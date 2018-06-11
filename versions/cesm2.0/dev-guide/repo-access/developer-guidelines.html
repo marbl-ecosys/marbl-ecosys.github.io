@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developer Guidelines &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Rules of engagement" href="index.html"/>
+        <link rel="next" title="Github workflow" href="workflow.html"/>
+        <link rel="prev" title="Rules of engagement" href="index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rules of engagement</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Developer Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#publishing-research-with-development-code">Publishing research with development code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mailing-list">Mailing List</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="workflow.html">Github workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="working-on-docs.html">Working on the documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Rules of engagement</a> &raquo;</li>
+        
+      <li>Developer Guidelines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/dev-guide/repo-access/developer-guidelines.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developer-guidelines">
+<span id="id1"></span><h1>Developer Guidelines<a class="headerlink" href="#developer-guidelines" title="Permalink to this headline">¶</a></h1>
+<p>This document provides guidance for individuals contributing to the MARBL project.
+The MARBL code is hosted on github at <a class="reference external" href="https://github.com/marbl-ecosys/MARBL">https://github.com/marbl-ecosys/MARBL</a>.</p>
+<div class="section" id="repository-structure">
+<h2>Repository Structure<a class="headerlink" href="#repository-structure" title="Permalink to this headline">¶</a></h2>
+<p>Users interested in developing new features should fork the repository into their own github account and make branches off <code class="docutils literal notranslate"><span class="pre">development</span></code>.
+Submit a pull request back to <code class="docutils literal notranslate"><span class="pre">development</span></code> when your modifications are complete.
+The <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch in the MARBL repository contains code from scientifically-vetted releases.</p>
+</div>
+<div class="section" id="publishing-research-with-development-code">
+<h2>Publishing research with development code<a class="headerlink" href="#publishing-research-with-development-code" title="Permalink to this headline">¶</a></h2>
+<p>Your contributions to the MARBL project will likely be used by others on the development team.
+This section aims to ensure that authors receive appropriate credit for contributions to the MARBL code base.
+Publishing work based on MARBL development code is encouraged; however, this project relies on contributions from a broad group and people deserve appropriate recognition for their intellectual efforts.</p>
+<p>You are expected to communicate publication plans to other members of the MARBL development team if your work involves their contributions.</p>
+<p>You must offer co-authorship (or other mutually agreed upon recognition) on papers or other scientific communications to authors of MARBL development code if that code meets all of the following conditions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The research used the code by invoking it at run time;</li>
+<li>The code impacted solutions, such that results and/or conclusions would differ without it; and</li>
+<li>The code was not available on <code class="docutils literal notranslate"><span class="pre">stable</span></code> or a release branch.</li>
+</ul>
+</div></blockquote>
+<p>MARBL code that has been released is not subject to these restrictions.</p>
+</div>
+<div class="section" id="mailing-list">
+<h2>Mailing List<a class="headerlink" href="#mailing-list" title="Permalink to this headline">¶</a></h2>
+<p>We recommend signing up for the <a class="reference external" href="https://groups.google.com/forum/#!forum/marbl-dev">MARBL developer’s mailing list</a>.
+This mailing list is used by the repository administrators to send out announcements about changes to the repository that may effect development.
+We also encourage developers to use the list to ask questions about the code or to communicate with each other about projects that could benefit from collaboration.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="workflow.html" class="btn btn-neutral float-right" title="Github workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Rules of engagement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

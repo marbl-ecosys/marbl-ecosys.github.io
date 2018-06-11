@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding a MARBL Parameter &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../index.html"/>
+        <link rel="up" title="Development Examples" href="development-examples.html"/>
+        <link rel="next" title="Adding a Tracer" href="add-tracer.html"/>
+        <link rel="prev" title="Adding a Diagnostic" href="add-diagnostic.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="development-examples.html">Development Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="add-diagnostic.html">Adding a Diagnostic</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding a MARBL Parameter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-create-new-module-level-variable">Step 1. Create new module-level variable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-add-the-parameter-to-marbl-registry">Step 2. Add the parameter to MARBL registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-set-default-value">Step 3. Set default value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-update-the-settings-yaml-files">Step 4. Update the settings YAML files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-convert-the-yaml-file-to-json">Step 5. Convert the YAML file to JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="add-tracer.html">Adding a Tracer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+          <li><a href="development-examples.html">Development Examples</a> &raquo;</li>
+        
+      <li>Adding a MARBL Parameter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/add-settings-parameter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-marbl-parameter">
+<span id="add-settings-parameter"></span><h1>Adding a MARBL Parameter<a class="headerlink" href="#adding-a-marbl-parameter" title="Permalink to this headline">¶</a></h1>
+<p>This is a five step process.
+There are three changes to make in the Fortran code, all of which are made in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code> <a class="footnote-reference" href="#id2" id="id1">[*]</a>.
+There are also two steps to make sure the parameter is picked up by the python tools to allow non-default values to be set.</p>
+<p>Settings parameters are sorted into four categories that are processed in the following order:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general_parms
+PFT_counts
+PFT_derived_types
+tracer_dependent
+</pre></div>
+</div>
+<p>This is necessary because the general parameter settings may affect the number of PFTs being modeled,
+which changes the dimensions of the PFT derived types, which may affect the tracer count.
+During initialization, parameters will be defined and the default values will be set for each category.
+The defaults will be overwritten if the GCM called <code class="docutils literal notranslate"><span class="pre">marbl_instance%put_setting()</span></code> before calling <code class="docutils literal notranslate"><span class="pre">init()</span></code>.</p>
+<p>For this example, we follow the minimum O2 needed for prodution and consumption parameter, which is <code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> in the code.
+<code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is a general parameter.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[*]</a></td><td>The only exception is for parameters dealing with PFTs, those are in <code class="docutils literal notranslate"><span class="pre">marbl_pft_mod.F90</span></code>.</td></tr>
+</tbody>
+</table>
+<div class="section" id="step-1-create-new-module-level-variable">
+<h2>Step 1. Create new module-level variable<a class="headerlink" href="#step-1-create-new-module-level-variable" title="Permalink to this headline">¶</a></h2>
+<p>All parameter settings are module variables in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code>.
+Further, all subroutines and module variables are public in this module.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">r8</span><span class="p">),</span> <span class="k">target</span> <span class="kd">::</span> <span class="p">&amp;</span>
+     <span class="n">parm_Fe_bioavail</span><span class="p">,</span>           <span class="p">&amp;</span> <span class="c">! fraction of Fe flux that is bioavailable</span>
+     <span class="n">parm_o2_min</span><span class="p">,</span>                <span class="p">&amp;</span> <span class="c">! min O2 needed for prod &amp; consump. (nmol/cm^3)</span>
+     <span class="n">parm_o2_min_delta</span><span class="p">,</span>          <span class="p">&amp;</span> <span class="c">! width of min O2 range (nmol/cm^3)</span>
+     <span class="n">parm_kappa_nitrif_per_day</span><span class="p">,</span>  <span class="p">&amp;</span> <span class="c">! nitrification inverse time constant (1/day)</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">target</span></code> attribute is necessary because MARBL’s internal parameter registry makes use of pointers.</p>
+</div>
+</div>
+<div class="section" id="step-2-add-the-parameter-to-marbl-registry">
+<h2>Step 2. Add the parameter to MARBL registry<a class="headerlink" href="#step-2-add-the-parameter-to-marbl-registry" title="Permalink to this headline">¶</a></h2>
+<p>This registry allows the parameter to be both set by and returned to the GCM.
+Parameters in each of the four possible categories are defined separately from each other, in one of the following subroutines:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_counts</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_derived_types</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_tracer_dependent</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is registered in <code class="docutils literal notranslate"><span class="pre">marbl_settings_define_general_parms</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_define_parameters</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+  <span class="n">sname</span>     <span class="o">=</span> <span class="s1">&#39;parm_o2_min&#39;</span>
+  <span class="n">lname</span>     <span class="o">=</span> <span class="s1">&#39;Minimum O2 needed for production and consumption&#39;</span>
+  <span class="n">units</span>     <span class="o">=</span> <span class="s1">&#39;nmol/cm^3&#39;</span>
+  <span class="n">datatype</span>  <span class="o">=</span> <span class="s1">&#39;real&#39;</span>
+  <span class="n">rptr</span>      <span class="o">=&gt;</span> <span class="n">parm_o2_min</span>
+  <span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_var</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">lname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span>       <span class="p">&amp;</span>
+                      <span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">rptr</span><span class="o">=</span><span class="n">rptr</span><span class="p">)</span>
+  <span class="k">call </span><span class="n">check_and_log_add_var_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">subname</span><span class="p">,</span> <span class="n">labort_marbl_loc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-set-default-value">
+<h2>Step 3. Set default value<a class="headerlink" href="#step-3-set-default-value" title="Permalink to this headline">¶</a></h2>
+<p>MARBL convention is to have a reasonable default value defined in case the variable is not changed via an input settings file.
+Defaults for each of the four categories are set separately from each other, immediately after parameters for that category are defined.
+The subroutines for setting defaults are</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_general_parms</span><span class="p">()</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_PFT_counts</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_PFT_derived_types</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_tracer_dependent</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is set in <code class="docutils literal notranslate"><span class="pre">marbl_settings_set_defaults_general_parms</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_general_parms</span><span class="p">()</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="n">parm_Fe_bioavail</span>              <span class="o">=</span> <span class="mf">1.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+  <span class="n">parm_o2_min</span>                   <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+  <span class="n">parm_o2_min_delta</span>             <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+  <span class="n">parm_kappa_nitrif_per_day</span>     <span class="o">=</span> <span class="mf">0.06_r8</span>         <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-update-the-settings-yaml-files">
+<h2>Step 4. Update the settings YAML files<a class="headerlink" href="#step-4-update-the-settings-yaml-files" title="Permalink to this headline">¶</a></h2>
+<p>We use a YAML file to provide an easy-to-edit and human-readable text file containing a list of all parameters and their default values.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ABOUT THIS FILE</span>
+<span class="c1"># ---------------</span>
+<span class="c1"># MARBL users can change settings values for runtime-configurable variables via a settings</span>
+<span class="c1"># input file. MARBL provides a python script that can generate an input file by reading a</span>
+<span class="c1"># JSON file containing the configurable variables and default values, but JSON does not allow</span>
+<span class="c1"># comments in the file format so the workflow is to edit this YAML file and then generate</span>
+<span class="c1"># the JSON file via $MARBL/MARBL_tools/yaml_to_json.py</span>
+<span class="c1">#</span>
+<span class="c1"># Parameters in MARBL are divided into four different stages, based on the order in which they are set</span>
+<span class="c1"># 1. General Parameters: variables that have no dependencies on other stages</span>
+<span class="c1">#    (note that init_bury_coeff_opt is alone in general_parms2 because it depends on ladjust_bury_coeff)</span>
+<span class="c1"># 2. PFT Counts: variables that can not be set until after PFT_defaults (in General Parameters) is known</span>
+<span class="c1"># 3. PFT Derived Types: variables that can not be set until PFT Counts are known</span>
+<span class="c1">#                       (autotroph_cnt, zooplankton_cnt, and max_grazer_prey_cnt)</span>
+<span class="c1"># 4. Post-Tracer: variables that can not be set until the tracer count is known</span>
+<span class="c1">#                 (tracer count depends on PFT Derived Types)</span>
+<span class="c1">#</span>
+<span class="c1"># All variables need to provide the following metadata:</span>
+<span class="c1"># 1. longname: a description of the variable</span>
+<span class="c1"># 2. subcategory: when writing parameters to the log, MARBL will group variables by subcategory</span>
+<span class="c1"># 3. units: physical units (use &quot;unitless&quot; for pure numbers and &quot;non-numeric&quot; for strings / logicals)</span>
+<span class="c1"># 4. datatype: integer, real, logical, or string</span>
+<span class="c1"># 5. default_value: Value to use unless overwritten by the MARBL input file</span>
+<span class="c1">#       NOTE: some parameters provide different default values for different configurations;</span>
+<span class="c1">#             e.g. in CESM, the value of some parameters is resolution-dependent. In these</span>
+<span class="c1">#             cases, default_value should be a dictionary with a &quot;default&quot; key and then keys</span>
+<span class="c1">#             for whatever resolutions differ from the default.</span>
+<span class="c1">#</span>
+<span class="c1">#             Accepted keys:</span>
+<span class="c1">#                1. default</span>
+<span class="c1">#                2. CESM_x3</span>
+<span class="c1">#</span>
+<span class="c1"># There are also some optional metadata options:</span>
+<span class="c1"># 1. valid_values: only values that MARBL will accept (default_value must be in valid_values!)</span>
+<span class="c1"># 2. cannot change:</span>
+<span class="c1"># 3. must set:</span>
+<span class="c1"># 4. _append_to_config_keywords: if default values of variables processed later depend on the</span>
+<span class="c1">#                                value of another variable, then that variable needs to have</span>
+<span class="c1">#                                _append_to_config_keywords = True</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">################################################################################</span>
+<span class="l l-Scalar l-Scalar-Plain">#                        Category 1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">General Parameters</span>                        <span class="c1">#</span>
+<span class="c1">################################################################################</span>
+
+<span class="l l-Scalar l-Scalar-Plain">general_parms</span> <span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">.</span>
+  <span class="l l-Scalar l-Scalar-Plain">.</span>
+  <span class="l l-Scalar l-Scalar-Plain">.</span>
+  <span class="l l-Scalar l-Scalar-Plain">parm_o2_min</span> <span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">longname</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Minimum O2 needed for production &amp; consumption</span>
+      <span class="l l-Scalar l-Scalar-Plain">subcategory</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4. general parameters</span>
+      <span class="l l-Scalar l-Scalar-Plain">units</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nmol/cm^3</span>
+      <span class="l l-Scalar l-Scalar-Plain">datatype</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="l l-Scalar l-Scalar-Plain">default_value</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-5-convert-the-yaml-file-to-json">
+<h2>Step 5. Convert the YAML file to JSON<a class="headerlink" href="#step-5-convert-the-yaml-file-to-json" title="Permalink to this headline">¶</a></h2>
+<p>We prefer editing YAML files to editing JSON files because they are much easier to maintain (and allow user comments).
+Unfortunately, python does not include a YAML parser in the default distributions.
+Rather than require all users to install <code class="docutils literal notranslate"><span class="pre">pyYAML</span></code>, we require that of MARBL developers and then ask them to convert the YAML files to JSON.
+The <code class="docutils literal notranslate"><span class="pre">MARBL_tools/yaml_to_json.py</span></code> script is provided to do just that:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cd MARBL_tools
+$ ./yaml_to_json.py
+</pre></div>
+</div>
+<p>The rest of the python scripts provided in the <code class="docutils literal notranslate"><span class="pre">MARBL_tools/</span></code> subdirectory rely on the JSON file rather than the YAML.
+<code class="docutils literal notranslate"><span class="pre">MARBL_tools/MARBL_generate_settings_file.py</span></code> will turn the JSON file into a list for the GCM to parse:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>! general parameters
+.
+.
+.
+parm_o2_min = 5.0
+parm_o2_min_delta = 5.0
+</pre></div>
+</div>
+<p>It is then up to the GCM to read this text file and pass it line by line to <code class="docutils literal notranslate"><span class="pre">marbl_instance%put_setting()</span></code></p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="add-tracer.html" class="btn btn-neutral float-right" title="Adding a Tracer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="add-diagnostic.html" class="btn btn-neutral" title="Adding a Diagnostic" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

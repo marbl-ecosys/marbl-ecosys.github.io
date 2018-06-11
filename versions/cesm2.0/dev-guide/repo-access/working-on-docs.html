@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working on the documentation &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Rules of engagement" href="index.html"/>
+        <link rel="prev" title="Github workflow" href="workflow.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Rules of engagement</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="developer-guidelines.html">Developer Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow.html">Github workflow</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working on the documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#local-environment">Local environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-workflow">Documentation workflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#do-all-development-work-on-a-branch">Do all development work on a branch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#edit-documentation-source">Edit documentation source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-documentation">Build the documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#commit-changes">Commit changes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#headers-in-restructuredtext">Headers in ReStructuredText</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Rules of engagement</a> &raquo;</li>
+        
+      <li>Working on the documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/dev-guide/repo-access/working-on-docs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-on-the-documentation">
+<span id="working-on-docs"></span><h1>Working on the documentation<a class="headerlink" href="#working-on-the-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Here are guidelines for installing and using Sphinx to develop documentation.</p>
+<div class="section" id="local-environment">
+<h2>Local environment<a class="headerlink" href="#local-environment" title="Permalink to this headline">¶</a></h2>
+<p>The MARBL documentation is built in <a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a>
+from content written in reStructuredText.</p>
+<p>The following extensions are required.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io">sphinxcontrib-bibtex</a></li>
+</ul>
+<p>Python must be available locally.</p>
+<p>Miniconda is a nice tool for maintaining Python:
+<a class="reference external" href="https://conda.io/miniconda.html">https://conda.io/miniconda.html</a></p>
+<p>It’s helpful to setup an environment. See <a class="reference external" href="https://conda.io/docs/using/envs.html">here</a>
+for more on conda environments.</p>
+<p>With conda installed, do the following</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name marbl-docs sphinx sphinx_rtd_theme
+$ source activate marbl-docs
+$ pip install sphinxcontrib-bibtex
+</pre></div>
+</div>
+<p>This creates an environment call “marbl-docs” and installs the required extensions.</p>
+<p>To deactivate the “marbl-docs” environment</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source deactivate marbl-docs
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation-workflow">
+<h2>Documentation workflow<a class="headerlink" href="#documentation-workflow" title="Permalink to this headline">¶</a></h2>
+<p>Here’s some notes on how to modify the documentation.</p>
+<div class="section" id="do-all-development-work-on-a-branch">
+<h3>Do all development work on a branch<a class="headerlink" href="#do-all-development-work-on-a-branch" title="Permalink to this headline">¶</a></h3>
+<p>Checkout a new local branch using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git checkout -b my_branch
+</pre></div>
+</div>
+<p>to create a branch or omit the <code class="docutils literal notranslate"><span class="pre">-b</span></code> to checkout an existing branch.</p>
+</div>
+<div class="section" id="edit-documentation-source">
+<h3>Edit documentation source<a class="headerlink" href="#edit-documentation-source" title="Permalink to this headline">¶</a></h3>
+<p>Modify and/or add <a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#rst-primer">reStructuredText</a>
+files.</p>
+<p>The documentation has three major sections</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="55%" />
+<col width="42%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td></td>
+<td><a class="reference internal" href="../index.html#dev-guide"><span class="std std-ref">Developer’s guide</span></a></td>
+<td><code class="docutils literal notranslate"><span class="pre">MARBL/docs/src/dev-guide</span></code></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><a class="reference internal" href="../../sci-guide/index.html#sci-guide"><span class="std std-ref">Scientific manual</span></a></td>
+<td><code class="docutils literal notranslate"><span class="pre">MARBL/docs/src/sci-guide</span></code></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><a class="reference internal" href="../../usr-guide/index.html#usr-guide"><span class="std std-ref">User guide</span></a></td>
+<td><code class="docutils literal notranslate"><span class="pre">MARBL/docs/src/usr-guide</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>The file <code class="docutils literal notranslate"><span class="pre">index.html</span></code> in each of these directories includes the table of contents for each section; this file must be modified when new pages are added.</p>
+<p>Begin each <code class="docutils literal notranslate"><span class="pre">rst</span></code> file with a label that is the same as the file name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">_myfilename</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>Note the position of the underscore and ending colon.
+This enables referencing this page from elsewhere in the project using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>:ref:`Name of link&lt;myfilename&gt;`
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-the-documentation">
+<h3>Build the documentation<a class="headerlink" href="#build-the-documentation" title="Permalink to this headline">¶</a></h3>
+<p>Once changes are complete, build from <cite>src</cite> using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL/src]$ make clean html
+</pre></div>
+</div>
+<p>The compiled documentation ends up in <code class="docutils literal notranslate"><span class="pre">MARBL/docs/html</span></code>.
+You can view the files there in a browser locally as you work.</p>
+</div>
+<div class="section" id="commit-changes">
+<h3>Commit changes<a class="headerlink" href="#commit-changes" title="Permalink to this headline">¶</a></h3>
+<p>You can check the status of your modification using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git status
+</pre></div>
+</div>
+<p>When you are ready to commit</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL/docs]$ git add .
+[MARBL/docs]$ git commit -m &#39;message describing changes&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="headers-in-restructuredtext">
+<h2>Headers in ReStructuredText<a class="headerlink" href="#headers-in-restructuredtext" title="Permalink to this headline">¶</a></h2>
+<p>reStructuredText parses special characters to create titles, subtitles, and other headers in a non-unique way, which is to say that there are multiple ways to produce the same set of headers.
+Any non-alphanumeric [7-bit] character repeated for the entire length of the line above it will turn the line above it into a header.
+If you desire, you can also overline the header text with the same string.
+The order you use the special characters must be consistent within a file (the first character choice produces a title, the second character choice produces a subtitle, and so on).
+For example, the following two blocks of code translate into the same page:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span>
+<span class="o">-----</span>
+
+<span class="n">Subtitle</span>
+<span class="o">~~~~~~~~</span>
+
+<span class="n">Subsubtitle</span>
+<span class="o">===========</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span>
+<span class="o">+++++</span>
+
+<span class="o">^^^^^^^^</span>
+<span class="n">Subtitle</span>
+<span class="o">^^^^^^^^</span>
+
+<span class="n">Subsubtitle</span>
+<span class="n">___________</span>
+</pre></div>
+</div>
+<p>For consistency, MARBL documentation should use the same pattern across all files.
+(Again, this is not a requirement of reStructuredText.)
+The preferred pattern is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=====</span>
+<span class="n">Title</span>
+<span class="o">=====</span>
+
+<span class="o">--------</span>
+<span class="n">Subtitle</span>
+<span class="o">--------</span>
+
+<span class="o">~~~~~~~~~~~</span>
+<span class="n">Subsubtitle</span>
+<span class="o">~~~~~~~~~~~</span>
+</pre></div>
+</div>
+<p>Note that this convention is entirely arbitrary, but should make reading <code class="docutils literal notranslate"><span class="pre">.rst</span></code> files a little easier.
+If you find a need for a Subsubsubtitle, choose your favorite special character that is not already in use and then edit this page accordingly.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<div class="admonition-restructuredtext-resource admonition">
+<p class="first admonition-title">reStructuredText resource</p>
+<p class="last">The authoritative <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText User Documentation</a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="workflow.html" class="btn btn-neutral" title="Github workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

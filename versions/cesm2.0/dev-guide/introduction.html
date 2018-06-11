@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction to MARBL framework &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../index.html"/>
+        <link rel="up" title="MARBL developer’s guide" href="index.html"/>
+        <link rel="next" title="Coding conventions in MARBL" href="coding-conventions.html"/>
+        <link rel="prev" title="MARBL developer’s guide" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction to MARBL framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracer-equation-view-of-biogeochemistry">Tracer equation view of biogeochemistry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-overview">Implementation overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development-examples.html">Development Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+      <li>Introduction to MARBL framework</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction-to-marbl-framework">
+<span id="intro"></span><h1>Introduction to MARBL framework<a class="headerlink" href="#introduction-to-marbl-framework" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tracer-equation-view-of-biogeochemistry">
+<h2>Tracer equation view of biogeochemistry<a class="headerlink" href="#tracer-equation-view-of-biogeochemistry" title="Permalink to this headline">¶</a></h2>
+<p>MARBL is designed to be a modular implementation of ocean biogoechemistry suitable for coupling to ocean general circulation models (OGCM).
+In the OGCM context, the prognostic equation governing the evolution of an arbitrary tracer <span class="math notranslate nohighlight">\(\chi\)</span> in the ocean is</p>
+<div class="math notranslate nohighlight" id="equation-tracer">
+<span class="eqno">(1)<a class="headerlink" href="#equation-tracer" title="Permalink to this equation">¶</a></span>\[   \frac{\partial \chi}{\partial t}
+   + \nabla\cdot(\mathbf{u}\chi)
+   - \nabla\cdot\left(K\cdot \nabla\chi\right) = B_\chi(\mathbf{x})\]</div>
+<p>where and <span class="math notranslate nohighlight">\(B_\chi(\mathbf{x})\)</span> is the sum of sources minus sinks for <span class="math notranslate nohighlight">\(\chi\)</span>, computed as a function of the model state vector, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>The OGCM computes the lefthand-side of <a class="reference internal" href="#equation-tracer">(1)</a> (time tendency, advection, diffusion); MARBL’s role is to compute the righthand-side (<span class="math notranslate nohighlight">\(B_\chi(\mathbf{x})\)</span>).
+MARBL returns this tendency to the OGCM, which steps <a class="reference internal" href="#equation-tracer">(1)</a> forward in time.
+MARBL also computes air-sea fluxes for constituents like CO<sub>2</sub>; the OGCM is responsible for handling these in a manner consistent with its numerics.
+MARBL also returns diagnostic output, including intermediate terms used in the computation of <span class="math notranslate nohighlight">\(B_\chi(\mathbf{x})\)</span>, such as net primary productivity or grazing of phytoplankton.
+The OGCM must compute diagnostics relating to the total tracer concentration and terms from the righthand-side of <a class="reference internal" href="#equation-tracer">(1)</a>.</p>
+</div>
+<div class="section" id="implementation-overview">
+<h2>Implementation overview<a class="headerlink" href="#implementation-overview" title="Permalink to this headline">¶</a></h2>
+<p>MARBL is compiled as a standalone library with no explicit dependencies on aspects of the OGCM code.
+The OGCM includes a <em>MARBL driver</em>, which is responsible for all communication with MARBL making use of MARBL’s interface layer.</p>
+<p>MARBL is configured to operate on vertical columns.  The OGCM passes data into MARBL on these columns, including information describing the domain (i.e., <cite>dz</cite> or the vertical layer thickness, which may vary in time).</p>
+<p>MARBL returns data on columns, which must then be remapped back to the OGCM’s data format.</p>
+<img alt="../_images/modular-design.png" class="align-center" src="../_images/modular-design.png" />
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="coding-conventions.html" class="btn btn-neutral float-right" title="Coding conventions in MARBL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="MARBL developer’s guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
