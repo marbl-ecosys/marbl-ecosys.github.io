@@ -103,7 +103,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../usr-guide/index.html">MARBL user guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../implementations/index.html">Examples of MARBL Implementation</a></li>
@@ -207,15 +210,15 @@ from content written in reStructuredText.</p>
 <a class="reference external" href="https://conda.io/miniconda.html">https://conda.io/miniconda.html</a></p>
 <p>It’s helpful to setup an environment. See <a class="reference external" href="https://conda.io/docs/using/envs.html">here</a>
 for more on conda environments.</p>
-<p>With conda installed, do the following</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name marbl-docs sphinx sphinx_rtd_theme
-$ source activate marbl-docs
-$ pip install sphinxcontrib-bibtex
+<p>With conda installed, do the following (the last command assumes you are in the root of your MARBL repository):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ conda create --name marbl-docs pip
+$ conda activate marbl-docs
+[MARBL]$ pip install -r docs/py_requirements.txt
 </pre></div>
 </div>
-<p>This creates an environment call “marbl-docs” and installs the required extensions.</p>
-<p>To deactivate the “marbl-docs” environment</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source deactivate marbl-docs
+<p>This creates an environment call “marbl-docs” and ensures that <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> commands are local to the environment rather than global.</p>
+<p>To deactivate the “marbl-docs” environment run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ conda deactivate
 </pre></div>
 </div>
 </div>
@@ -225,7 +228,7 @@ $ pip install sphinxcontrib-bibtex
 <div class="section" id="do-all-development-work-on-a-branch">
 <h3>Do all development work on a branch<a class="headerlink" href="#do-all-development-work-on-a-branch" title="Permalink to this headline">¶</a></h3>
 <p>Checkout a new local branch using</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git checkout -b my_branch
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git checkout -b my_branch
 </pre></div>
 </div>
 <p>to create a branch or omit the <code class="docutils literal notranslate"><span class="pre">-b</span></code> to checkout an existing branch.</p>
@@ -257,20 +260,20 @@ files.</p>
 </tbody>
 </table>
 <p>The file <code class="docutils literal notranslate"><span class="pre">index.html</span></code> in each of these directories includes the table of contents for each section; this file must be modified when new pages are added.</p>
-<p>Begin each <code class="docutils literal notranslate"><span class="pre">rst</span></code> file with a label that is the same as the file name:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">_myfilename</span><span class="p">:</span>
+<p>Begin each <code class="docutils literal notranslate"><span class="pre">rst</span></code> file with a label that is the same as the file name</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.. _myfilename:
 </pre></div>
 </div>
 <p>Note the position of the underscore and ending colon.
-This enables referencing this page from elsewhere in the project using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>:ref:`Name of link&lt;myfilename&gt;`
+This enables referencing this page from elsewhere in the project using</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:ref:`Name of link&lt;myfilename&gt;`
 </pre></div>
 </div>
 </div>
 <div class="section" id="build-the-documentation">
 <h3>Build the documentation<a class="headerlink" href="#build-the-documentation" title="Permalink to this headline">¶</a></h3>
 <p>Once changes are complete, build from <cite>src</cite> using</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL/src]$ make clean html
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL/docs/src]$ make clean html
 </pre></div>
 </div>
 <p>The compiled documentation ends up in <code class="docutils literal notranslate"><span class="pre">MARBL/docs/html</span></code>.
@@ -279,11 +282,11 @@ You can view the files there in a browser locally as you work.</p>
 <div class="section" id="commit-changes">
 <h3>Commit changes<a class="headerlink" href="#commit-changes" title="Permalink to this headline">¶</a></h3>
 <p>You can check the status of your modification using</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git status
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git status
 </pre></div>
 </div>
 <p>When you are ready to commit</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[MARBL/docs]$ git add .
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL/docs]$ git add .
 [MARBL/docs]$ git commit -m &#39;message describing changes&#39;
 </pre></div>
 </div>
@@ -296,50 +299,46 @@ Any non-alphanumeric [7-bit] character repeated for the entire length of the lin
 If you desire, you can also overline the header text with the same string.
 The order you use the special characters must be consistent within a file (the first character choice produces a title, the second character choice produces a subtitle, and so on).
 For example, the following two blocks of code translate into the same page:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span>
-<span class="o">-----</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Title
+-----
 
-<span class="n">Subtitle</span>
-<span class="o">~~~~~~~~</span>
+Subtitle
+~~~~~~~~
 
-<span class="n">Subsubtitle</span>
-<span class="o">===========</span>
+Subsubtitle
+===========
 </pre></div>
 </div>
 <p>and</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Title</span>
-<span class="o">+++++</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Title
++++++
 
-<span class="o">^^^^^^^^</span>
-<span class="n">Subtitle</span>
-<span class="o">^^^^^^^^</span>
+^^^^^^^^
+Subtitle
+^^^^^^^^
 
-<span class="n">Subsubtitle</span>
-<span class="n">___________</span>
+Subsubtitle
+___________
 </pre></div>
 </div>
 <p>For consistency, MARBL documentation should use the same pattern across all files.
 (Again, this is not a requirement of reStructuredText.)
-The preferred pattern is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=====</span>
-<span class="n">Title</span>
-<span class="o">=====</span>
+The preferred pattern is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>=====
+Title
+=====
 
-<span class="o">--------</span>
-<span class="n">Subtitle</span>
-<span class="o">--------</span>
+--------
+Subtitle
+--------
 
-<span class="o">~~~~~~~~~~~</span>
-<span class="n">Subsubtitle</span>
-<span class="o">~~~~~~~~~~~</span>
+~~~~~~~~~~~
+Subsubtitle
+~~~~~~~~~~~
 </pre></div>
 </div>
 <p>Note that this convention is entirely arbitrary, but should make reading <code class="docutils literal notranslate"><span class="pre">.rst</span></code> files a little easier.
 If you find a need for a Subsubsubtitle, choose your favorite special character that is not already in use and then edit this page accordingly.</p>
-<div class="line-block">
-<div class="line"><br /></div>
-<div class="line"><br /></div>
-</div>
 <div class="admonition-restructuredtext-resource admonition">
 <p class="first admonition-title">reStructuredText resource</p>
 <p class="last">The authoritative <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText User Documentation</a>.</p>
