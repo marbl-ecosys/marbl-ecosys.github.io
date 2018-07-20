@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How Many Saved State Fields Need to be Stored? &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Requirements on the GCM" href="index.html"/>
+        <link rel="next" title="Global Sums of Fields Provided by MARBL" href="global_sums.html"/>
+        <link rel="prev" title="What Forcing Fields has MARBL Requested?" href="forcing_fields.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">MARBL user guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">How to Use MARBL in a GCM</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../init.html">Init</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Requirements on the GCM</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html#provide-data-to-marbl">Provide data to MARBL</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#computations-across-columns">Computations across columns</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../surface_flux.html">Compute Surface Fluxes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../shutdown.html">Shutdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-guide/index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-guide/repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">MARBL user guide</a> &raquo;</li>
+        
+          <li><a href="../index.html">How to Use MARBL in a GCM</a> &raquo;</li>
+        
+          <li><a href="index.html">Requirements on the GCM</a> &raquo;</li>
+        
+      <li>How Many Saved State Fields Need to be Stored?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/usr-guide/GCM-interface/GCM_requirements/saved_state.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-many-saved-state-fields-need-to-be-stored">
+<span id="saved-state"></span><h1>How Many Saved State Fields Need to be Stored?<a class="headerlink" href="#how-many-saved-state-fields-need-to-be-stored" title="Permalink to this headline">¶</a></h1>
+<p>MARBL does not yet have a stand-alone test to provide a list of requested saved state fields, but <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_init()</span></code> shows that there are four saved state fields - two for the surface and two for the interior.
+The two surface fields are <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">pH</span></code> and <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">pH</span> <span class="pre">(alternate</span> <span class="pre">CO2)</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">surface_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_surface_elements</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
+
+<span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;surface pH&#39;</span>
+<span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_SURF&#39;</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;pH&#39;</span>
+<span class="n">vgrid</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="mi">2</span>
+<span class="k">call </span><span class="n">surface_state</span><span class="p">%</span><span class="n">add_state</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span>            <span class="p">&amp;</span>
+     <span class="n">surf_ind</span><span class="p">%</span><span class="n">ph_surf</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">  call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;add_state(PH_SURF)&quot;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+  <span class="k">return</span>
+<span class="k">end if</span>
+
+<span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;surface pH (alternate CO2)&#39;</span>
+<span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_SURF_ALT_CO2&#39;</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;pH&#39;</span>
+<span class="n">vgrid</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="mi">2</span>
+<span class="k">call </span><span class="n">surface_state</span><span class="p">%</span><span class="n">add_state</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span>            <span class="p">&amp;</span>
+     <span class="n">surf_ind</span><span class="p">%</span><span class="n">ph_alt_co2_surf</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">  call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;add_state(PH_SURF_ALT_CO2)&quot;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+  <span class="k">return</span>
+<span class="k">end if</span>
+</pre></div>
+</div>
+<p>The two interior state fields are <code class="docutils literal notranslate"><span class="pre">3D</span> <span class="pre">pH</span></code> and <code class="docutils literal notranslate"><span class="pre">3D</span> <span class="pre">pH</span> <span class="pre">(alternate</span> <span class="pre">CO2)</span></code></p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">interior_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_interior_forcing</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
+
+<span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;3D pH&#39;</span>
+<span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_3D&#39;</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;pH&#39;</span>
+<span class="n">vgrid</span> <span class="o">=</span> <span class="s1">&#39;layer_avg&#39;</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="mi">3</span>
+<span class="k">call </span><span class="n">interior_state</span><span class="p">%</span><span class="n">add_state</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span>           <span class="p">&amp;</span>
+     <span class="n">interior_ind</span><span class="p">%</span><span class="n">ph_col</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">  call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;add_state(PH_3D)&quot;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+  <span class="k">return</span>
+<span class="k">end if</span>
+
+<span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;3D pH (alternate CO2)&#39;</span>
+<span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_3D_ALT_CO2&#39;</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;pH&#39;</span>
+<span class="n">vgrid</span> <span class="o">=</span> <span class="s1">&#39;layer_avg&#39;</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="mi">3</span>
+<span class="k">call </span><span class="n">interior_state</span><span class="p">%</span><span class="n">add_state</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span>           <span class="p">&amp;</span>
+     <span class="n">interior_ind</span><span class="p">%</span><span class="n">ph_alt_co2_col</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">  call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;add_state(PH_3D_ALT_CO2)&quot;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+  <span class="k">return</span>
+<span class="k">end if</span>
+</pre></div>
+</div>
+<p>The pH computation is an iterative solver, and it has proven useful to use the pH at timestep <code class="docutils literal notranslate"><span class="pre">t</span></code> as an initial value when solving for time <code class="docutils literal notranslate"><span class="pre">t+1</span></code>.</p>
+<div class="section" id="saved-state-in-the-interface">
+<h2>Saved State in the Interface<a class="headerlink" href="#saved-state-in-the-interface" title="Permalink to this headline">¶</a></h2>
+<p>MARBL splits the saved state fields between those needed for computing surface fluxes and those needed for computing interior tendencies, so on the interface we have</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">surface_saved_state</span>
+<span class="n">marbl_instance</span><span class="p">%</span><span class="n">interior_saved_state</span>
+</pre></div>
+</div>
+<p>Both of these are of type <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_type</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_single_saved_state_type</span>
+  <span class="kt">integer</span>                 <span class="kd">::</span> <span class="n">rank</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">long_name</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">short_name</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">units</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">vertical_grid</span> <span class="c">! &#39;none&#39;, &#39;layer_avg&#39;, &#39;layer_iface&#39;</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">dimension</span><span class="p">(:)</span>   <span class="kd">::</span> <span class="n">field_2d</span>  <span class="c">! num_elements</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">dimension</span><span class="p">(:,:)</span> <span class="kd">::</span> <span class="n">field_3d</span>  <span class="c">! num_levels, num_elements</span>
+<span class="k">contains</span>
+<span class="k">  procedure</span> <span class="kd">::</span> <span class="n">construct</span> <span class="o">=&gt;</span> <span class="n">marbl_single_saved_state_construct</span>
+<span class="k">end type </span><span class="n">marbl_single_saved_state_type</span>
+
+<span class="c">!*****************************************************************************</span>
+
+<span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_saved_state_type</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">saved_state_cnt</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">num_elements</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">num_levels</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_single_saved_state_type</span><span class="p">),</span> <span class="k">dimension</span><span class="p">(:),</span> <span class="k">pointer</span> <span class="kd">::</span> <span class="n">state</span> <span class="o">=&gt;</span> <span class="nb">NULL</span><span class="p">()</span>
+ <span class="k">contains</span>
+<span class="k">   procedure</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">construct</span> <span class="o">=&gt;</span> <span class="n">marbl_saved_state_constructor</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">add_state</span> <span class="o">=&gt;</span> <span class="n">marbl_saved_state_add</span>
+<span class="k">end type </span><span class="n">marbl_saved_state_type</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-should-the-gcm-do">
+<h2>What Should the GCM Do?<a class="headerlink" href="#what-should-the-gcm-do" title="Permalink to this headline">¶</a></h2>
+<p>After <code class="docutils literal notranslate"><span class="pre">marbl_instance%set_surface_forcing()</span></code> returns, the GCM needs to process <code class="docutils literal notranslate"><span class="pre">marbl_intance%surface_saved_state</span></code>.
+That means looping through each element in the <code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_saved_state%state(:)</span></code> array, checking <code class="docutils literal notranslate"><span class="pre">state(n)%rank</span></code>, and then storing either <code class="docutils literal notranslate"><span class="pre">state(n)%field_2d</span></code> or <code class="docutils literal notranslate"><span class="pre">state(n)%field_3d</span></code> in a global array.
+Before calling <code class="docutils literal notranslate"><span class="pre">set_surface_forcing()</span></code> in the next time step, these saved values should be copied back into <code class="docutils literal notranslate"><span class="pre">marbl_intance%surface_saved_state</span></code>.</p>
+<p>Similar actions must be taken with <code class="docutils literal notranslate"><span class="pre">marbl_instance%interior_saved_state</span></code> before / after calls to <code class="docutils literal notranslate"><span class="pre">marbl_instance%set_interior_forcing()</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="global_sums.html" class="btn btn-neutral float-right" title="Global Sums of Fields Provided by MARBL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="forcing_fields.html" class="btn btn-neutral" title="What Forcing Fields has MARBL Requested?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

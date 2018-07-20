@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MARBL scientific documentation &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../index.html"/>
+        <link rel="next" title="Phytoplankton growth" href="phytoplankton-growth.html"/>
+        <link rel="prev" title="Adding a Tracer" href="../dev-guide/add-tracer.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-guide/index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MARBL scientific documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="phytoplankton-growth.html">Phytoplankton growth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="light-attenuation.html">Light attenuation formulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dev-guide/repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>MARBL scientific documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sci-guide/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marbl-scientific-documentation">
+<span id="sci-guide"></span><h1>MARBL scientific documentation<a class="headerlink" href="#marbl-scientific-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The default MARBL configuration invokes the Biogeochemical Elemental Cycling (BEC) model  <a class="reference internal" href="#moore-2004" id="id1">[MDL04]</a>. which is an ecosystem/biogeochemistry model designed to run within the ocean circulation component of CESM.</p>
+<p>The ecosystem includes multiple phytoplankton functional groups (diatoms, diazotrophs, small phytoplankton, and coccolithophores) and multiple potentially growth limiting nutrients (nitrate, ammonium, phosphate, silicate, and iron) <a class="reference internal" href="#moore-2002" id="id2">[MDK+02]</a><a class="reference internal" href="#moore-2004" id="id3">[MDL04]</a>.
+There is one zooplankton group, dissolved organic material (semi-labile), sinking particulate pools and explicit simulation of the biogeochemical cycling of key elements (C, N, P, Fe, Si, O, plus alkalinity) <a class="reference internal" href="#moore-2004" id="id4">[MDL04]</a>.
+The ecosystem component is coupled with a carbonate chemistry module based on the Ocean Carbon Model Intercomparison Project (OCMIP) <a class="reference internal" href="#doney-2009" id="id5">[DLM+09]</a> allowing dynamic computation of surface ocean pCO2 and air-sea CO2 flux.</p>
+<p>The model allows for water column denitrication, whereby nitrate is consumed during remineralization in place of O2 once ambient O2 concentrations fall below 4 micro-molar <a class="reference internal" href="#moore-2007" id="id6">[MD07]</a>.
+Photoadaptation is calculated as a variable phytoplankton ratio of chlorophyll to nitrogen based on Geider et al. <a class="reference internal" href="#geider-1998" id="id7">[GMK98]</a>.
+The model allows for variable Fe/C and Si/C ratios with an optimum and minimum value prescribed.
+As ambient Fe (or Si for diatoms) concentrations decline the phytoplankton lower their cellular quotas.
+Phytoplankton N/P ratios are fixed at the Redfield value of 16, but the diazotroph group has a higher N/P atomic ratio of 50 (see detailed description of the model in Moore et al., 2002 <a class="reference internal" href="#moore-2002" id="id8">[MDK+02]</a>, and Moore et al., 2004 <a class="reference internal" href="#moore-2004" id="id9">[MDL04]</a>).
+Thus, community N/P uptake varies with the phytoplankton community composition.</p>
+<p>The ecosystem model results have been compared extensively against in situ data (e.g., JGOFS time series stations) and SeaWiFS satellite ocean color observations in a global mixed layer only variant and coupled with a full-depth, global 3-D general circulation model <a class="reference internal" href="#moore-2002" id="id10">[MDK+02]</a><a class="reference internal" href="#moore-2004" id="id11">[MDL04]</a><a class="reference internal" href="#doney-2009" id="id12">[DLM+09]</a>.
+In both cases, the simulated output is in generally good agreement with bulk ecosystem observations (e.g., total biomass, productivity, nutrients, export) across diverse ecosystems that include both macro-nutrient and iron-limited regimes as well as very different physical environments from high latitude sites to the mid-ocean gyres.
+The model also incorporates the work of Moore and Braucher <a class="reference internal" href="#moore-2008" id="id13">[MB08]</a>, who incorporated an improved sedimentary iron source and scavenging parameterization, greatly improving simulated iron fields relative to observations, and the work of Krishnamurthy et al. <a class="reference internal" href="#krishnamurthy-2007" id="id14">[KMZL07]</a>, who describe the impact of atmospheric deposition of nitrogen.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This description is still under development.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="phytoplankton-growth.html">Phytoplankton growth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="light-attenuation.html">Light attenuation formulation</a></li>
+</ul>
+</div>
+<p class="rubric">References</p>
+<p id="bibtex-bibliography-sci-guide/index-0"><table class="docutils citation" frame="void" id="doney-2009" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[DLM+09]</td><td><em>(<a class="fn-backref" href="#id5">1</a>, <a class="fn-backref" href="#id12">2</a>)</em> S.&nbsp;C. Doney, I.&nbsp;Lima, J.K. Moore, K.&nbsp;Lindsay, M.J. Behrenfeld, T.K. Westberry, N.&nbsp;Mahowald, D.M. Glover, and T.&nbsp;Takahashi. Skill metrics for confronting global upper ocean ecosystem-biogeochemistry models against field and remote sensing data. <em>J. Mar. Systems</em>, 76:95–112, 2009.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="geider-1998" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[GMK98]</a></td><td>R.&nbsp;Geider, H.&nbsp;MacIntyre, and T.&nbsp;Kana. A dynamic regulatory model of phytoplankton acclimation to light, nutrients, and temperature. <em>Limnology and Oceanography</em>, 43:679–694, 1998.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="krishnamurthy-2007" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[KMZL07]</a></td><td>A.&nbsp;Krishnamurthy, J.&nbsp;K. Moore, C.&nbsp;S. Zender, and C.&nbsp;Luo. The effects of atmospheric inorganic nitrogen deposition on ocean biogeochemistry. <em>J. Geophys. Res.</em>, 2007.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="moore-2008" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[MB08]</a></td><td>J.&nbsp;K. Moore and O.&nbsp;Braucher. Sedimentary and mineral dust sources of dissolved iron to the world ocean. <em>Biogeosciences</em>, 5:631–656, 2008.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="moore-2002" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[MDK+02]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id8">2</a>, <a class="fn-backref" href="#id10">3</a>)</em> J.&nbsp;K. Moore, S.&nbsp;Doney, J.&nbsp;Kleypas, D.&nbsp;Glover, and I.&nbsp;Fung. An intermediate complexity marine ecosystem model for the global domain. <em>Deep-Sea Res. II</em>, 49:403–462, 2002.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="moore-2007" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[MD07]</a></td><td>J.&nbsp;K. Moore and S.&nbsp;C. Doney. Iron availability limits the ocean nitrogen inventory stabilizing feedbacks between marine denitrification and nitrogen fixation. <em>Global Biogeochem. Cycles</em>, 2007.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="moore-2004" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[MDL04]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>, <a class="fn-backref" href="#id9">4</a>, <a class="fn-backref" href="#id11">5</a>)</em> J.&nbsp;K. Moore, S.&nbsp;C. Doney, and K.&nbsp;Lindsay. Upper ocean ecosystem dynamics and iron cycling in a global three-dimensional model. <em>Global Biogeochem. Cycles</em>, 2004.</td></tr>
+</tbody>
+</table>
+</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="phytoplankton-growth.html" class="btn btn-neutral float-right" title="Phytoplankton growth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../dev-guide/add-tracer.html" class="btn btn-neutral" title="Adding a Tracer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

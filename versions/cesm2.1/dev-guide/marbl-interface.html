@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MARBL interface &mdash; MARBL cesm2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.0 documentation" href="../index.html"/>
+        <link rel="up" title="MARBL developer’s guide" href="index.html"/>
+        <link rel="next" title="Development Examples" href="development-examples.html"/>
+        <link rel="prev" title="Coding conventions in MARBL" href="coding-conventions.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.0</option>
+                      
+                        
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MARBL interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development-examples.html">Development Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+      <li>MARBL interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/marbl-interface.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marbl-interface">
+<span id="id1"></span><h1>MARBL interface<a class="headerlink" href="#marbl-interface" title="Permalink to this headline">¶</a></h1>
+<p>GCMs should use the MARBL interface class to call MARBL routines.
+The class definition is shown below:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_interface_class</span>
+
+   <span class="c">! public data - general</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_domain_type</span><span class="p">)</span>                        <span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">domain</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_tracer_metadata_type</span><span class="p">)</span>  <span class="p">,</span> <span class="k">allocatable</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">tracer_metadata</span><span class="p">(:)</span>
+   <span class="c">! Pointer so that destructor doesn&#39;t need to reset all inds to 0</span>
+   <span class="c">! (that happens automatically when new tracer indexing type is allocated)</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_tracer_index_type</span><span class="p">)</span>     <span class="p">,</span> <span class="k">pointer</span>    <span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">tracer_indices</span> <span class="o">=&gt;</span> <span class="nb">NULL</span><span class="p">()</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_log_type</span><span class="p">)</span>                           <span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">StatusLog</span>
+
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_saved_state_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">surface_saved_state</span>             <span class="c">! input/output</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_saved_state_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">interior_saved_state</span>             <span class="c">! input/output</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_saved_state_indexing_type</span><span class="p">),</span> <span class="k">public</span>            <span class="kd">::</span> <span class="n">surf_state_ind</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_interior_saved_state_indexing_type</span><span class="p">),</span> <span class="k">public</span>           <span class="kd">::</span> <span class="n">interior_state_ind</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_timers_type</span><span class="p">)</span>                   <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">timer_summary</span>
+
+   <span class="c">! public data - interior forcing</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">column_tracers</span><span class="p">(:,:)</span>     <span class="c">! input  *</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">column_dtracers</span><span class="p">(:,:)</span>    <span class="c">! output *</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_interior_forcing_indexing_type</span><span class="p">),</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">interior_forcing_ind</span>         <span class="c">!</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_forcing_fields_type</span><span class="p">)</span>           <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">interior_input_forcings</span><span class="p">(:)</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_diagnostics_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">interior_forcing_diags</span>  <span class="c">! output</span>
+
+   <span class="c">! public data surface forcing</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">surface_vals</span><span class="p">(:,:)</span>           <span class="c">! input  *</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_forcing_indexing_type</span><span class="p">)</span> <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">surface_forcing_ind</span>         <span class="c">!</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_forcing_fields_type</span><span class="p">)</span>           <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">surface_input_forcings</span><span class="p">(:)</span> <span class="c">! input  *</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">surface_tracer_fluxes</span><span class="p">(:,:)</span>  <span class="c">! output *</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_forcing_output_type</span><span class="p">)</span>   <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">surface_forcing_output</span>      <span class="c">! output</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_diagnostics_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">surface_forcing_diags</span>       <span class="c">! output</span>
+
+   <span class="c">! public data - global averages</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_fields_interior</span><span class="p">(:)</span>   <span class="c">! output (nfields)</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_averages_interior</span><span class="p">(:)</span> <span class="c">! input (nfields)</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_fields_surface</span><span class="p">(:,:)</span>  <span class="c">! output (num_elements,nfields)</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_averages_surface</span><span class="p">(:)</span>  <span class="c">! input (nfields)</span>
+
+   <span class="c">! FIXME #77: for now, running means are being computed in the driver</span>
+   <span class="c">!            they will eventually be moved from the interface to inside MARBL</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_scalar_interior</span><span class="p">(:)</span>
+   <span class="kt">real</span> <span class="p">(</span><span class="n">r8</span><span class="p">)</span>                                 <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_scalar_surface</span><span class="p">(:)</span>
+
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_running_mean_0d_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_rmean_interior</span><span class="p">(:)</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_running_mean_0d_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_avg_rmean_surface</span><span class="p">(:)</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_running_mean_0d_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_scalar_rmean_interior</span><span class="p">(:)</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_running_mean_0d_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_scalar_rmean_surface</span><span class="p">(:)</span>
+
+   <span class="c">! private data</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_PAR_type</span><span class="p">)</span>                      <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">PAR</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_particulate_share_type</span><span class="p">)</span>        <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">particulate_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_forcing_share_type</span><span class="p">)</span>    <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">surface_forcing_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_forcing_internal_type</span><span class="p">)</span> <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">surface_forcing_internal</span>
+   <span class="kt">logical</span>                                   <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">lallow_glo_ops</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">timers</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_timer_indexing_type</span><span class="p">)</span>           <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">timer_ids</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_settings_type</span><span class="p">)</span>                 <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">settings</span>
+
+ <span class="k">contains</span>
+
+<span class="k">   procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">init</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">reset_timers</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">extract_timing</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">glo_vars_init</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">get_tracer_index</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">set_interior_forcing</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">set_surface_forcing</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">set_global_scalars</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">shutdown</span>
+   <span class="k">generic</span>            <span class="kd">::</span> <span class="n">inquire_settings_metadata</span> <span class="o">=&gt;</span> <span class="n">inquire_settings_metadata_by_name</span><span class="p">,</span> <span class="p">&amp;</span>
+                                                      <span class="n">inquire_settings_metadata_by_id</span>
+   <span class="k">generic</span>            <span class="kd">::</span> <span class="n">put_setting</span> <span class="o">=&gt;</span> <span class="n">put_real</span><span class="p">,</span>            <span class="p">&amp;</span>
+                                        <span class="n">put_integer</span><span class="p">,</span>         <span class="p">&amp;</span>
+                                        <span class="n">put_logical</span><span class="p">,</span>         <span class="p">&amp;</span>
+                                        <span class="n">put_string</span><span class="p">,</span>          <span class="p">&amp;</span> <span class="c">! This routine checks to see if string is actually an array</span>
+                                        <span class="n">put_input_file_line</span><span class="p">,</span> <span class="p">&amp;</span> <span class="c">! This line converts string &quot;var = val&quot; to proper put()</span>
+                                        <span class="n">put_all_string</span>
+   <span class="k">generic</span>            <span class="kd">::</span> <span class="n">get_setting</span> <span class="o">=&gt;</span> <span class="n">get_real</span><span class="p">,</span>    <span class="p">&amp;</span>
+                                        <span class="n">get_integer</span><span class="p">,</span> <span class="p">&amp;</span>
+                                        <span class="n">get_logical</span><span class="p">,</span> <span class="p">&amp;</span>
+                                        <span class="n">get_string</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span>  <span class="kd">::</span> <span class="n">get_settings_var_cnt</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">inquire_settings_metadata_by_name</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">inquire_settings_metadata_by_id</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_real</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_integer</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_logical</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_string</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_input_file_line</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">put_all_string</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">get_real</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">get_integer</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">get_logical</span>
+   <span class="k">procedure</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">get_string</span>
+
+<span class="k">end type </span><span class="n">marbl_interface_class</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="development-examples.html" class="btn btn-neutral float-right" title="Development Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="coding-conventions.html" class="btn btn-neutral" title="Coding conventions in MARBL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
