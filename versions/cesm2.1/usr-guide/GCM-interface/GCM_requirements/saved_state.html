@@ -260,8 +260,8 @@ The two surface fields are <code class="docutils literal notranslate"><span clas
 <div class="section" id="saved-state-in-the-interface">
 <h2>Saved State in the Interface<a class="headerlink" href="#saved-state-in-the-interface" title="Permalink to this headline">¶</a></h2>
 <p>MARBL splits the saved state fields between those needed for computing surface fluxes and those needed for computing interior tendencies, so on the interface we have</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">surface_saved_state</span>
-<span class="n">marbl_instance</span><span class="p">%</span><span class="n">interior_saved_state</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">surface_flux_saved_state</span>
+<span class="n">marbl_instance</span><span class="p">%</span><span class="n">interior_tendency_saved_state</span>
 </pre></div>
 </div>
 <p>Both of these are of type <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_type</span></code>:</p>
@@ -293,10 +293,11 @@ The two surface fields are <code class="docutils literal notranslate"><span clas
 </div>
 <div class="section" id="what-should-the-gcm-do">
 <h2>What Should the GCM Do?<a class="headerlink" href="#what-should-the-gcm-do" title="Permalink to this headline">¶</a></h2>
-<p>After <code class="docutils literal notranslate"><span class="pre">marbl_instance%set_surface_forcing()</span></code> returns, the GCM needs to process <code class="docutils literal notranslate"><span class="pre">marbl_intance%surface_saved_state</span></code>.
-That means looping through each element in the <code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_saved_state%state(:)</span></code> array, checking <code class="docutils literal notranslate"><span class="pre">state(n)%rank</span></code>, and then storing either <code class="docutils literal notranslate"><span class="pre">state(n)%field_2d</span></code> or <code class="docutils literal notranslate"><span class="pre">state(n)%field_3d</span></code> in a global array.
-Before calling <code class="docutils literal notranslate"><span class="pre">set_surface_forcing()</span></code> in the next time step, these saved values should be copied back into <code class="docutils literal notranslate"><span class="pre">marbl_intance%surface_saved_state</span></code>.</p>
-<p>Similar actions must be taken with <code class="docutils literal notranslate"><span class="pre">marbl_instance%interior_saved_state</span></code> before / after calls to <code class="docutils literal notranslate"><span class="pre">marbl_instance%set_interior_forcing()</span></code>.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_compute()</span></code> returns, the GCM needs to process <code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_saved_state</span></code>.
+That means looping through each element in the <code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_saved_state%state(:)</span></code> array, checking <code class="docutils literal notranslate"><span class="pre">state(n)%rank</span></code>,
+and then storing either <code class="docutils literal notranslate"><span class="pre">state(n)%field_2d</span></code> or <code class="docutils literal notranslate"><span class="pre">state(n)%field_3d</span></code> in a global array.
+Before calling <code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code> in the next time step, these saved values should be copied back into <code class="docutils literal notranslate"><span class="pre">marbl_intance%surface_flux_saved_state</span></code>.</p>
+<p>Similar actions must be taken with <code class="docutils literal notranslate"><span class="pre">marbl_instance%interior_tendency_saved_state</span></code> before / after calls to <code class="docutils literal notranslate"><span class="pre">marbl_instance%interior_tendency_compute()</span></code>.</p>
 </div>
 </div>
 

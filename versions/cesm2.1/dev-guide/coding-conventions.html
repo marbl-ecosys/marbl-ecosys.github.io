@@ -236,9 +236,10 @@ A few constructs commonly used in MARBL may be unfamiliar to scientific programm
 <div class="section" id="how-to-call-an-object-oriented-subroutine">
 <h3>How to Call an Object-oriented Subroutine<a class="headerlink" href="#how-to-call-an-object-oriented-subroutine" title="Permalink to this headline">¶</a></h3>
 <p>A subroutine inside a class is referenced just like any other member, via the <code class="docutils literal notranslate"><span class="pre">%</span></code> character.
-For example, MARBL times the call to the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_compute_carbonate_chemistry()</span></code> from the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_set_interior_forcing()</span></code> (part of <code class="docutils literal notranslate"><span class="pre">marbl_mod.F90</span></code>).
+For example, MARBL times the call to the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_compute_carbonate_chemistry()</span></code> from
+the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_compute()</span></code> (part of <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod.F90</span></code>).
 The timer calls look like this:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_set_interior_forcing</span><span class="p">(</span> <span class="p">&amp;</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>

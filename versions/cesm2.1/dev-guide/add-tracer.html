@@ -312,8 +312,8 @@ For example, here is where the dissolved inorganic phosphate index is set:</p>
 <h3>Step 4. Compute surface flux for new tracer (if necessary)<a class="headerlink" href="#step-4-compute-surface-flux-for-new-tracer-if-necessary" title="Permalink to this headline">¶</a></h3>
 <p>Not all tracers return a surface flux, so this may not be necessary for your tracer.
 For this example, we will follow the oxygen tracer.
-Surface fluxes are computed in <code class="docutils literal notranslate"><span class="pre">marbl_mod::marbl_set_surface_forcing</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_set_surface_forcing</span><span class="p">(</span> <span class="p">&amp;</span>
+Surface fluxes are computed in <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_mod::marbl_surface_flux_compute</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_surface_flux_compute</span><span class="p">(</span> <span class="p">&amp;</span>
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>
@@ -321,10 +321,6 @@ Surface fluxes are computed in <code class="docutils literal notranslate"><span 
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="p">.</span>
-       <span class="n">stf</span>                  <span class="o">=&gt;</span> <span class="n">surface_tracer_fluxes</span><span class="p">(:,:),</span>                                        <span class="p">&amp;</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
        <span class="n">o2_ind</span>            <span class="o">=&gt;</span> <span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">o2_ind</span><span class="p">,</span>                                      <span class="p">&amp;</span>
        <span class="p">.</span>
        <span class="p">.</span>
@@ -335,7 +331,7 @@ Surface fluxes are computed in <code class="docutils literal notranslate"><span 
   <span class="c">!  fluxes initially set to 0</span>
   <span class="c">!-----------------------------------------------------------------------</span>
 
-  <span class="n">stf</span><span class="p">(:,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">c0</span>
+  <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">c0</span>
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="p">.</span>
@@ -354,20 +350,16 @@ Surface fluxes are computed in <code class="docutils literal notranslate"><span 
      <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">xkw_ice</span><span class="p">(:)</span> <span class="o">*</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">66</span><span class="mf">0.0_r8</span> <span class="o">/</span> <span class="n">schmidt_o2</span><span class="p">(:))</span>
      <span class="n">o2sat</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">ap_used</span><span class="p">(:)</span> <span class="o">*</span> <span class="n">o2sat_1atm</span><span class="p">(:)</span>
      <span class="n">flux_o2_loc</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">*</span> <span class="p">(</span><span class="n">o2sat</span><span class="p">(:)</span> <span class="o">-</span> <span class="n">surface_vals</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">))</span>
-     <span class="n">stf</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">stf</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">+</span> <span class="n">flux_o2_loc</span><span class="p">(:)</span>
+     <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">+</span> <span class="n">flux_o2_loc</span><span class="p">(:)</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This subroutine will be renamed <code class="docutils literal notranslate"><span class="pre">marbl_compute_surface_fluxes</span></code> to better reflect what the code is doing.</p>
 </div>
 </div>
 <div class="section" id="step-5-compute-tracer-tendency">
 <h3>Step 5. Compute tracer tendency<a class="headerlink" href="#step-5-compute-tracer-tendency" title="Permalink to this headline">¶</a></h3>
 <p>The tracer tendencies are computed in a two step process - MARBL computes the tracer tendency terms from a variety of processes and then combines the terms in the end.
 Given the modular nature of MARBL, the tendencies from each process are computed in their own routine.
-This is done in <code class="docutils literal notranslate"><span class="pre">marbl_mod::set_interior_forcing</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_set_interior_forcing</span><span class="p">(</span> <span class="p">&amp;</span>
+This is done in <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod::interior_tendency_compute</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>
@@ -445,10 +437,7 @@ So you will need to update <code class="docutils literal notranslate"><span clas
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<ol class="last arabic simple">
-<li>This subroutine will be renamed <code class="docutils literal notranslate"><span class="pre">marbl_compute_interior_tendencies</span></code> to better reflect what the code is doing.</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">k</span></code> loop in the example may be removed in favor of doing per-process computations on an entire column at once.</li>
-</ol>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">k</span></code> loop in the example may be removed in favor of doing per-process computations on an entire column at once.</p>
 </div>
 </div>
 <div class="section" id="step-6-add-any-necessary-diagnostics">

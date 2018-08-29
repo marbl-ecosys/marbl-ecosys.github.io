@@ -226,7 +226,7 @@ For example, <code class="docutils literal notranslate"><span class="pre">autotr
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">init</span><span class="p">(</span><span class="n">this</span><span class="p">,</span>                   <span class="p">&amp;</span>
      <span class="n">gcm_num_levels</span><span class="p">,</span>                    <span class="p">&amp;</span>
      <span class="n">gcm_num_PAR_subcols</span><span class="p">,</span>               <span class="p">&amp;</span>
-     <span class="n">gcm_num_elements_surface_forcing</span><span class="p">,</span>  <span class="p">&amp;</span>
+     <span class="n">gcm_num_elements_surface_flux</span><span class="p">,</span>     <span class="p">&amp;</span>
      <span class="n">gcm_delta_z</span><span class="p">,</span>                       <span class="p">&amp;</span>
      <span class="n">gcm_zw</span><span class="p">,</span>                            <span class="p">&amp;</span>
      <span class="n">gcm_zt</span><span class="p">,</span>                            <span class="p">&amp;</span>
@@ -235,7 +235,7 @@ For example, <code class="docutils literal notranslate"><span class="pre">autotr
   <span class="k">class</span><span class="p">(</span><span class="n">marbl_interface_class</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">this</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_levels</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_PAR_subcols</span>
-  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_elements_surface_forcing</span>
+  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_elements_surface_flux</span>
   <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_delta_z</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
   <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_zw</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
   <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_zt</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
@@ -247,8 +247,8 @@ For example, <code class="docutils literal notranslate"><span class="pre">autotr
 There are some MARBL configurations that require this, and MARBL will abort unless the GCM verifies it can provide these values.</p>
 <p>MARBL does not have an explicit interface to tell a GCM how many tracers are being computed.
 Instead, use <code class="docutils literal notranslate"><span class="pre">size(marbl_instance%tracer_metadata)</span></code> (called after <code class="docutils literal notranslate"><span class="pre">marbl_instance%init()</span></code>).</p>
-<p>MARBL can compute surface fluxes across multiple columns simultaneously, with the number of columns supported set by <code class="docutils literal notranslate"><span class="pre">gcm_num_elements_surface_forcing</span></code>.
-There is not a corresponding <code class="docutils literal notranslate"><span class="pre">gcm_num_elements_interior_forcing</span></code> yet, because currently MARBL computes tracer tendencies one column at a time.</p>
+<p>MARBL can compute surface fluxes across multiple columns simultaneously, with the number of columns supported set by <code class="docutils literal notranslate"><span class="pre">gcm_num_elements_surface_flux</span></code>.
+There is not a corresponding <code class="docutils literal notranslate"><span class="pre">gcm_num_elements_interior_tendency</span></code> yet, because currently MARBL computes tracer tendencies one column at a time.</p>
 </div>
 <div class="section" id="example-from-stand-alone-marbl">
 <h2>Example from Stand-Alone MARBL<a class="headerlink" href="#example-from-stand-alone-marbl" title="Permalink to this headline">¶</a></h2>
@@ -278,13 +278,12 @@ There is not a corresponding <code class="docutils literal notranslate"><span cl
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">init()</span></code> is then called from the individual test, storing the tracer count in the local variable <code class="docutils literal notranslate"><span class="pre">nt</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Call marbl%init</span>
-<span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">init</span><span class="p">(</span><span class="n">gcm_num_levels</span> <span class="o">=</span> <span class="n">km</span><span class="p">,</span>                  <span class="p">&amp;</span>
-                         <span class="n">gcm_num_PAR_subcols</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>              <span class="p">&amp;</span>
-                         <span class="n">gcm_num_elements_surface_forcing</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="p">&amp;</span>
-                         <span class="n">gcm_delta_z</span> <span class="o">=</span> <span class="n">delta_z</span><span class="p">,</span>                <span class="p">&amp;</span>
-                         <span class="n">gcm_zw</span> <span class="o">=</span> <span class="n">zw</span><span class="p">,</span>                          <span class="p">&amp;</span>
-                         <span class="n">gcm_zt</span> <span class="o">=</span> <span class="n">zt</span><span class="p">,</span>                          <span class="p">&amp;</span>
-                         <span class="n">marbl_tracer_cnt</span> <span class="o">=</span> <span class="n">nt</span><span class="p">)</span>
+<span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">init</span><span class="p">(</span><span class="n">gcm_num_levels</span> <span class="o">=</span> <span class="n">km</span><span class="p">,</span>               <span class="p">&amp;</span>
+                         <span class="n">gcm_num_PAR_subcols</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>           <span class="p">&amp;</span>
+                         <span class="n">gcm_num_elements_surface_flux</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="p">&amp;</span>
+                         <span class="n">gcm_delta_z</span> <span class="o">=</span> <span class="n">delta_z</span><span class="p">,</span>             <span class="p">&amp;</span>
+                         <span class="n">gcm_zw</span> <span class="o">=</span> <span class="n">zw</span><span class="p">,</span>                       <span class="p">&amp;</span>
+                         <span class="n">gcm_zt</span> <span class="o">=</span> <span class="n">zt</span><span class="p">)</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
 <span class="k">  call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;marbl%init&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
   <span class="k">return</span>
@@ -309,27 +308,42 @@ lflux_gas_co2 = T
 lcompute_nhx_surface_emis = T
 lvariable_PtoC = T
 ladjust_bury_coeff = F
+lo2_consumption_scalef = F
+lp_remin_scalef = F
 init_bury_coeff_opt = &#39;settings_file&#39;
 particulate_flux_ref_depth = 100
 Jint_Ctot_thres_molpm2pyr =   0.10000000000000001E-08
+gQsi_0 =   0.13700000000000001E+00
+gQsi_max =   0.82199999999999995E+00
+gQsi_min =   0.45699999999999998E-01
+gQ_Fe_kFe_thres =   0.10000000000000000E+02
+gQ_Si_kSi_thres =   0.60000000000000000E+01
 parm_Fe_bioavail =   0.10000000000000000E+01
 parm_o2_min =   0.50000000000000000E+01
 parm_o2_min_delta =   0.50000000000000000E+01
 parm_kappa_nitrif_per_day =   0.59999999999999998E-01
 parm_nitrif_par_lim =   0.10000000000000000E+01
 parm_labile_ratio =   0.93999999999999995E+00
-parm_init_POC_bury_coeff =   0.11000000000000001E+01
-parm_init_POP_bury_coeff =   0.11000000000000001E+01
-parm_init_bSi_bury_coeff =   0.10000000000000000E+01
-parm_Fe_scavenge_rate0 =   0.18000000000000000E+02
+parm_init_POC_bury_coeff =   0.25400000000000000E+01
+parm_init_POP_bury_coeff =   0.35999999999999999E+00
+parm_init_bSi_bury_coeff =   0.15300000000000000E+01
+parm_Fe_scavenge_rate0 =   0.22000000000000000E+02
 parm_Lig_scavenge_rate0 =   0.14999999999999999E-01
-parm_FeLig_scavenge_rate0 =   0.13999999999999999E+01
+parm_FeLig_scavenge_rate0 =   0.12000000000000000E+01
 parm_Lig_degrade_rate0 =   0.93999999999999994E-04
 parm_Fe_desorption_rate0 =   0.99999999999999995E-06
 parm_f_prod_sp_CaCO3 =   0.70000000000000007E-01
 parm_POC_diss =   0.10000000000000000E+05
-parm_SiO2_diss =   0.77000000000000000E+05
+parm_SiO2_diss =   0.65000000000000000E+05
+parm_SiO2_gamma =   0.00000000000000000E+00
+parm_hPOC_SiO2_ratio =   0.10000000000000000E-01
 parm_CaCO3_diss =   0.50000000000000000E+05
+parm_CaCO3_gamma =   0.20000000000000000E-01
+parm_hPOC_CaCO3_ratio =   0.10000000000000000E-01
+parm_hPOC_dust_ratio =   0.10000000000000000E-01
+o2_sf_o2_range_hi =   0.45000000000000000E+02
+o2_sf_o2_range_lo =   0.50000000000000000E+01
+o2_sf_val_lo_o2 =   0.26000000000000001E+01
 parm_sed_denitrif_coeff =   0.10000000000000000E+01
 bury_coeff_rmean_timescale_years =   0.10000000000000000E+02
 parm_scalelen_z(1) =   0.10000000000000000E+05
@@ -337,13 +351,15 @@ parm_scalelen_z(2) =   0.25000000000000000E+05
 parm_scalelen_z(3) =   0.50000000000000000E+05
 parm_scalelen_z(4) =   0.10000000000000000E+06
 parm_scalelen_vals(1) =   0.10000000000000000E+01
-parm_scalelen_vals(2) =   0.30000000000000000E+01
-parm_scalelen_vals(3) =   0.45000000000000000E+01
-parm_scalelen_vals(4) =   0.55000000000000000E+01
+parm_scalelen_vals(2) =   0.36000000000000001E+01
+parm_scalelen_vals(3) =   0.47000000000000002E+01
+parm_scalelen_vals(4) =   0.47999999999999998E+01
 caco3_bury_thres_opt = &#39;omega_calc&#39;
 caco3_bury_thres_depth =   0.30000000000000000E+06
-caco3_bury_thres_omega_calc =   0.10000000000000000E+01
+caco3_bury_thres_omega_calc =   0.89000000000000001E+00
 PON_bury_coeff =   0.50000000000000000E+00
+POM_bury_frac_max =   0.80000000000000004E+00
+bSi_bury_frac_max =   0.10000000000000000E+01
 ciso_fract_factors = &#39;Laws&#39;
 autotroph_cnt = 3
 zooplankton_cnt = 1
@@ -361,8 +377,8 @@ autotrophs(1)%kNO3 =   0.25000000000000000E+00
 autotrophs(1)%kNH4 =   0.10000000000000000E-01
 autotrophs(1)%kSiO3 =   0.00000000000000000E+00
 autotrophs(1)%Qp_fixed =   0.85470085470085479E-02
-autotrophs(1)%gQfe_0 =   0.34999999999999997E-04
-autotrophs(1)%gQfe_min =   0.27000000000000000E-05
+autotrophs(1)%gQfe_0 =   0.30000000000000001E-04
+autotrophs(1)%gQfe_min =   0.25000000000000002E-05
 autotrophs(1)%alphaPi_per_day =   0.39000000000000001E+00
 autotrophs(1)%PCref_per_day =   0.50000000000000000E+01
 autotrophs(1)%thetaN_max =   0.25000000000000000E+01
@@ -380,16 +396,16 @@ autotrophs(2)%Nfixer = F
 autotrophs(2)%imp_calcifier = F
 autotrophs(2)%exp_calcifier = F
 autotrophs(2)%silicifier = T
-autotrophs(2)%kFe =   0.60000000000000002E-04
+autotrophs(2)%kFe =   0.69999999999999994E-04
 autotrophs(2)%kPO4 =   0.50000000000000003E-01
 autotrophs(2)%kDOP =   0.50000000000000000E+00
 autotrophs(2)%kNO3 =   0.50000000000000000E+00
 autotrophs(2)%kNH4 =   0.50000000000000003E-01
 autotrophs(2)%kSiO3 =   0.69999999999999996E+00
 autotrophs(2)%Qp_fixed =   0.85470085470085479E-02
-autotrophs(2)%gQfe_0 =   0.34999999999999997E-04
-autotrophs(2)%gQfe_min =   0.27000000000000000E-05
-autotrophs(2)%alphaPi_per_day =   0.28999999999999998E+00
+autotrophs(2)%gQfe_0 =   0.30000000000000001E-04
+autotrophs(2)%gQfe_min =   0.25000000000000002E-05
+autotrophs(2)%alphaPi_per_day =   0.28000000000000003E+00
 autotrophs(2)%PCref_per_day =   0.50000000000000000E+01
 autotrophs(2)%thetaN_max =   0.40000000000000000E+01
 autotrophs(2)%loss_thres =   0.20000000000000000E-01
@@ -413,8 +429,8 @@ autotrophs(3)%kNO3 =   0.20000000000000000E+01
 autotrophs(3)%kNH4 =   0.20000000000000001E+00
 autotrophs(3)%kSiO3 =   0.00000000000000000E+00
 autotrophs(3)%Qp_fixed =   0.27350427350427355E-02
-autotrophs(3)%gQfe_0 =   0.69999999999999994E-04
-autotrophs(3)%gQfe_min =   0.54000000000000000E-05
+autotrophs(3)%gQfe_0 =   0.60000000000000002E-04
+autotrophs(3)%gQfe_min =   0.25000000000000002E-05
 autotrophs(3)%alphaPi_per_day =   0.39000000000000001E+00
 autotrophs(3)%PCref_per_day =   0.25000000000000000E+01
 autotrophs(3)%thetaN_max =   0.25000000000000000E+01
@@ -448,10 +464,10 @@ grazing(2,1)%lname = &#39;Grazing of diat by zoo&#39;
 grazing(2,1)%auto_ind_cnt = 1
 grazing(2,1)%zoo_ind_cnt = 0
 grazing(2,1)%grazing_function = 1
-grazing(2,1)%z_umax_0_per_day =   0.31000000000000001E+01
+grazing(2,1)%z_umax_0_per_day =   0.31499999999999999E+01
 grazing(2,1)%z_grz =   0.12000000000000000E+01
 grazing(2,1)%graze_zoo =   0.25000000000000000E+00
-grazing(2,1)%graze_poc =   0.38000000000000000E+00
+grazing(2,1)%graze_poc =   0.39000000000000001E+00
 grazing(2,1)%graze_doc =   0.59999999999999998E-01
 grazing(2,1)%f_zoo_detr =   0.23999999999999999E+00
 grazing(2,1)%auto_ind(1) = 2
@@ -460,7 +476,7 @@ grazing(3,1)%lname = &#39;Grazing of diaz by zoo&#39;
 grazing(3,1)%auto_ind_cnt = 1
 grazing(3,1)%zoo_ind_cnt = 0
 grazing(3,1)%grazing_function = 1
-grazing(3,1)%z_umax_0_per_day =   0.32500000000000000E+01
+grazing(3,1)%z_umax_0_per_day =   0.32999999999999998E+01
 grazing(3,1)%z_grz =   0.12000000000000000E+01
 grazing(3,1)%graze_zoo =   0.29999999999999999E+00
 grazing(3,1)%graze_poc =   0.10000000000000001E+00
@@ -518,6 +534,8 @@ lcompute_nhx_surface_emis = .true.
 lecovars_full_depth_tavg = .false.
 lflux_gas_co2 = .true.
 lflux_gas_o2 = .true.
+lo2_consumption_scalef = .false.
+lp_remin_scalef = .false.
 lsource_sink = .true.
 lvariable_PtoC = .true.
 
@@ -528,13 +546,26 @@ init_bury_coeff_opt = &quot;settings_file&quot;
 Jint_Ctot_thres_molpm2pyr = 1e-09
 bury_coeff_rmean_timescale_years = 10
 caco3_bury_thres_depth =   3.0000000000000000e+05
-caco3_bury_thres_omega_calc = 1.0
+caco3_bury_thres_omega_calc = 0.89
 caco3_bury_thres_opt = &quot;omega_calc&quot;
 ciso_fract_factors = &quot;Laws&quot;
+gQ_Fe_kFe_thres = 10.0
+gQ_Si_kSi_thres = 6.0
+gQsi_0 = 0.137
+gQsi_max = 0.822
+gQsi_min = 0.0457
+o2_sf_o2_range_hi = 45.0
+o2_sf_o2_range_lo = 5.0
+o2_sf_val_lo_o2 = 2.6
+parm_CaCO3_gamma = 0.02
 parm_Fe_bioavail = 1.0
 parm_Fe_desorption_rate0 =   9.9999999999999995e-07
 parm_Lig_degrade_rate0 = 9.4e-05
+parm_SiO2_gamma = 0.0
 parm_f_prod_sp_CaCO3 = 0.07
+parm_hPOC_CaCO3_ratio = 0.01
+parm_hPOC_SiO2_ratio = 0.01
+parm_hPOC_dust_ratio = 0.01
 parm_labile_ratio = 0.94
 parm_o2_min = 5.0
 parm_o2_min_delta = 5.0
@@ -542,30 +573,32 @@ parm_sed_denitrif_coeff = 1
 particulate_flux_ref_depth = 100
 
 ! general parameters (bury coeffs)
+POM_bury_frac_max = 0.8
 PON_bury_coeff = 0.5
-parm_init_POC_bury_coeff = 1.1
-parm_init_POP_bury_coeff = 1.1
-parm_init_bSi_bury_coeff = 1.0
+bSi_bury_frac_max = 1.0
+parm_init_POC_bury_coeff = 2.54
+parm_init_POP_bury_coeff = 0.36
+parm_init_bSi_bury_coeff = 1.53
 
-! general parameters (dissipation)
+! general parameters (dissolution)
 parm_CaCO3_diss =   5.0000000000000000e+04
 parm_POC_diss =   1.0000000000000000e+04
-parm_SiO2_diss =   7.7000000000000000e+04
+parm_SiO2_diss =   6.5000000000000000e+04
 
 ! general parameters (nitrification)
 parm_kappa_nitrif_per_day = 0.06
 parm_nitrif_par_lim = 1.0
 
 ! general parameters (scavenging)
-parm_FeLig_scavenge_rate0 = 1.4
-parm_Fe_scavenge_rate0 = 18.0
+parm_FeLig_scavenge_rate0 = 1.2
+parm_Fe_scavenge_rate0 = 22.0
 parm_Lig_scavenge_rate0 = 0.015
 
 ! Scale lengths
 parm_scalelen_vals(1) = 1
-parm_scalelen_vals(2) = 3.0
-parm_scalelen_vals(3) = 4.5
-parm_scalelen_vals(4) = 5.5
+parm_scalelen_vals(2) = 3.6
+parm_scalelen_vals(3) = 4.7
+parm_scalelen_vals(4) = 4.8
 parm_scalelen_z(1) =   1.0000000000000000e+04
 parm_scalelen_z(2) =   2.5000000000000000e+04
 parm_scalelen_z(3) =   5.0000000000000000e+04
@@ -579,8 +612,8 @@ autotrophs(1)%agg_rate_max = 0.5
 autotrophs(1)%agg_rate_min = 0.01
 autotrophs(1)%alphaPI_per_day = 0.39
 autotrophs(1)%exp_calcifier = .false.
-autotrophs(1)%gQfe_0 =   3.4999999999999997e-05
-autotrophs(1)%gQfe_min = 2.7e-06
+autotrophs(1)%gQfe_0 =   3.0000000000000001e-05
+autotrophs(1)%gQfe_min = 2.5e-06
 autotrophs(1)%imp_calcifier = .true.
 autotrophs(1)%kDOP = 0.3
 autotrophs(1)%kFe = 3e-05
@@ -603,13 +636,13 @@ autotrophs(2)%PCref_per_day = 5
 autotrophs(2)%Qp_fixed =   8.5470085470085479e-03
 autotrophs(2)%agg_rate_max = 0.5
 autotrophs(2)%agg_rate_min = 0.02
-autotrophs(2)%alphaPI_per_day = 0.29
+autotrophs(2)%alphaPI_per_day = 0.28
 autotrophs(2)%exp_calcifier = .false.
-autotrophs(2)%gQfe_0 =   3.4999999999999997e-05
-autotrophs(2)%gQfe_min = 2.7e-06
+autotrophs(2)%gQfe_0 =   3.0000000000000001e-05
+autotrophs(2)%gQfe_min = 2.5e-06
 autotrophs(2)%imp_calcifier = .false.
 autotrophs(2)%kDOP = 0.5
-autotrophs(2)%kFe = 6e-05
+autotrophs(2)%kFe = 7e-05
 autotrophs(2)%kNH4 = 0.05
 autotrophs(2)%kNO3 = 0.5
 autotrophs(2)%kPO4 = 0.05
@@ -631,8 +664,8 @@ autotrophs(3)%agg_rate_max = 0.5
 autotrophs(3)%agg_rate_min = 0.01
 autotrophs(3)%alphaPI_per_day = 0.39
 autotrophs(3)%exp_calcifier = .false.
-autotrophs(3)%gQfe_0 =   6.9999999999999994e-05
-autotrophs(3)%gQfe_min = 5.4e-06
+autotrophs(3)%gQfe_0 =   6.0000000000000002e-05
+autotrophs(3)%gQfe_min = 2.5e-06
 autotrophs(3)%imp_calcifier = .false.
 autotrophs(3)%kDOP = 0.075
 autotrophs(3)%kFe = 4.5e-05
@@ -675,13 +708,13 @@ grazing(2,1)%auto_ind(1) = 2
 grazing(2,1)%auto_ind_cnt = 1
 grazing(2,1)%f_zoo_detr = 0.24
 grazing(2,1)%graze_doc = 0.06
-grazing(2,1)%graze_poc = 0.38
+grazing(2,1)%graze_poc = 0.39
 grazing(2,1)%graze_zoo = 0.25
 grazing(2,1)%grazing_function = 1
 grazing(2,1)%lname = &quot;Grazing of diat by zoo&quot;
 grazing(2,1)%sname = &quot;grz_diat_zoo&quot;
 grazing(2,1)%z_grz = 1.2
-grazing(2,1)%z_umax_0_per_day = 3.1
+grazing(2,1)%z_umax_0_per_day = 3.15
 grazing(2,1)%zoo_ind_cnt = 0
 grazing(3,1)%auto_ind(1) = 3
 grazing(3,1)%auto_ind_cnt = 1
@@ -693,7 +726,7 @@ grazing(3,1)%grazing_function = 1
 grazing(3,1)%lname = &quot;Grazing of diaz by zoo&quot;
 grazing(3,1)%sname = &quot;grz_diaz_zoo&quot;
 grazing(3,1)%z_grz = 1.2
-grazing(3,1)%z_umax_0_per_day = 3.25
+grazing(3,1)%z_umax_0_per_day = 3.3
 grazing(3,1)%zoo_ind_cnt = 0
 
 ! tracer restoring

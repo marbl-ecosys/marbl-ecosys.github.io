@@ -202,16 +202,18 @@
   <div class="section" id="adding-a-diagnostic">
 <span id="add-diagnostic"></span><h1>Adding a Diagnostic<a class="headerlink" href="#adding-a-diagnostic" title="Permalink to this headline">¶</a></h1>
 <p>This is a five step process.
-There are three changes to make in the Fortran code, all of which are made in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_mod.F90</span></code>.
+There are three changes to make in the Fortran code.
+The indexing type is in <code class="docutils literal notranslate"><span class="pre">marbl_interface_private_types.F90</span></code>, and the rest of the code is in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_mod.F90</span></code>.
+(If your diagnostic is part of the carbon isotope tracer module, that code belongs in <code class="docutils literal notranslate"><span class="pre">marbl_ciso_diagnostics_mod.F90</span></code>.)
 There are also two steps to make sure the diagnostic is known the GCM so it is included in the output.</p>
 <p>For this example, we follow the in situ temperature, which uses the <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> index.</p>
 <div class="section" id="step-1-add-to-marbl-diagnostic-indexing-type">
 <span id="ref-add-diag"></span><h2>Step 1. Add to MARBL diagnostic indexing type<a class="headerlink" href="#step-1-add-to-marbl-diagnostic-indexing-type" title="Permalink to this headline">¶</a></h2>
 <p>To reduce the number of string comparisons inside routines called every time-step, MARBL uses integer indices to track many different variables.
 These indices are packed into datatypes to group common indices together.
-So the indices for diagnostics variables are split into <code class="docutils literal notranslate"><span class="pre">marbl_surface_forcing_diagnostics_indexing_type</span></code> and <code class="docutils literal notranslate"><span class="pre">marbl_interior_forcing_diagnostics_indexing_type</span></code>.
+So the indices for diagnostics variables are split into <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_diagnostics_indexing_type</span></code> and <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_diagnostics_indexing_type</span></code>.
 <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> is an interior forcing diagnostic.</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_interior_diagnostics_indexing_type</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
   <span class="c">! General 2D diags</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatcalc</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatarag</span>
@@ -223,7 +225,7 @@ So the indices for diagnostics variables are split into <code class="docutils li
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="p">.</span>
-<span class="k">end type </span><span class="n">marbl_surface_forcing_diagnostics_indexing_type</span>
+<span class="k">end type </span><span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
 </pre></div>
 </div>
 </div>
@@ -262,10 +264,10 @@ This step copies data only available in MARBL into the datatype that is availabl
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In situ temperature is copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_set_interior_forcing()</span></code>.
+<p class="last">In situ temperature is copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_interior_tendency_compute()</span></code>.
 This subroutine also calls many different <code class="docutils literal notranslate"><span class="pre">store_diagnostics_*</span></code> subroutines, but in a future release the <code class="docutils literal notranslate"><span class="pre">store_diagnostics</span></code> routines will be condensed into a smaller subset of routines.
 Regardless, find the routine that makes the most sense for your diagnostic variable.
-(Surface forcing fields are copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_set_surface_forcing()</span></code>.)</p>
+(Surface forcing fields are copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_surface_flux_compute()</span></code>.)</p>
 </div>
 </div>
 <div class="section" id="step-4-update-the-diagnostics-yaml-files">
