@@ -274,12 +274,12 @@ Regardless, find the routine that makes the most sense for your diagnostic varia
 <h2>Step 4. Update the Diagnostics YAML files<a class="headerlink" href="#step-4-update-the-diagnostics-yaml-files" title="Permalink to this headline">¶</a></h2>
 <p>We use a YAML file to provide an easy-to-edit and human-readable text file containing a list of all diagnostics and the recommended frequency of output.
 Developers adding or removing diagnostics should make changes to <code class="docutils literal notranslate"><span class="pre">defaults/diagnostics_latest.yaml</span></code>.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">insitu_temp</span> <span class="p p-Indicator">:</span>
-   <span class="l l-Scalar l-Scalar-Plain">longname</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">in situ temperature</span>
-   <span class="l l-Scalar l-Scalar-Plain">units</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">degC</span>
-   <span class="l l-Scalar l-Scalar-Plain">vertical_grid</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">layer_avg</span>
-   <span class="l l-Scalar l-Scalar-Plain">frequency</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">medium</span>
-   <span class="l l-Scalar l-Scalar-Plain">operator</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">insitu_temp </span><span class="p">:</span>
+   <span class="nt">longname </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">in situ temperature</span>
+   <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">degC</span>
+   <span class="nt">vertical_grid </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">layer_avg</span>
+   <span class="nt">frequency </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">medium</span>
+   <span class="nt">operator </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> matches what we used for the short name in <a class="reference internal" href="#step-2-add-to-diagnostic-structure">Step 2. Add to diagnostic structure</a>.
@@ -288,14 +288,14 @@ Other acceptable frequencies are <code class="docutils literal notranslate"><spa
 <p>The operator means “average over this time period.”
 Other acceptable operators are <code class="docutils literal notranslate"><span class="pre">instantaneous</span></code>, <code class="docutils literal notranslate"><span class="pre">minimum</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximum</span></code>.
 You can recommend multiple frequencies by adding a list to the YAML, as long as the operator key is a list of the same size:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">CaCO3_form_zint</span> <span class="p p-Indicator">:</span>
-   <span class="l l-Scalar l-Scalar-Plain">longname</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Total CaCO3 Formation Vertical Integral</span>
-   <span class="l l-Scalar l-Scalar-Plain">units</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mmol/m^3 cm/s</span>
-   <span class="l l-Scalar l-Scalar-Plain">vertical_grid</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
-   <span class="l l-Scalar l-Scalar-Plain">frequency</span> <span class="p p-Indicator">:</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">CaCO3_form_zint </span><span class="p">:</span>
+   <span class="nt">longname </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Total CaCO3 Formation Vertical Integral</span>
+   <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mmol/m^3 cm/s</span>
+   <span class="nt">vertical_grid </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
+   <span class="nt">frequency </span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">medium</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">high</span>
-   <span class="l l-Scalar l-Scalar-Plain">operator</span> <span class="p p-Indicator">:</span>
+   <span class="nt">operator </span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
 </pre></div>
