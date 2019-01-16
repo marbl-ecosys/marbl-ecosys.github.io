@@ -213,12 +213,12 @@ for more on conda environments.</p>
 <p>With conda installed, do the following (the last command assumes you are in the root of your MARBL repository):</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ conda create --name marbl-docs pip
 $ conda activate marbl-docs
-[MARBL]$ pip install -r docs/py_requirements.txt
+(marbl-docs)$ pip install -r docs/py_requirements.txt
 </pre></div>
 </div>
 <p>This creates an environment call “marbl-docs” and ensures that <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> commands are local to the environment rather than global.</p>
 <p>To deactivate the “marbl-docs” environment run</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ conda deactivate
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(marbl-docs)$ conda deactivate
 </pre></div>
 </div>
 </div>
@@ -228,7 +228,7 @@ $ conda activate marbl-docs
 <div class="section" id="do-all-development-work-on-a-branch">
 <h3>Do all development work on a branch<a class="headerlink" href="#do-all-development-work-on-a-branch" title="Permalink to this headline">¶</a></h3>
 <p>Checkout a new local branch using</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL]$ git checkout -b my_branch
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(marbl-docs)$ git checkout -b my_branch
 </pre></div>
 </div>
 <p>to create a branch or omit the <code class="docutils literal notranslate"><span class="pre">-b</span></code> to checkout an existing branch.</p>
@@ -273,7 +273,7 @@ This enables referencing this page from elsewhere in the project using</p>
 <div class="section" id="build-the-documentation">
 <h3>Build the documentation<a class="headerlink" href="#build-the-documentation" title="Permalink to this headline">¶</a></h3>
 <p>Once changes are complete, build from <cite>src</cite> using</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[MARBL/docs/src]$ make clean html
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(marbl-docs)[docs/src]$ make clean html
 </pre></div>
 </div>
 <p>The compiled documentation ends up in <code class="docutils literal notranslate"><span class="pre">MARBL/docs/html</span></code>.
