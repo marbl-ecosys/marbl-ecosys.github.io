@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -213,7 +215,7 @@ There are also two steps to make sure the diagnostic is known the GCM so it is i
 These indices are packed into datatypes to group common indices together.
 So the indices for diagnostics variables are split into <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_diagnostics_indexing_type</span></code> and <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_diagnostics_indexing_type</span></code>.
 <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> is an interior forcing diagnostic.</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
   <span class="c">! General 2D diags</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatcalc</span>
   <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatarag</span>
@@ -243,7 +245,7 @@ In these situations, pointers are used instead of allocatable arrays so that <co
 <span class="k">call </span><span class="n">diags</span><span class="p">%</span><span class="n">add_diagnostic</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">truncate</span><span class="p">,</span>     <span class="p">&amp;</span>
      <span class="n">ind</span><span class="p">%</span><span class="n">insitu_temp</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">  call </span><span class="n">log_add_diagnostics_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+<span class="k">  call </span><span class="n">marbl_logging_add_diagnostics_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
   <span class="k">return</span>
 <span class="k">end if</span>
 </pre></div>
@@ -255,8 +257,8 @@ In these situations, pointers are used instead of allocatable arrays so that <co
 This step copies data only available in MARBL into the datatype that is available to the GCM.</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">associate</span><span class="p">(</span> <span class="p">&amp;</span>
      <span class="n">kmt</span>   <span class="o">=&gt;</span> <span class="n">domain</span><span class="p">%</span><span class="n">kmt</span><span class="p">,</span> <span class="p">&amp;</span>
-     <span class="n">diags</span> <span class="o">=&gt;</span> <span class="n">marbl_interior_forcing_diags</span><span class="p">%</span><span class="n">diags</span><span class="p">,</span> <span class="p">&amp;</span>
-     <span class="n">ind</span>   <span class="o">=&gt;</span> <span class="n">marbl_interior_diag_ind</span> <span class="p">&amp;</span>
+     <span class="n">diags</span> <span class="o">=&gt;</span> <span class="n">marbl_interior_tendency_diags</span><span class="p">%</span><span class="n">diags</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">ind</span>   <span class="o">=&gt;</span> <span class="n">marbl_interior_tendency_diag_ind</span> <span class="p">&amp;</span>
      <span class="p">)</span>
 <span class="n">diags</span><span class="p">(</span><span class="n">ind</span><span class="p">%</span><span class="n">insitu_temp</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">kmt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">temperature</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">kmt</span><span class="p">)</span>
 <span class="k">end associate</span>

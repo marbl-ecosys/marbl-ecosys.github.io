@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -201,7 +203,7 @@
 (Recall that <code class="docutils literal notranslate"><span class="pre">num_elements_interior_tendency</span> <span class="pre">=</span> <span class="pre">1</span></code>, per <a class="reference internal" href="init.html#ref-init-interface"><span class="std std-ref">The init() interface</span></a>.)
 The stand-alone test suite does not yet call this routine, so examples come from the POP driver.
 The call to the routine is straightforward:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">interior_tendency_compute</span><span class="p">()</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_compute</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>As with <a class="reference internal" href="surface_flux.html#ref-compute-surface-fluxes"><span class="std std-ref">Compute Surface Fluxes</span></a>, the details are in the surrounding calls.</p>
@@ -212,7 +214,7 @@ Specifically it needs to to the following.</p>
 <div class="section" id="step-1-set-global-scalars">
 <h3>Step 1. Set global scalars<a class="headerlink" href="#step-1-set-global-scalars" title="Permalink to this headline">¶</a></h3>
 <p>If MARBL is configured with <code class="docutils literal notranslate"><span class="pre">ladjust_bury_coeff</span> <span class="pre">=</span> <span class="pre">.true.</span></code> then it will request running means of global averages of a few fields.</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">set_global_scalars</span><span class="p">(</span><span class="s1">&#39;interior_tendency&#39;</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">set_global_scalars</span><span class="p">(</span><span class="s1">&#39;interior_tendency&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Note that at this point, MARBL is responsible for both the global averaging and keeping the running means; in the future running means will be computed in MARBL (and requested as part of saved state).</p>
@@ -231,31 +233,31 @@ For each column, MARBL needs to know the following:</p>
 
 <span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">domain</span><span class="p">%</span><span class="n">kmt</span> <span class="o">=</span> <span class="n">KMT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">bid</span><span class="p">)</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">partial_bottom_cells</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">  </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">domain</span><span class="p">%</span><span class="n">delta_z</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">DZT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">bid</span><span class="p">)</span>
+<span class="k">   </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">domain</span><span class="p">%</span><span class="n">delta_z</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">DZT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">bid</span><span class="p">)</span>
 <span class="k">end if</span>
 
 <span class="c">! --- set forcing fields ---</span>
 
 <span class="k">do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">interior_tendency_forcings</span><span class="p">)</span>
- <span class="k">if</span> <span class="p">(</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">   </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-        <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">bid</span><span class="p">)</span>
- <span class="k">else</span>
-<span class="k">   </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="p">&amp;</span>
-        <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,:,</span><span class="n">bid</span><span class="p">)</span>
- <span class="k">end if</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+         <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">bid</span><span class="p">)</span>
+  <span class="k">else</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="p">&amp;</span>
+         <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,:,</span><span class="n">bid</span><span class="p">)</span>
+  <span class="k">end if</span>
 <span class="k">end do</span>
 
 <span class="c">! --- set column tracers, averaging 2 time levels into 1 ---</span>
 
 <span class="k">do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ecosys_tracer_cnt</span>
-  <span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">tracers</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">p5</span><span class="o">*</span><span class="p">(</span><span class="n">tracer_module_old</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">tracer_module_cur</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">))</span>
+   <span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">tracers</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">p5</span><span class="o">*</span><span class="p">(</span><span class="n">tracer_module_old</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">tracer_module_cur</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">))</span>
 <span class="k">end do</span>
 
 <span class="c">! --- copy data from slab to column for marbl_saved_state ---</span>
 <span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">interior_tendency_saved_state</span><span class="p">)</span>
- <span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-   <span class="n">interior_tendency_saved_state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">bid</span><span class="p">)</span>
+  <span class="n">marbl_instances</span><span class="p">(</span><span class="n">bid</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+    <span class="n">interior_tendency_saved_state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">bid</span><span class="p">)</span>
 <span class="k">end do</span>
 </pre></div>
 </div>

@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -232,10 +234,10 @@ Otherwise they are read from an initial condition.</p>
 <span class="c">!  derived type for reading tracers from a file</span>
 <span class="c">!-----------------------------------------------------------------------</span>
 
-<span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">tracer_read</span>
-   <span class="kt">character</span><span class="p">(</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mod_varname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_varname</span><span class="p">,</span> <span class="n">file_fmt</span>
-   <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">default_val</span>
-<span class="k">end type</span>
+   <span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">tracer_read</span>
+      <span class="kt">character</span><span class="p">(</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">mod_varname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">file_varname</span><span class="p">,</span> <span class="n">file_fmt</span>
+      <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span> <span class="kd">::</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">default_val</span>
+   <span class="k">end type</span>
 </pre></div>
 </div>
 <p>Metadata such as the tracer name and the name of the tracer as it appears in the file is copied from <code class="docutils literal notranslate"><span class="pre">tracer_d_module</span></code> into <code class="docutils literal notranslate"><span class="pre">tracer_inputs</span></code> (an array of type <code class="docutils literal notranslate"><span class="pre">tracer_read</span></code>).

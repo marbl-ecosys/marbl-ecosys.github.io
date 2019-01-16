@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -201,7 +203,7 @@
 <span id="saved-state"></span><h1>How Many Saved State Fields Need to be Stored?<a class="headerlink" href="#how-many-saved-state-fields-need-to-be-stored" title="Permalink to this headline">¶</a></h1>
 <p>MARBL does not yet have a stand-alone test to provide a list of requested saved state fields, but <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_init()</span></code> shows that there are four saved state fields - two for the surface and two for the interior.
 The two surface fields are <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">pH</span></code> and <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">pH</span> <span class="pre">(alternate</span> <span class="pre">CO2)</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">surface_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_surface_elements</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">surface_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_elements_surface_flux</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
 
 <span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;surface pH&#39;</span>
 <span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_SURF&#39;</span>
@@ -229,7 +231,7 @@ The two surface fields are <code class="docutils literal notranslate"><span clas
 </pre></div>
 </div>
 <p>The two interior state fields are <code class="docutils literal notranslate"><span class="pre">3D</span> <span class="pre">pH</span></code> and <code class="docutils literal notranslate"><span class="pre">3D</span> <span class="pre">pH</span> <span class="pre">(alternate</span> <span class="pre">CO2)</span></code></p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">interior_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_interior_forcing</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">interior_state</span><span class="p">%</span><span class="n">construct</span><span class="p">(</span><span class="n">num_elements_interior_tendency</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">)</span>
 
 <span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;3D pH&#39;</span>
 <span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;PH_3D&#39;</span>
@@ -260,11 +262,20 @@ The two surface fields are <code class="docutils literal notranslate"><span clas
 <div class="section" id="saved-state-in-the-interface">
 <h2>Saved State in the Interface<a class="headerlink" href="#saved-state-in-the-interface" title="Permalink to this headline">¶</a></h2>
 <p>MARBL splits the saved state fields between those needed for computing surface fluxes and those needed for computing interior tendencies, so on the interface we have</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">surface_flux_saved_state</span>
-<span class="n">marbl_instance</span><span class="p">%</span><span class="n">interior_tendency_saved_state</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_interface_class</span>
+
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_saved_state_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">surface_flux_saved_state</span>             <span class="c">! input/output</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_saved_state_type</span><span class="p">)</span>              <span class="p">,</span> <span class="k">public</span>               <span class="kd">::</span> <span class="n">interior_tendency_saved_state</span>        <span class="c">! input/output</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+<span class="k">end type </span><span class="n">marbl_interface_class</span>
 </pre></div>
 </div>
-<p>Both of these are of type <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_type</span></code>:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_type</span></code> is a wrapper for <code class="docutils literal notranslate"><span class="pre">marbl_single_saved_state_type</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_single_saved_state_type</span>
   <span class="kt">integer</span>                 <span class="kd">::</span> <span class="n">rank</span>
   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">long_name</span>

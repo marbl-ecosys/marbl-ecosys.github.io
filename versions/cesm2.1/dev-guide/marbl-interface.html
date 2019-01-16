@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -237,14 +239,22 @@ The class definition is shown below:</p>
    <span class="k">type</span><span class="p">(</span><span class="n">marbl_running_mean_0d_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">public</span><span class="p">,</span> <span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">glo_scalar_rmean_surface_flux</span><span class="p">(:)</span>
 
    <span class="c">! private data</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_PAR_type</span><span class="p">)</span>                      <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">PAR</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_particulate_share_type</span><span class="p">)</span>        <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">particulate_share</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_flux_share_type</span><span class="p">)</span>       <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">surface_flux_share</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_flux_internal_type</span><span class="p">)</span>    <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">surface_flux_internal</span>
-   <span class="kt">logical</span>                                   <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">lallow_glo_ops</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">)</span>          <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">timers</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_timer_indexing_type</span><span class="p">)</span>           <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">timer_ids</span>
-   <span class="k">type</span><span class="p">(</span><span class="n">marbl_settings_type</span><span class="p">)</span>                 <span class="p">,</span> <span class="k">private</span>              <span class="kd">::</span> <span class="n">settings</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_PAR_type</span><span class="p">),</span>                     <span class="k">private</span> <span class="kd">::</span> <span class="n">PAR</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">autotroph_derived_terms_type</span><span class="p">),</span>       <span class="k">private</span> <span class="kd">::</span> <span class="n">autotroph_derived_terms</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">autotroph_local_type</span><span class="p">),</span>               <span class="k">private</span> <span class="kd">::</span> <span class="n">autotroph_local</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">zooplankton_derived_terms_type</span><span class="p">),</span>     <span class="k">private</span> <span class="kd">::</span> <span class="n">zooplankton_derived_terms</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">zooplankton_local_type</span><span class="p">),</span>             <span class="k">private</span> <span class="kd">::</span> <span class="n">zooplankton_local</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">zooplankton_share_type</span><span class="p">),</span>             <span class="k">private</span> <span class="kd">::</span> <span class="n">zooplankton_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_particulate_share_type</span><span class="p">),</span>       <span class="k">private</span> <span class="kd">::</span> <span class="n">particulate_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_interior_tendency_share_type</span><span class="p">),</span> <span class="k">private</span> <span class="kd">::</span> <span class="n">interior_tendency_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">dissolved_organic_matter_type</span><span class="p">),</span>      <span class="k">private</span> <span class="kd">::</span> <span class="n">dissolved_organic_matter</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">carbonate_type</span><span class="p">),</span>                     <span class="k">private</span> <span class="kd">::</span> <span class="n">carbonate</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_flux_share_type</span><span class="p">),</span>      <span class="k">private</span> <span class="kd">::</span> <span class="n">surface_flux_share</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_surface_flux_internal_type</span><span class="p">),</span>   <span class="k">private</span> <span class="kd">::</span> <span class="n">surface_flux_internal</span>
+   <span class="kt">logical</span><span class="p">,</span>                                  <span class="k">private</span> <span class="kd">::</span> <span class="n">lallow_glo_ops</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">),</span>         <span class="k">private</span> <span class="kd">::</span> <span class="n">timers</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_timer_indexing_type</span><span class="p">),</span>          <span class="k">private</span> <span class="kd">::</span> <span class="n">timer_ids</span>
+   <span class="k">type</span><span class="p">(</span><span class="n">marbl_settings_type</span><span class="p">),</span>                <span class="k">private</span> <span class="kd">::</span> <span class="n">settings</span>
 
  <span class="k">contains</span>
 

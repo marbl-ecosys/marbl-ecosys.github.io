@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -213,7 +215,7 @@ Specifically, it needs to do the following.</p>
 <h3>Step 1. Set global scalars<a class="headerlink" href="#step-1-set-global-scalars" title="Permalink to this headline">¶</a></h3>
 <p>Currently, there are no global scalars that need to be set for this stage.
 To prepare for future updates where that is no longer the case, it is recommended that the GCM calls</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">set_global_scalars</span><span class="p">(</span><span class="s1">&#39;surface_flux&#39;</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">set_global_scalars</span><span class="p">(</span><span class="s1">&#39;surface_flux&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -226,23 +228,23 @@ Data for <code class="docutils literal notranslate"><span class="pre">surface_in
 <span class="c">!-----------------------------------------------------------------------</span>
 
 <span class="k">do </span><span class="n">index_marbl</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">marbl_col_cnt</span><span class="p">(</span><span class="n">iblock</span><span class="p">)</span>
-  <span class="n">i</span> <span class="o">=</span> <span class="n">marbl_col_to_pop_i</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
-  <span class="n">j</span> <span class="o">=</span> <span class="n">marbl_col_to_pop_j</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
+   <span class="n">i</span> <span class="o">=</span> <span class="n">marbl_col_to_pop_i</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
+   <span class="n">j</span> <span class="o">=</span> <span class="n">marbl_col_to_pop_j</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
 
-  <span class="k">do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">surface_flux_forcings</span><span class="p">)</span>
-     <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-          <span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
-  <span class="k">end do</span>
+   <span class="k">do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">surface_flux_forcings</span><span class="p">)</span>
+      <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+           <span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
+   <span class="k">end do</span>
 
-<span class="k">  do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">ecosys_tracer_cnt</span>
-     <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">tracers_at_surface</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-          <span class="n">p5</span><span class="o">*</span><span class="p">(</span><span class="n">tracers_at_surface_old</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">tracers_at_surface_cur</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
-  <span class="k">end do</span>
+<span class="k">   do </span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">ecosys_tracer_cnt</span>
+      <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">tracers_at_surface</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+           <span class="n">p5</span><span class="o">*</span><span class="p">(</span><span class="n">tracers_at_surface_old</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">tracers_at_surface_cur</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+   <span class="k">end do</span>
 
-<span class="k">  do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">surface_flux_saved_state</span><span class="p">)</span>
-    <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">surface_flux_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-      <span class="n">surface_flux_saved_state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
-  <span class="k">end do</span>
+<span class="k">   do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">surface_flux_saved_state</span><span class="p">)</span>
+     <span class="n">marbl_instances</span><span class="p">(</span><span class="n">iblock</span><span class="p">)%</span><span class="n">surface_flux_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(</span><span class="n">index_marbl</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
+       <span class="n">surface_flux_saved_state</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">iblock</span><span class="p">)</span>
+   <span class="k">end do</span>
 
 <span class="k">end do</span>
 </pre></div>

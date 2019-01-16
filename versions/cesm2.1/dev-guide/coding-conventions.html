@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -208,11 +210,11 @@ A few constructs commonly used in MARBL may be unfamiliar to scientific programm
 <span class="c">! Internal timer types</span>
 
 <span class="k">type</span> <span class="kd">::</span> <span class="n">marbl_single_timer_type</span>
-  <span class="kt">character</span><span class="p">(</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">name</span>
-  <span class="kt">logical</span>             <span class="kd">::</span> <span class="n">is_running</span>
-  <span class="kt">logical</span>             <span class="kd">::</span> <span class="n">is_threaded</span>
-  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>            <span class="kd">::</span> <span class="n">cur_start</span>
-  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>            <span class="kd">::</span> <span class="n">cumulative_runtime</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">name</span>
+  <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">is_running</span>
+  <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">is_threaded</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">cur_start</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">cumulative_runtime</span>
 <span class="k">contains</span>
 <span class="k">  procedure</span> <span class="kd">::</span> <span class="n">init</span> <span class="o">=&gt;</span> <span class="n">init_single_timer</span>
 <span class="k">end type </span><span class="n">marbl_single_timer_type</span>
@@ -240,19 +242,18 @@ For example, MARBL times the call to the subroutine <code class="docutils litera
 the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_compute()</span></code> (part of <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod.F90</span></code>).
 The timer calls look like this:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-  <span class="k">type</span>    <span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">)</span>        <span class="p">,</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">marbl_timers</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">),</span>                        <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">marbl_timers</span>
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="k">call </span><span class="n">marbl_timers</span><span class="p">%</span><span class="n">start</span><span class="p">(</span><span class="n">marbl_timer_indices</span><span class="p">%</span><span class="n">carbonate_chem_id</span><span class="p">,</span>            <span class="p">&amp;</span>
                           <span class="n">marbl_status_log</span><span class="p">)</span>
-  <span class="k">call </span><span class="n">marbl_compute_carbonate_chemistry</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span>     <span class="p">&amp;</span>
-       <span class="n">salinity</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,</span> <span class="p">:),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">carbonate</span><span class="p">(:),</span>    <span class="p">&amp;</span>
-       <span class="n">ph_prev_col</span><span class="p">(:),</span> <span class="n">ph_prev_alt_co2_col</span><span class="p">(:),</span> <span class="n">zsat_calcite</span><span class="p">(:),</span>             <span class="p">&amp;</span>
-       <span class="n">zsat_aragonite</span><span class="p">(:),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="k">call </span><span class="n">compute_carbonate_chemistry</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span>           <span class="p">&amp;</span>
+       <span class="n">salinity</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,</span> <span class="p">:),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">carbonate</span><span class="p">,</span>       <span class="p">&amp;</span>
+       <span class="n">ph_prev_col</span><span class="p">(:),</span> <span class="n">ph_prev_alt_co2_col</span><span class="p">(:),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
   <span class="k">call </span><span class="n">marbl_timers</span><span class="p">%</span><span class="k">stop</span><span class="p">(</span><span class="n">marbl_timer_indices</span><span class="p">%</span><span class="n">carbonate_chem_id</span><span class="p">,</span>             <span class="p">&amp;</span>
                           <span class="n">marbl_status_log</span><span class="p">)</span>
 </pre></div>
@@ -266,12 +267,6 @@ The timer calls look like this:</p>
   <span class="k">class</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>
   <span class="kt">integer</span><span class="p">,</span>                           <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">id</span>
   <span class="k">type</span><span class="p">(</span><span class="n">marbl_log_type</span><span class="p">),</span>              <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">marbl_status_log</span>
-
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-
-<span class="k">end subroutine </span><span class="n">start_timer</span>
 </pre></div>
 </div>
 <p>One key thing to note here is the use of <code class="docutils literal notranslate"><span class="pre">self</span></code>, the first argument to the subroutine.

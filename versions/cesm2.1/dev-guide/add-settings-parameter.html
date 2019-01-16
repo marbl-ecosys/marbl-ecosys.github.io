@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -228,10 +230,14 @@ The defaults will be overwritten if the GCM called <code class="docutils literal
 <p>All parameter settings are module variables in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code>.
 Further, all subroutines and module variables are public in this module.</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">r8</span><span class="p">),</span> <span class="k">target</span> <span class="kd">::</span> <span class="p">&amp;</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span> <span class="k">target</span> <span class="kd">::</span> <span class="p">&amp;</span>
+     <span class="n">Jint_Ctot_thres_molpm2pyr</span><span class="p">,</span>  <span class="p">&amp;</span> <span class="c">! MARBL will abort if abs(Jint_Ctot) exceeds this threshold</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
      <span class="n">parm_Fe_bioavail</span><span class="p">,</span>           <span class="p">&amp;</span> <span class="c">! fraction of Fe flux that is bioavailable</span>
      <span class="n">parm_o2_min</span><span class="p">,</span>                <span class="p">&amp;</span> <span class="c">! min O2 needed for prod &amp; consump. (nmol/cm^3)</span>
      <span class="n">parm_o2_min_delta</span><span class="p">,</span>          <span class="p">&amp;</span> <span class="c">! width of min O2 range (nmol/cm^3)</span>
-     <span class="n">parm_kappa_nitrif_per_day</span><span class="p">,</span>  <span class="p">&amp;</span> <span class="c">! nitrification inverse time constant (1/day)</span>
      <span class="p">.</span>
      <span class="p">.</span>
      <span class="p">.</span>
@@ -253,7 +259,7 @@ Parameters in each of the four possible categories are defined separately from e
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is registered in <code class="docutils literal notranslate"><span class="pre">marbl_settings_define_general_parms</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_define_parameters</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>
@@ -287,7 +293,6 @@ The subroutines for setting defaults are</p>
   <span class="n">parm_Fe_bioavail</span>              <span class="o">=</span> <span class="mf">1.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
   <span class="n">parm_o2_min</span>                   <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
   <span class="n">parm_o2_min_delta</span>             <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
-  <span class="n">parm_kappa_nitrif_per_day</span>     <span class="o">=</span> <span class="mf">0.06_r8</span>         <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
 </pre></div>
 </div>
 </div>

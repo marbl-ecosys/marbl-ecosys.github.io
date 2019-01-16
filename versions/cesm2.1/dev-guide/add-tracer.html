@@ -73,6 +73,8 @@
                       <option value=''>cesm2.0</option>
                       
                         
+                          <option value="../cesm2.1">cesm2.1</option>
+                        
                       
                         
                           <option value="../latest">latest</option>
@@ -246,19 +248,19 @@ Due to the many ways to introduce tracers (different modules, living tracers, et
 <p>If you are adding a tracer that is only active in certain configurations, you would include an if statement around the following code.
 At this point in time, all the base ecosystem tracers are present in all configurations, so there is no such restriction.
 For example, here we set in index for the refractory DOC tracer:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">tracer_index_constructor</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">ciso_on</span><span class="p">,</span> <span class="n">lvariable_PtoC</span><span class="p">,</span> <span class="n">autotrophs</span><span class="p">,</span> <span class="p">&amp;</span>
-           <span class="n">zooplankton</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-    <span class="c">! General ecosys tracers</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-    <span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_tracer_index</span><span class="p">(</span><span class="s1">&#39;docr&#39;</span><span class="p">,</span> <span class="s1">&#39;ecosys_base&#39;</span><span class="p">,</span> <span class="n">this</span><span class="p">%</span><span class="n">docr_ind</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">tracer_index_constructor</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">ciso_on</span><span class="p">,</span> <span class="n">lvariable_PtoC</span><span class="p">,</span> <span class="n">autotroph_settings</span><span class="p">,</span> <span class="p">&amp;</span>
+           <span class="n">zooplankton_settings</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">! General ecosys tracers</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_tracer_index</span><span class="p">(</span><span class="s1">&#39;docr&#39;</span><span class="p">,</span> <span class="s1">&#39;ecosys_base&#39;</span><span class="p">,</span> <span class="n">this</span><span class="p">%</span><span class="n">docr_ind</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
 <span class="k">end subroutine </span><span class="n">tracer_index_constructor</span>
 </pre></div>
 </div>
@@ -283,11 +285,12 @@ For example, here we set in index for the refractory DOC tracer:</p>
 </pre></div>
 </div>
 <p>There are a few different subroutines in <code class="docutils literal notranslate"><span class="pre">marbl_init_mod.F90</span></code> to define the metadata for different classes of tracers.
-(Metadata for carbon isotope tracers is handled in <code class="docutils literal notranslate"><span class="pre">marbl_ciso_mod::marbl_ciso_init_tracer_metadata</span></code>.)</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_init_non_autotroph_tracer_metadata</span>
-<span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_init_non_autotroph_tracers_metadata</span>
-<span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_init_zooplankton_tracer_metadata</span>
-<span class="k">private</span> <span class="kd">::</span> <span class="n">marbl_init_autotroph_tracer_metadata</span>
+(Metadata for carbon isotope tracers is handled in <code class="docutils literal notranslate"><span class="pre">marbl_ciso_init_mod::marbl_ciso_init_tracer_metadata</span></code>.)</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_init_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_non_autotroph_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_non_autotroph_tracers_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_zooplankton_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_autotroph_tracer_metadata</span>
 </pre></div>
 </div>
 <p>The last three subroutines above are called from <code class="docutils literal notranslate"><span class="pre">marbl_init_tracer_metadata()</span></code>, and <code class="docutils literal notranslate"><span class="pre">marbl_init_non_autotroph_tracer_metadata()</span></code> is called from <code class="docutils literal notranslate"><span class="pre">marbl_init_non_autotroph_tracers_metadata()</span></code>
@@ -314,18 +317,18 @@ For example, here is where the dissolved inorganic phosphate index is set:</p>
 For this example, we will follow the oxygen tracer.
 Surface fluxes are computed in <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_mod::marbl_surface_flux_compute</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_surface_flux_compute</span><span class="p">(</span> <span class="p">&amp;</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
   <span class="k">associate</span><span class="p">(</span>                                                                                      <span class="p">&amp;</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-       <span class="n">o2_ind</span>            <span class="o">=&gt;</span> <span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">o2_ind</span><span class="p">,</span>                                      <span class="p">&amp;</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
-       <span class="p">)</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="n">o2_ind</span>            <span class="o">=&gt;</span> <span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">o2_ind</span><span class="p">,</span>                                      <span class="p">&amp;</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">)</span>
 
   <span class="c">!-----------------------------------------------------------------------</span>
   <span class="c">!  fluxes initially set to 0</span>
@@ -344,13 +347,13 @@ Surface fluxes are computed in <code class="docutils literal notranslate"><span 
      <span class="p">.</span>
      <span class="p">.</span>
      <span class="k">if</span> <span class="p">(</span><span class="n">lflux_gas_o2</span><span class="p">)</span> <span class="k">then</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
-     <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">xkw_ice</span><span class="p">(:)</span> <span class="o">*</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">66</span><span class="mf">0.0_r8</span> <span class="o">/</span> <span class="n">schmidt_o2</span><span class="p">(:))</span>
-     <span class="n">o2sat</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">ap_used</span><span class="p">(:)</span> <span class="o">*</span> <span class="n">o2sat_1atm</span><span class="p">(:)</span>
-     <span class="n">flux_o2_loc</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">*</span> <span class="p">(</span><span class="n">o2sat</span><span class="p">(:)</span> <span class="o">-</span> <span class="n">surface_vals</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">))</span>
-     <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">+</span> <span class="n">flux_o2_loc</span><span class="p">(:)</span>
+       <span class="p">.</span>
+       <span class="p">.</span>
+       <span class="p">.</span>
+       <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">xkw_ice</span><span class="p">(:)</span> <span class="o">*</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">66</span><span class="mf">0.0_r8</span> <span class="o">/</span> <span class="n">schmidt_o2</span><span class="p">(:))</span>
+       <span class="n">o2sat</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">ap_used</span><span class="p">(:)</span> <span class="o">*</span> <span class="n">o2sat_1atm</span><span class="p">(:)</span>
+       <span class="n">flux_o2_loc</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">*</span> <span class="p">(</span><span class="n">o2sat</span><span class="p">(:)</span> <span class="o">-</span> <span class="n">tracers_at_surface</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">))</span>
+       <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">+</span> <span class="n">flux_o2_loc</span><span class="p">(:)</span>
 </pre></div>
 </div>
 </div>
@@ -360,84 +363,106 @@ Surface fluxes are computed in <code class="docutils literal notranslate"><span 
 Given the modular nature of MARBL, the tendencies from each process are computed in their own routine.
 This is done in <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod::interior_tendency_compute</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-  <span class="k">call </span><span class="n">marbl_compute_PAR</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">interior_forcings</span><span class="p">,</span> <span class="n">interior_forcing_indices</span><span class="p">,</span> <span class="p">&amp;</span>
-                         <span class="n">autotroph_cnt</span><span class="p">,</span> <span class="n">totalChl_local</span><span class="p">,</span> <span class="n">PAR</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">compute_PAR</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">interior_tendency_forcings</span><span class="p">,</span> <span class="n">interior_tendency_forcing_indices</span><span class="p">,</span> <span class="p">&amp;</span>
+                   <span class="n">totalChl_local</span><span class="p">,</span> <span class="n">PAR</span><span class="p">)</span>
 
+  <span class="k">call </span><span class="n">compute_autotroph_elemental_ratios</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">autotroph_local</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">autotroph_derived_terms</span><span class="p">)</span>
+
+  <span class="k">call </span><span class="n">compute_function_scaling</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">Tfunc</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
   <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">km</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-     <span class="k">call </span><span class="n">marbl_compute_autotroph_uptake</span><span class="p">(</span><span class="n">autotroph_cnt</span><span class="p">,</span> <span class="n">autotrophs</span><span class="p">,</span>  <span class="p">&amp;</span>
-          <span class="n">tracer_local</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span>                  <span class="p">&amp;</span>
-          <span class="n">autotroph_secondary_species</span><span class="p">(:,</span> <span class="n">k</span><span class="p">))</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-     <span class="k">call </span><span class="n">marbl_compute_denitrif</span><span class="p">(</span><span class="n">tracer_local</span><span class="p">(</span><span class="n">o2_ind</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">tracer_local</span><span class="p">(</span><span class="n">no3_ind</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">dissolved_organic_matter</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">DOC_remin</span><span class="p">,</span> <span class="p">&amp;</span>
-          <span class="n">dissolved_organic_matter</span><span class="p">(</span><span class="n">k</span><span class="p">)%</span><span class="n">DOCr_remin</span><span class="p">,</span> <span class="p">&amp;</span>
-          <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
 
-     <span class="k">call </span><span class="n">marbl_compute_dtracer_local</span> <span class="p">(</span><span class="n">autotroph_cnt</span><span class="p">,</span> <span class="n">zooplankton_cnt</span><span class="p">,</span>      <span class="p">&amp;</span>
-          <span class="n">autotrophs</span><span class="p">,</span> <span class="n">zooplankton</span><span class="p">,</span>           <span class="p">&amp;</span>
-          <span class="n">autotroph_secondary_species</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">zooplankton_secondary_species</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">dissolved_organic_matter</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">nitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">Fe_scavenge</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">Lig_prod</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">Lig_loss</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">P_iron</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">POP</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">P_SiO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">P_CaCO3</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">PON_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">interior_restore</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">tracer_local</span><span class="p">(</span><span class="n">o2_ind</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">o2_production</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="p">&amp;</span>
-          <span class="n">dtracers</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="n">marbl_tracer_indices</span> <span class="p">)</span>
+     <span class="k">call </span><span class="n">compute_scavenging</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,:),</span> <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">Fefree</span><span class="p">(:),</span> <span class="n">Fe_scavenge_rate</span><span class="p">(:),</span> <span class="p">&amp;</span>
+          <span class="n">Fe_scavenge</span><span class="p">(:),</span> <span class="n">Lig_scavenge</span><span class="p">(:),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;compute_scavenging()&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="k">     end if</span>
+
+<span class="k">     call </span><span class="n">compute_large_detritus_prod</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+          <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="n">Fe_scavenge</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>                    <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span>   <span class="p">&amp;</span>
+          <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOP_loss_P_bal</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="c">! FIXME #28: need to pull particulate share out</span>
+     <span class="c">!            of compute_particulate_terms!</span>
+     <span class="k">call </span><span class="n">compute_particulate_terms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span>                   <span class="p">&amp;</span>
+          <span class="n">marbl_particulate_share</span><span class="p">,</span> <span class="n">p_remin_scalef</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>            <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span>                    <span class="p">&amp;</span>
+          <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span> <span class="n">PON_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">PON_sed_loss</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>   <span class="p">&amp;</span>
+          <span class="n">QA_dust_def</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>                                        <span class="p">&amp;</span>
+          <span class="n">tracer_local</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="n">carbonate</span><span class="p">,</span> <span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>        <span class="p">&amp;</span>
+          <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">fesedflux</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span>    <span class="p">&amp;</span>
+          <span class="n">glo_avg_fields_interior_tendency</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;compute_particulate_terms()&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="k">     end if</span>
+
+<span class="k">     if</span>  <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">km</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">update_particulate_terms_from_prior_level</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="p">&amp;</span>
+             <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span> <span class="n">QA_dust_def</span><span class="p">(:))</span>
+     <span class="n">endif</span>
+
+  <span class="k">end do</span> <span class="c">! k</span>
   <span class="p">.</span>
   <span class="p">.</span>
   <span class="p">.</span>
+  <span class="k">call </span><span class="n">compute_denitrif</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,</span> <span class="p">:),</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOC_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOCr_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">other_remin</span><span class="p">(:),</span> <span class="n">sed_denitrif</span><span class="p">(:),</span> <span class="n">denitrif</span><span class="p">(:))</span>
+
+  <span class="k">call </span><span class="n">compute_local_tendencies</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">nitrif</span><span class="p">(:),</span> <span class="n">denitrif</span><span class="p">(:),</span> <span class="n">sed_denitrif</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">Fe_scavenge</span><span class="p">(:),</span> <span class="n">Lig_prod</span><span class="p">(:),</span> <span class="n">Lig_loss</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">P_iron</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">POP</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">P_SiO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">P_CaCO3</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">other_remin</span><span class="p">(:),</span> <span class="n">PON_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">tracer_local</span><span class="p">(:,:),</span> <span class="p">&amp;</span>
+       <span class="n">o2_consumption_scalef</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">o2_production</span><span class="p">(:),</span> <span class="n">o2_consumption</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">interior_tendencies</span><span class="p">(:,:))</span>
+</pre></div>
+</div>
+<p>The tendencies are combined in <code class="docutils literal notranslate"><span class="pre">compute_local_tendencies</span></code> while subroutines like <code class="docutils literal notranslate"><span class="pre">compute_PAR</span></code>, <code class="docutils literal notranslate"><span class="pre">compute_autotroph_uptake</span></code>, and <code class="docutils literal notranslate"><span class="pre">compute_denitrif</span></code> are the per-process computations.
+So you will need to update <code class="docutils literal notranslate"><span class="pre">compute_local_tendencies</span></code> to compute the tracer tendency for your new tracer correctly:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">compute_local_tendencies</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="n">dissolved_organic_matter</span><span class="p">,</span> <span class="n">nitrif</span><span class="p">,</span> <span class="n">denitrif</span><span class="p">,</span> <span class="n">sed_denitrif</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">Fe_scavenge</span><span class="p">,</span> <span class="n">Lig_prod</span><span class="p">,</span> <span class="n">Lig_loss</span><span class="p">,</span> <span class="n">P_iron_remin</span><span class="p">,</span> <span class="n">POC_remin</span><span class="p">,</span> <span class="n">POP_remin</span><span class="p">,</span> <span class="n">P_SiO2_remin</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">P_CaCO3_remin</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2_remin</span><span class="p">,</span> <span class="n">other_remin</span><span class="p">,</span> <span class="n">PON_remin</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">o2_consumption_scalef</span><span class="p">,</span> <span class="n">o2_production</span><span class="p">,</span> <span class="n">o2_consumption</span><span class="p">,</span> <span class="n">interior_tendencies</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">km</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">O2_loc</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="n">parm_o2_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">parm_o2_min_delta</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">c0</span><span class="p">),</span> <span class="n">c1</span><span class="p">)</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">POC_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">POCremin_refract</span><span class="p">)</span> <span class="o">+</span> <span class="n">DOC_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">DOCr_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="p">&amp;</span>
+                                              <span class="o">-</span> <span class="p">(</span><span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">denitrif_C_N</span><span class="p">)</span> <span class="o">-</span> <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="p">&amp;</span>
+                                              <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_loss_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_graze_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span>  <span class="p">&amp;</span>
+                                              <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_loss_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_graze_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">)))</span> <span class="p">&amp;</span>
+                                             <span class="o">/</span> <span class="n">parm_Remin_D_C_O2</span> <span class="o">+</span> <span class="p">(</span><span class="n">c2</span> <span class="o">*</span> <span class="n">nitrif</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_consumption_scalef</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">interior_tendencies</span><span class="p">(</span><span class="n">o2_ind</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_production</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
   <span class="k">end do</span>
 </pre></div>
-</div>
-<p>The tendencies are combined in <code class="docutils literal notranslate"><span class="pre">marbl_compute_dtracer_local</span></code> while subroutines like <code class="docutils literal notranslate"><span class="pre">marbl_compute_PAR</span></code>, <code class="docutils literal notranslate"><span class="pre">marbl_compute_autotroph_uptake</span></code>, and <code class="docutils literal notranslate"><span class="pre">marbl_compute_denitrif</span></code> are the per-process computations.
-So you will need to update <code class="docutils literal notranslate"><span class="pre">marbl_compute_dtracer_local</span></code> to compute the tracer tendency for your new tracer correctly:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_compute_dtracer_local</span> <span class="p">(</span><span class="n">auto_cnt</span><span class="p">,</span> <span class="n">zoo_cnt</span><span class="p">,</span> <span class="n">autotrophs</span><span class="p">,</span>       <span class="p">&amp;</span>
-           <span class="n">zooplankton</span><span class="p">,</span> <span class="n">autotroph_secondary_species</span><span class="p">,</span>                  <span class="p">&amp;</span>
-           <span class="n">zooplankton_secondary_species</span><span class="p">,</span> <span class="n">dissolved_organic_matter</span><span class="p">,</span>           <span class="p">&amp;</span>
-           <span class="n">nitrif</span><span class="p">,</span> <span class="n">denitrif</span><span class="p">,</span> <span class="n">sed_denitrif</span><span class="p">,</span> <span class="n">Fe_scavenge</span><span class="p">,</span> <span class="n">Lig_prod</span><span class="p">,</span> <span class="n">Lig_loss</span><span class="p">,</span>   <span class="p">&amp;</span>
-           <span class="n">P_iron_remin</span><span class="p">,</span> <span class="n">POC_remin</span><span class="p">,</span> <span class="n">POP_remin</span><span class="p">,</span> <span class="n">P_SiO2_remin</span><span class="p">,</span> <span class="n">P_CaCO3_remin</span><span class="p">,</span>   <span class="p">&amp;</span>
-           <span class="n">P_CaCO3_ALT_CO2_remin</span><span class="p">,</span> <span class="n">other_remin</span><span class="p">,</span> <span class="n">PON_remin</span><span class="p">,</span> <span class="n">interior_restore</span><span class="p">,</span>   <span class="p">&amp;</span>
-           <span class="n">O2_loc</span><span class="p">,</span> <span class="n">o2_production</span><span class="p">,</span> <span class="n">o2_consumption</span><span class="p">,</span> <span class="n">dtracers</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">)</span>
-<span class="p">.</span>
-<span class="p">.</span>
-<span class="p">.</span>
-  <span class="k">associate</span><span class="p">(</span>                                                            <span class="p">&amp;</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-       <span class="n">o2_ind</span>            <span class="o">=&gt;</span> <span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">o2_ind</span><span class="p">,</span>          <span class="p">&amp;</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
-       <span class="p">.</span>
-  <span class="p">)</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="n">o2_consumption</span> <span class="o">=</span> <span class="p">(</span><span class="n">O2_loc</span> <span class="o">-</span> <span class="n">parm_o2_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">parm_o2_min_delta</span>
-  <span class="n">o2_consumption</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">o2_consumption</span><span class="p">,</span> <span class="n">c0</span><span class="p">),</span> <span class="n">c1</span><span class="p">)</span>
-  <span class="n">o2_consumption</span> <span class="o">=</span> <span class="n">o2_consumption</span> <span class="o">*</span> <span class="p">(</span> <span class="p">(</span><span class="n">POC_remin</span> <span class="o">*</span> <span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">POCremin_refract</span><span class="p">)</span> <span class="o">+</span> <span class="n">DOC_remin</span> <span class="p">&amp;</span>
-       <span class="o">+</span> <span class="n">DOCr_remin</span> <span class="o">-</span> <span class="p">(</span><span class="n">sed_denitrif</span> <span class="o">*</span> <span class="n">denitrif_C_N</span><span class="p">)</span> <span class="o">-</span> <span class="n">other_remin</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_loss_dic</span><span class="p">(:))</span> <span class="p">&amp;</span>
-       <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_graze_dic</span><span class="p">(:))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_loss_dic</span><span class="p">(:))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_graze_dic</span><span class="p">(:))</span> <span class="p">)</span> <span class="p">&amp;</span>
-       <span class="o">/</span> <span class="n">parm_Remin_D_C_O2</span> <span class="o">+</span> <span class="p">(</span><span class="n">c2</span> <span class="o">*</span> <span class="n">nitrif</span><span class="p">))</span>
-
-  <span class="n">dtracers</span><span class="p">(</span><span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_production</span> <span class="o">-</span> <span class="n">o2_consumption</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal notranslate"><span class="pre">k</span></code> loop in the example may be removed in favor of doing per-process computations on an entire column at once.</p>
 </div>
 </div>
 <div class="section" id="step-6-add-any-necessary-diagnostics">
