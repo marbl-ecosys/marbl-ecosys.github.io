@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding a Tracer &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../index.html"/>
+        <link rel="up" title="Development Examples" href="development-examples.html"/>
+        <link rel="next" title="Code Snippets" href="code-details/index.html"/>
+        <link rel="prev" title="Adding a MARBL Parameter" href="add-settings-parameter.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="development-examples.html">Development Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="add-diagnostic.html">Adding a Diagnostic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add-settings-parameter.html">Adding a MARBL Parameter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding a Tracer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#marbl-code-changes">MARBL Code Changes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gcm-code-changes">GCM Code Changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code-details/index.html">Code Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+          <li><a href="development-examples.html">Development Examples</a> &raquo;</li>
+        
+      <li>Adding a Tracer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/add-tracer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-tracer">
+<span id="add-tracer"></span><h1>Adding a Tracer<a class="headerlink" href="#adding-a-tracer" title="Permalink to this headline">¶</a></h1>
+<p>The steps needed to add a new tracer depend greatly on what the tracer is, so this page will not use a single tracer as an example.
+Also, a significant portion of the code shown in these examples will be cleaned up prior to the MARBL 1.0.0 release (sorry!).</p>
+<div class="section" id="marbl-code-changes">
+<h2>MARBL Code Changes<a class="headerlink" href="#marbl-code-changes" title="Permalink to this headline">¶</a></h2>
+<p>This is an eight step process.</p>
+<div class="section" id="step-1-add-to-marbl-tracer-index-type">
+<h3>Step 1. Add to MARBL tracer index type<a class="headerlink" href="#step-1-add-to-marbl-tracer-index-type" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned in <a class="reference internal" href="add-diagnostic.html#ref-add-diag"><span class="std std-ref">Step 1. Add to MARBL diagnostic indexing type</span></a>, the <code class="docutils literal notranslate"><span class="pre">indexing_type</span></code> is a common structure in MARBL.
+Due to the many ways to introduce tracers (different modules, living tracers, etc), the tracer indexing type is a little more complex than others.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_tracer_index_type</span>
+  <span class="c">! Book-keeping (tracer count and index ranges)</span>
+  <span class="kt">integer</span> <span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">total_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">type</span> <span class="p">(</span><span class="n">marbl_tracer_count_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">ecosys_base</span>
+  <span class="k">type</span> <span class="p">(</span><span class="n">marbl_tracer_count_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">ciso</span>
+
+  <span class="c">! General tracers</span>
+  <span class="kt">integer</span> <span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">po4_ind</span>         <span class="o">=</span> <span class="mi">0</span> <span class="c">! dissolved inorganic phosphate</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">! CISO tracers</span>
+  <span class="kt">integer</span> <span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">di13c_ind</span>       <span class="o">=</span> <span class="mi">0</span> <span class="c">! dissolved inorganic carbon 13</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">! Living tracers</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_living_tracer_index_type</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">auto_inds</span><span class="p">(:)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+<span class="k">contains</span>
+<span class="k">  procedure</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">add_tracer_index</span>
+  <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">construct</span> <span class="o">=&gt;</span> <span class="n">tracer_index_constructor</span>
+  <span class="k">procedure</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">destruct</span> <span class="o">=&gt;</span> <span class="n">tracer_index_destructor</span>
+<span class="k">end type </span><span class="n">marbl_tracer_index_type</span>
+</pre></div>
+</div>
+<p>For this example, assume we are adding a single tracer in the base ecosys module (regretfully referred to as “general tracers” in most comments).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This data type does not conform to MARBL naming conventions and will be renamed <code class="docutils literal notranslate"><span class="pre">marbl_tracer_indexing_type</span></code> in a future update.</p>
+</div>
+</div>
+<div class="section" id="step-2-update-tracer-index-constructor">
+<h3>Step 2. Update <code class="docutils literal notranslate"><span class="pre">tracer_index_constructor</span></code><a class="headerlink" href="#step-2-update-tracer-index-constructor" title="Permalink to this headline">¶</a></h3>
+<p>If you are adding a tracer that is only active in certain configurations, you would include an if statement around the following code.
+At this point in time, all the base ecosystem tracers are present in all configurations, so there is no such restriction.
+For example, here we set in index for the refractory DOC tracer:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">tracer_index_constructor</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">ciso_on</span><span class="p">,</span> <span class="n">lvariable_PtoC</span><span class="p">,</span> <span class="n">autotroph_settings</span><span class="p">,</span> <span class="p">&amp;</span>
+           <span class="n">zooplankton_settings</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">! General ecosys tracers</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_tracer_index</span><span class="p">(</span><span class="s1">&#39;docr&#39;</span><span class="p">,</span> <span class="s1">&#39;ecosys_base&#39;</span><span class="p">,</span> <span class="n">this</span><span class="p">%</span><span class="n">docr_ind</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+<span class="k">end subroutine </span><span class="n">tracer_index_constructor</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is an <a class="reference external" href="https://github.com/marbl-ecosys/MARBL/issues/124">issue ticket</a> to refer to objects as <code class="docutils literal notranslate"><span class="pre">self</span></code> instead of <code class="docutils literal notranslate"><span class="pre">this</span></code>.
+<a class="reference internal" href="coding-conventions.html#ref-oo-examples"><span class="std std-ref">Example of an Object-oriented Class</span></a> has it right.</p>
+</div>
+</div>
+<div class="section" id="step-3-set-tracer-metadata">
+<h3>Step 3. Set tracer metadata<a class="headerlink" href="#step-3-set-tracer-metadata" title="Permalink to this headline">¶</a></h3>
+<p>MARBL provides the following metadata to describe each tracer:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_tracer_metadata_type</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">short_name</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">long_name</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">units</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tend_units</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">flux_units</span>
+   <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">lfull_depth_tavg</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tracer_module_name</span>
+<span class="k">end type </span><span class="n">marbl_tracer_metadata_type</span>
+</pre></div>
+</div>
+<p>There are a few different subroutines in <code class="docutils literal notranslate"><span class="pre">marbl_init_mod.F90</span></code> to define the metadata for different classes of tracers.
+(Metadata for carbon isotope tracers is handled in <code class="docutils literal notranslate"><span class="pre">marbl_ciso_init_mod::marbl_ciso_init_tracer_metadata</span></code>.)</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_init_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_non_autotroph_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_non_autotroph_tracers_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_zooplankton_tracer_metadata</span>
+<span class="k">subroutine </span><span class="n">marbl_init_autotroph_tracer_metadata</span>
+</pre></div>
+</div>
+<p>The last three subroutines above are called from <code class="docutils literal notranslate"><span class="pre">marbl_init_tracer_metadata()</span></code>, and <code class="docutils literal notranslate"><span class="pre">marbl_init_non_autotroph_tracer_metadata()</span></code> is called from <code class="docutils literal notranslate"><span class="pre">marbl_init_non_autotroph_tracers_metadata()</span></code>
+Prior to those calls, <code class="docutils literal notranslate"><span class="pre">marbl_init_tracer_metadata()</span></code> sets two attributes in the metadata type:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">marbl_tracer_metadata</span><span class="p">(:)%</span><span class="n">lfull_depth_tavg</span>   <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<span class="n">marbl_tracer_metadata</span><span class="p">(:)%</span><span class="n">tracer_module_name</span> <span class="o">=</span> <span class="s1">&#39;ecosys&#39;</span>
+</pre></div>
+</div>
+<p>Metadata for all base ecosystem non-living tracers is set in <code class="docutils literal notranslate"><span class="pre">marbl_init_non_autotroph_tracers_metadata()</span></code>.
+For example, here is where the dissolved inorganic phosphate index is set:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_init_non_autotroph_tracers_metadata</span><span class="p">(</span><span class="n">marbl_tracer_metadata</span><span class="p">,</span> <span class="p">&amp;</span>
+           <span class="n">marbl_tracer_indices</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">marbl_init_non_autotroph_tracer_metadata</span><span class="p">(</span><span class="s1">&#39;PO4&#39;</span><span class="p">,</span> <span class="s1">&#39;Dissolved Inorganic Phosphate&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+             <span class="n">marbl_tracer_metadata</span><span class="p">(</span><span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">po4_ind</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-compute-surface-flux-for-new-tracer-if-necessary">
+<h3>Step 4. Compute surface flux for new tracer (if necessary)<a class="headerlink" href="#step-4-compute-surface-flux-for-new-tracer-if-necessary" title="Permalink to this headline">¶</a></h3>
+<p>Not all tracers return a surface flux, so this may not be necessary for your tracer.
+For this example, we will follow the oxygen tracer.
+Surface fluxes are computed in <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_mod::marbl_surface_flux_compute</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_surface_flux_compute</span><span class="p">(</span> <span class="p">&amp;</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">associate</span><span class="p">(</span>                                                                                      <span class="p">&amp;</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="n">o2_ind</span>            <span class="o">=&gt;</span> <span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">o2_ind</span><span class="p">,</span>                                      <span class="p">&amp;</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">)</span>
+
+  <span class="c">!-----------------------------------------------------------------------</span>
+  <span class="c">!  fluxes initially set to 0</span>
+  <span class="c">!-----------------------------------------------------------------------</span>
+
+  <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">c0</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">!-----------------------------------------------------------------------</span>
+  <span class="c">!  compute CO2 flux, computing disequilibrium one row at a time</span>
+  <span class="c">!-----------------------------------------------------------------------</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">lflux_gas_o2</span> <span class="p">.</span><span class="nb">or</span><span class="p">.</span> <span class="n">lflux_gas_co2</span><span class="p">)</span> <span class="k">then</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
+     <span class="p">.</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">lflux_gas_o2</span><span class="p">)</span> <span class="k">then</span>
+       <span class="p">.</span>
+       <span class="p">.</span>
+       <span class="p">.</span>
+       <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">xkw_ice</span><span class="p">(:)</span> <span class="o">*</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">66</span><span class="mf">0.0_r8</span> <span class="o">/</span> <span class="n">schmidt_o2</span><span class="p">(:))</span>
+       <span class="n">o2sat</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">ap_used</span><span class="p">(:)</span> <span class="o">*</span> <span class="n">o2sat_1atm</span><span class="p">(:)</span>
+       <span class="n">flux_o2_loc</span><span class="p">(:)</span> <span class="o">=</span> <span class="n">pv_o2</span><span class="p">(:)</span> <span class="o">*</span> <span class="p">(</span><span class="n">o2sat</span><span class="p">(:)</span> <span class="o">-</span> <span class="n">tracers_at_surface</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">))</span>
+       <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">=</span> <span class="n">surface_fluxes</span><span class="p">(:,</span> <span class="n">o2_ind</span><span class="p">)</span> <span class="o">+</span> <span class="n">flux_o2_loc</span><span class="p">(:)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-5-compute-tracer-tendency">
+<h3>Step 5. Compute tracer tendency<a class="headerlink" href="#step-5-compute-tracer-tendency" title="Permalink to this headline">¶</a></h3>
+<p>The tracer tendencies are computed in a two step process - MARBL computes the tracer tendency terms from a variety of processes and then combines the terms in the end.
+Given the modular nature of MARBL, the tendencies from each process are computed in their own routine.
+This is done in <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod::interior_tendency_compute</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">compute_PAR</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">interior_tendency_forcings</span><span class="p">,</span> <span class="n">interior_tendency_forcing_indices</span><span class="p">,</span> <span class="p">&amp;</span>
+                   <span class="n">totalChl_local</span><span class="p">,</span> <span class="n">PAR</span><span class="p">)</span>
+
+  <span class="k">call </span><span class="n">compute_autotroph_elemental_ratios</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">autotroph_local</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">autotroph_derived_terms</span><span class="p">)</span>
+
+  <span class="k">call </span><span class="n">compute_function_scaling</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">Tfunc</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">do </span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">km</span>
+
+     <span class="k">call </span><span class="n">compute_scavenging</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,:),</span> <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">Fefree</span><span class="p">(:),</span> <span class="n">Fe_scavenge_rate</span><span class="p">(:),</span> <span class="p">&amp;</span>
+          <span class="n">Fe_scavenge</span><span class="p">(:),</span> <span class="n">Lig_scavenge</span><span class="p">(:),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;compute_scavenging()&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="k">     end if</span>
+
+<span class="k">     call </span><span class="n">compute_large_detritus_prod</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+          <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="n">Fe_scavenge</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>                    <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span>   <span class="p">&amp;</span>
+          <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOP_loss_P_bal</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="c">! FIXME #28: need to pull particulate share out</span>
+     <span class="c">!            of compute_particulate_terms!</span>
+     <span class="k">call </span><span class="n">compute_particulate_terms</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span>                   <span class="p">&amp;</span>
+          <span class="n">marbl_particulate_share</span><span class="p">,</span> <span class="n">p_remin_scalef</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>            <span class="p">&amp;</span>
+          <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span>                    <span class="p">&amp;</span>
+          <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span> <span class="n">PON_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">PON_sed_loss</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>   <span class="p">&amp;</span>
+          <span class="n">QA_dust_def</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>                                        <span class="p">&amp;</span>
+          <span class="n">tracer_local</span><span class="p">(:,</span> <span class="n">k</span><span class="p">),</span> <span class="n">carbonate</span><span class="p">,</span> <span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>        <span class="p">&amp;</span>
+          <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">fesedflux</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span>    <span class="p">&amp;</span>
+          <span class="n">glo_avg_fields_interior_tendency</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;compute_particulate_terms()&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="k">     end if</span>
+
+<span class="k">     if</span>  <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">km</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">        call </span><span class="n">update_particulate_terms_from_prior_level</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">POC</span><span class="p">,</span> <span class="n">POP</span><span class="p">,</span> <span class="n">P_CaCO3</span><span class="p">,</span> <span class="p">&amp;</span>
+             <span class="n">P_CaCO3_ALT_CO2</span><span class="p">,</span> <span class="n">P_SiO2</span><span class="p">,</span> <span class="n">dust</span><span class="p">,</span> <span class="n">P_iron</span><span class="p">,</span> <span class="n">QA_dust_def</span><span class="p">(:))</span>
+     <span class="n">endif</span>
+
+  <span class="k">end do</span> <span class="c">! k</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">compute_denitrif</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,</span> <span class="p">:),</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOC_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">%</span><span class="n">DOCr_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">other_remin</span><span class="p">(:),</span> <span class="n">sed_denitrif</span><span class="p">(:),</span> <span class="n">denitrif</span><span class="p">(:))</span>
+
+  <span class="k">call </span><span class="n">compute_local_tendencies</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">dissolved_organic_matter</span><span class="p">,</span> <span class="p">&amp;</span>
+       <span class="n">nitrif</span><span class="p">(:),</span> <span class="n">denitrif</span><span class="p">(:),</span> <span class="n">sed_denitrif</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">Fe_scavenge</span><span class="p">(:),</span> <span class="n">Lig_prod</span><span class="p">(:),</span> <span class="n">Lig_loss</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">P_iron</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">POC</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">POP</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">P_SiO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">P_CaCO3</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="n">P_CaCO3_ALT_CO2</span><span class="p">%</span><span class="n">remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">other_remin</span><span class="p">(:),</span> <span class="n">PON_remin</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">tracer_local</span><span class="p">(:,:),</span> <span class="p">&amp;</span>
+       <span class="n">o2_consumption_scalef</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">o2_production</span><span class="p">(:),</span> <span class="n">o2_consumption</span><span class="p">(:),</span> <span class="p">&amp;</span>
+       <span class="n">interior_tendencies</span><span class="p">(:,:))</span>
+</pre></div>
+</div>
+<p>The tendencies are combined in <code class="docutils literal notranslate"><span class="pre">compute_local_tendencies</span></code> while subroutines like <code class="docutils literal notranslate"><span class="pre">compute_PAR</span></code>, <code class="docutils literal notranslate"><span class="pre">compute_autotroph_uptake</span></code>, and <code class="docutils literal notranslate"><span class="pre">compute_denitrif</span></code> are the per-process computations.
+So you will need to update <code class="docutils literal notranslate"><span class="pre">compute_local_tendencies</span></code> to compute the tracer tendency for your new tracer correctly:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">compute_local_tendencies</span><span class="p">(</span><span class="n">km</span><span class="p">,</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">autotroph_derived_terms</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">zooplankton_derived_terms</span><span class="p">,</span> <span class="n">dissolved_organic_matter</span><span class="p">,</span> <span class="n">nitrif</span><span class="p">,</span> <span class="n">denitrif</span><span class="p">,</span> <span class="n">sed_denitrif</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">Fe_scavenge</span><span class="p">,</span> <span class="n">Lig_prod</span><span class="p">,</span> <span class="n">Lig_loss</span><span class="p">,</span> <span class="n">P_iron_remin</span><span class="p">,</span> <span class="n">POC_remin</span><span class="p">,</span> <span class="n">POP_remin</span><span class="p">,</span> <span class="n">P_SiO2_remin</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">P_CaCO3_remin</span><span class="p">,</span> <span class="n">P_CaCO3_ALT_CO2_remin</span><span class="p">,</span> <span class="n">other_remin</span><span class="p">,</span> <span class="n">PON_remin</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">o2_consumption_scalef</span><span class="p">,</span> <span class="n">o2_production</span><span class="p">,</span> <span class="n">o2_consumption</span><span class="p">,</span> <span class="n">interior_tendencies</span><span class="p">)</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">km</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="p">.</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">O2_loc</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="n">parm_o2_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">parm_o2_min_delta</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">c0</span><span class="p">),</span> <span class="n">c1</span><span class="p">)</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">POC_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">POCremin_refract</span><span class="p">)</span> <span class="o">+</span> <span class="n">DOC_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="n">DOCr_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="p">&amp;</span>
+                                              <span class="o">-</span> <span class="p">(</span><span class="n">sed_denitrif</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">denitrif_C_N</span><span class="p">)</span> <span class="o">-</span> <span class="n">other_remin</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="p">&amp;</span>
+                                              <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_loss_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">zoo_graze_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span>  <span class="p">&amp;</span>
+                                              <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_loss_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">auto_graze_dic</span><span class="p">(:,</span><span class="n">k</span><span class="p">)))</span> <span class="p">&amp;</span>
+                                             <span class="o">/</span> <span class="n">parm_Remin_D_C_O2</span> <span class="o">+</span> <span class="p">(</span><span class="n">c2</span> <span class="o">*</span> <span class="n">nitrif</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_consumption_scalef</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">interior_tendencies</span><span class="p">(</span><span class="n">o2_ind</span><span class="p">,</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">o2_production</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="n">o2_consumption</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+  <span class="k">end do</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-6-add-any-necessary-diagnostics">
+<h3>Step 6. Add any necessary diagnostics<a class="headerlink" href="#step-6-add-any-necessary-diagnostics" title="Permalink to this headline">¶</a></h3>
+<p>By default, MARBL’s diagnostics include the interior restoring tendency for each tracer.
+Otherwise, it is assumed that the GCM will provide tracer diagnostics itself.
+MARBL does compute the vertical integral of the conservative terms in the source-sink computation of many tracers.
+If your tracer affects these integrals, you should update the appropriate subroutine in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_mod.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="kd">::</span> <span class="n">store_diagnostics_carbon_fluxes</span>
+<span class="k">private</span> <span class="kd">::</span> <span class="n">store_diagnostics_nitrogen_fluxes</span>
+<span class="k">private</span> <span class="kd">::</span> <span class="n">store_diagnostics_phosphorus_fluxes</span>
+<span class="k">private</span> <span class="kd">::</span> <span class="n">store_diagnostics_silicon_fluxes</span>
+<span class="k">private</span> <span class="kd">::</span> <span class="n">store_diagnostics_iron_fluxes</span>
+</pre></div>
+</div>
+<p>If you want to provide a specific diagnostic related to your tracer, see <a class="reference internal" href="add-diagnostic.html#add-diagnostic"><span class="std std-ref">Adding a Diagnostic</span></a>.</p>
+</div>
+<div class="section" id="step-7-update-the-settings-yaml-files">
+<h3>Step 7. Update the settings YAML files<a class="headerlink" href="#step-7-update-the-settings-yaml-files" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">defaults/settings_*.yaml</span></code> files also contain a list of all defined tracers.
+On the <code class="docutils literal notranslate"><span class="pre">development</span></code> branch, make changes to <code class="docutils literal notranslate"><span class="pre">defaults/settings_latest.yaml</span></code>.
+Release branches may only offer specific versions of this file, such as <code class="docutils literal notranslate"><span class="pre">defaults/settings_cesm2.1.yaml</span></code>.
+The block of code defining the tracers looks like this:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># ABOUT THIS FILE</span>
+<span class="c1"># ---------------</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain"># Tracer count</span>
+<span class="l l-Scalar l-Scalar-Plain">_tracer_list</span> <span class="p p-Indicator">:</span>
+   <span class="c1"># Non-living tracers</span>
+   <span class="nt">PO4 </span><span class="p">:</span>
+      <span class="nt">long_name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Dissolved Inorganic Phosphate</span>
+      <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mmol/m^3</span>
+   <span class="nt">NO3 </span><span class="p">:</span>
+      <span class="nt">long_name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Dissolved Inorganic Nitrate</span>
+      <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mmol/m^3</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="l l-Scalar l-Scalar-Plain">.</span>
+</pre></div>
+</div>
+<p>This list needed because some parameters (such as <code class="docutils literal notranslate"><span class="pre">tracer_restore_vars(:)</span></code>) depend on the tracer count.
+Additionally, it makes it easy for GCMs to see a list of all tracers being returned by MARBL to help configure diagnostic output.</p>
+</div>
+<div class="section" id="step-8-convert-the-yaml-file-to-json">
+<h3>Step 8. Convert the YAML file to JSON<a class="headerlink" href="#step-8-convert-the-yaml-file-to-json" title="Permalink to this headline">¶</a></h3>
+<p>We prefer editing YAML files to editing JSON files because they are much easier to maintain (and allow user comments).
+Unfortunately, python does not include a YAML parser in the default distributions.
+Rather than require all users to install <code class="docutils literal notranslate"><span class="pre">pyYAML</span></code>, we require that of MARBL developers and then ask them to convert the YAML files to JSON.
+The <code class="docutils literal notranslate"><span class="pre">MARBL_tools/yaml_to_json.py</span></code> script is provided to do just that:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cd MARBL_tools
+$ ./yaml_to_json.py
+</pre></div>
+</div>
+<p>There is not a tracer-specific python script to run, but the <code class="docutils literal notranslate"><span class="pre">MARBL_settings_class</span></code> has <code class="docutils literal notranslate"><span class="pre">get_tracer_names()</span></code> and <code class="docutils literal notranslate"><span class="pre">get_tracer_cnt()</span></code> routines.</p>
+</div>
+</div>
+<div class="section" id="gcm-code-changes">
+<h2>GCM Code Changes<a class="headerlink" href="#gcm-code-changes" title="Permalink to this headline">¶</a></h2>
+<p>The GCM will need to provide initial conditions for this new tracer, and may also need to output additional tracer-specific diagnostics.
+The MARBL guide is not able to offer guidance on how to do that, as it will vary from GCM to GCM.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code-details/index.html" class="btn btn-neutral float-right" title="Code Snippets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="add-settings-parameter.html" class="btn btn-neutral" title="Adding a MARBL Parameter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
