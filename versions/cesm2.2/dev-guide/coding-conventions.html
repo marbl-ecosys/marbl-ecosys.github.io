@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Coding conventions in MARBL &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../index.html"/>
+        <link rel="up" title="MARBL developer’s guide" href="index.html"/>
+        <link rel="next" title="MARBL interface" href="marbl-interface.html"/>
+        <link rel="prev" title="Introduction to MARBL framework" href="introduction.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Coding conventions in MARBL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#object-oriented-programming-features">Object-oriented programming features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-an-object-oriented-class">Example of an Object-oriented Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-call-an-object-oriented-subroutine">How to Call an Object-oriented Subroutine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-a-subroutine-inside-an-object-oriented-class">Example of a Subroutine Inside an Object-oriented Class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#associate-construct">Associate construct</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development-examples.html">Development Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code-details/index.html">Code Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+      <li>Coding conventions in MARBL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/coding-conventions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="coding-conventions-in-marbl">
+<span id="coding-conventions"></span><h1>Coding conventions in MARBL<a class="headerlink" href="#coding-conventions-in-marbl" title="Permalink to this headline">¶</a></h1>
+<p>MARBL is written in Fortran.
+A few constructs commonly used in MARBL may be unfamiliar to scientific programmers.</p>
+<div class="section" id="object-oriented-programming-features">
+<h2>Object-oriented programming features<a class="headerlink" href="#object-oriented-programming-features" title="Permalink to this headline">¶</a></h2>
+<p>Object-oriented programming constructs permit the definition of classes that both contain data and methods which can perform operations on that data.</p>
+<div class="section" id="example-of-an-object-oriented-class">
+<span id="ref-oo-examples"></span><h3>Example of an Object-oriented Class<a class="headerlink" href="#example-of-an-object-oriented-class" title="Permalink to this headline">¶</a></h3>
+<p>The class used to time blocks of code inside MARBL, <code class="docutils literal notranslate"><span class="pre">marbl_internal_timers_type</span></code>, is object-oriented:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!*****************************************************************************</span>
+<span class="c">! Internal timer types</span>
+
+<span class="k">type</span> <span class="kd">::</span> <span class="n">marbl_single_timer_type</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">name</span>
+  <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">is_running</span>
+  <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">is_threaded</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">cur_start</span>
+  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">cumulative_runtime</span>
+<span class="k">contains</span>
+<span class="k">  procedure</span> <span class="kd">::</span> <span class="n">init</span> <span class="o">=&gt;</span> <span class="n">init_single_timer</span>
+<span class="k">end type </span><span class="n">marbl_single_timer_type</span>
+
+<span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_internal_timers_type</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">num_timers</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_single_timer_type</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">individual_timers</span><span class="p">(:)</span>
+<span class="k">contains</span>
+<span class="k">  procedure</span> <span class="kd">::</span> <span class="n">add</span> <span class="o">=&gt;</span> <span class="n">add_new_timer</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="n">start</span> <span class="o">=&gt;</span> <span class="n">start_timer</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="k">stop</span> <span class="o">=&gt;</span> <span class="n">stop_timer</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="n">extract</span> <span class="o">=&gt;</span> <span class="n">extract_timer_data</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="n">setup</span> <span class="o">=&gt;</span> <span class="n">setup_timers</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="n">reset</span> <span class="o">=&gt;</span> <span class="n">reset_timers</span>
+  <span class="k">procedure</span> <span class="kd">::</span> <span class="n">shutdown</span> <span class="o">=&gt;</span> <span class="n">shutdown_timers</span>
+<span class="k">end type </span><span class="n">marbl_internal_timers_type</span>
+</pre></div>
+</div>
+<p>This type includes several <cite>methods</cite>, such as the <code class="docutils literal notranslate"><span class="pre">start()</span></code> routine, referenced to the subroutine <code class="docutils literal notranslate"><span class="pre">start_timer</span></code>.</p>
+</div>
+<div class="section" id="how-to-call-an-object-oriented-subroutine">
+<h3>How to Call an Object-oriented Subroutine<a class="headerlink" href="#how-to-call-an-object-oriented-subroutine" title="Permalink to this headline">¶</a></h3>
+<p>A subroutine inside a class is referenced just like any other member, via the <code class="docutils literal notranslate"><span class="pre">%</span></code> character.
+For example, MARBL times the call to the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_compute_carbonate_chemistry()</span></code> from
+the subroutine <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_compute()</span></code> (part of <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_mod.F90</span></code>).
+The timer calls look like this:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_interior_tendency_compute</span><span class="p">(</span> <span class="p">&amp;</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">),</span>                        <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">marbl_timers</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="k">call </span><span class="n">marbl_timers</span><span class="p">%</span><span class="n">start</span><span class="p">(</span><span class="n">marbl_timer_indices</span><span class="p">%</span><span class="n">carbonate_chem_id</span><span class="p">,</span>            <span class="p">&amp;</span>
+                          <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="k">call </span><span class="n">compute_carbonate_chemistry</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span>           <span class="p">&amp;</span>
+       <span class="n">salinity</span><span class="p">,</span> <span class="n">tracer_local</span><span class="p">(:,</span> <span class="p">:),</span> <span class="n">marbl_tracer_indices</span><span class="p">,</span> <span class="n">carbonate</span><span class="p">,</span>       <span class="p">&amp;</span>
+       <span class="n">ph_prev_col</span><span class="p">(:),</span> <span class="n">ph_prev_alt_co2_col</span><span class="p">(:),</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+  <span class="k">call </span><span class="n">marbl_timers</span><span class="p">%</span><span class="k">stop</span><span class="p">(</span><span class="n">marbl_timer_indices</span><span class="p">%</span><span class="n">carbonate_chem_id</span><span class="p">,</span>             <span class="p">&amp;</span>
+                          <span class="n">marbl_status_log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-of-a-subroutine-inside-an-object-oriented-class">
+<h3>Example of a Subroutine Inside an Object-oriented Class<a class="headerlink" href="#example-of-a-subroutine-inside-an-object-oriented-class" title="Permalink to this headline">¶</a></h3>
+<p>The subroutine header looks like this:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">start_timer</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+
+  <span class="k">class</span><span class="p">(</span><span class="n">marbl_internal_timers_type</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">self</span>
+  <span class="kt">integer</span><span class="p">,</span>                           <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">id</span>
+  <span class="k">type</span><span class="p">(</span><span class="n">marbl_log_type</span><span class="p">),</span>              <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">marbl_status_log</span>
+</pre></div>
+</div>
+<p>One key thing to note here is the use of <code class="docutils literal notranslate"><span class="pre">self</span></code>, the first argument to the subroutine.
+In this case, <code class="docutils literal notranslate"><span class="pre">self</span></code> stands for the particular instance of an object of type <code class="docutils literal notranslate"><span class="pre">marbl_internal_timers_type</span></code>.
+The subroutine is actually part of this object, which lets it access members of the class without explicitly passing them through the interface.
+So this subroutine can change members of <code class="docutils literal notranslate"><span class="pre">self%individual_timers(:)</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">individual_timers(:)%cur_start</span></code>).</p>
+</div>
+</div>
+<div class="section" id="associate-construct">
+<h2>Associate construct<a class="headerlink" href="#associate-construct" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">associate</span></code> construct allows complex variables or expression to be denoted by a simple name or “alias.”
+The association between the name and the underlying variable is terminated at the end of the associate block.</p>
+<p>If we look closer at the <code class="docutils literal notranslate"><span class="pre">start_timer</span></code> routine, we see an example:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">associate</span><span class="p">(</span><span class="n">timer</span> <span class="o">=&gt;</span> <span class="n">self</span><span class="p">%</span><span class="n">individual_timers</span><span class="p">(</span><span class="n">id</span><span class="p">))</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">timer</span><span class="p">%</span><span class="n">is_running</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">    </span><span class="n">log_message</span> <span class="o">=</span> <span class="s1">&#39;Timer has already been started!&#39;</span>
+    <span class="k">call </span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">log_error</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="k">  end if</span>
+
+<span class="k">  </span><span class="n">timer</span><span class="p">%</span><span class="n">is_running</span> <span class="o">=</span> <span class="p">.</span><span class="n">true</span><span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="n">timer</span><span class="p">%</span><span class="n">cur_start</span> <span class="o">=</span> <span class="n">get_time</span><span class="p">()</span>
+ <span class="k">end associate</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">timer</span></code> replaces all instances of the more complicated expression <code class="docutils literal notranslate"><span class="pre">self%individual_timers(id)</span></code>.
+The assocation is terminated at <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">associate</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="marbl-interface.html" class="btn btn-neutral float-right" title="MARBL interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction to MARBL framework" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
