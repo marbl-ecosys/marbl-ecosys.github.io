@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding a Diagnostic &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../index.html"/>
+        <link rel="up" title="Development Examples" href="development-examples.html"/>
+        <link rel="next" title="Adding a MARBL Parameter" href="add-settings-parameter.html"/>
+        <link rel="prev" title="Development Examples" href="development-examples.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="development-examples.html">Development Examples</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding a Diagnostic</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-add-to-marbl-diagnostic-indexing-type">Step 1. Add to MARBL diagnostic indexing type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-add-to-diagnostic-structure">Step 2. Add to diagnostic structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-populate-diagnostic-type-with-data">Step 3. Populate diagnostic type with data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-update-the-diagnostics-yaml-files">Step 4. Update the Diagnostics YAML files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-convert-the-yaml-file-to-json">Step 5. Convert the YAML file to JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="add-settings-parameter.html">Adding a MARBL Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add-tracer.html">Adding a Tracer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code-details/index.html">Code Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+          <li><a href="development-examples.html">Development Examples</a> &raquo;</li>
+        
+      <li>Adding a Diagnostic</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/add-diagnostic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-a-diagnostic">
+<span id="add-diagnostic"></span><h1>Adding a Diagnostic<a class="headerlink" href="#adding-a-diagnostic" title="Permalink to this headline">¶</a></h1>
+<p>This is a five step process.
+There are three changes to make in the Fortran code.
+The indexing type is in <code class="docutils literal notranslate"><span class="pre">marbl_interface_private_types.F90</span></code>, and the rest of the code is in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_mod.F90</span></code>.
+(If your diagnostic is part of the carbon isotope tracer module, that code belongs in <code class="docutils literal notranslate"><span class="pre">marbl_ciso_diagnostics_mod.F90</span></code>.)
+There are also two steps to make sure the diagnostic is known the GCM so it is included in the output.</p>
+<p>For this example, we follow the in situ temperature, which uses the <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> index.</p>
+<div class="section" id="step-1-add-to-marbl-diagnostic-indexing-type">
+<span id="ref-add-diag"></span><h2>Step 1. Add to MARBL diagnostic indexing type<a class="headerlink" href="#step-1-add-to-marbl-diagnostic-indexing-type" title="Permalink to this headline">¶</a></h2>
+<p>To reduce the number of string comparisons inside routines called every time-step, MARBL uses integer indices to track many different variables.
+These indices are packed into datatypes to group common indices together.
+So the indices for diagnostics variables are split into <code class="docutils literal notranslate"><span class="pre">marbl_surface_flux_diagnostics_indexing_type</span></code> and <code class="docutils literal notranslate"><span class="pre">marbl_interior_tendency_diagnostics_indexing_type</span></code>.
+<code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> is an interior forcing diagnostic.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
+  <span class="c">! General 2D diags</span>
+  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatcalc</span>
+  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">zsatarag</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="c">! General 3D diags</span>
+  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span> <span class="kd">::</span> <span class="n">insitu_temp</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+  <span class="p">.</span>
+<span class="k">end type </span><span class="n">marbl_interior_tendency_diagnostics_indexing_type</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-add-to-diagnostic-structure">
+<h2>Step 2. Add to diagnostic structure<a class="headerlink" href="#step-2-add-to-diagnostic-structure" title="Permalink to this headline">¶</a></h2>
+<p>Another common feature among MARBL datatypes is the idea of adding an element to a derived type to contain all the data.
+Most derived types, including as <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_type</span></code>,  are “reallocating”:
+when a field is added, a new array of size <code class="docutils literal notranslate"><span class="pre">N+1</span></code> is created, the existing array is copied into the first <code class="docutils literal notranslate"><span class="pre">N</span></code> elements and then deallocated, and the new entry becomes element <code class="docutils literal notranslate"><span class="pre">N+1</span></code>.
+In these situations, pointers are used instead of allocatable arrays so that <code class="docutils literal notranslate"><span class="pre">marbl_instance%{surface,interior}_forcing_diags%diags</span></code> can point to the new array.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">lname</span> <span class="o">=</span> <span class="s1">&#39;in situ temperature&#39;</span>
+<span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;insitu_temp&#39;</span>
+<span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;degC&#39;</span>
+<span class="n">vgrid</span> <span class="o">=</span> <span class="s1">&#39;layer_avg&#39;</span>
+<span class="n">truncate</span> <span class="o">=</span> <span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<span class="k">call </span><span class="n">diags</span><span class="p">%</span><span class="n">add_diagnostic</span><span class="p">(</span><span class="n">lname</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">vgrid</span><span class="p">,</span> <span class="n">truncate</span><span class="p">,</span>     <span class="p">&amp;</span>
+     <span class="n">ind</span><span class="p">%</span><span class="n">insitu_temp</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">marbl_status_log</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
+<span class="k">  call </span><span class="n">marbl_logging_add_diagnostics_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+  <span class="k">return</span>
+<span class="k">end if</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-populate-diagnostic-type-with-data">
+<h2>Step 3. Populate diagnostic type with data<a class="headerlink" href="#step-3-populate-diagnostic-type-with-data" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of the <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_type</span></code> structure is to allow an easy way to pass diagnostics through the interface.
+This step copies data only available in MARBL into the datatype that is available to the GCM.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">associate</span><span class="p">(</span> <span class="p">&amp;</span>
+     <span class="n">kmt</span>   <span class="o">=&gt;</span> <span class="n">domain</span><span class="p">%</span><span class="n">kmt</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">diags</span> <span class="o">=&gt;</span> <span class="n">marbl_interior_tendency_diags</span><span class="p">%</span><span class="n">diags</span><span class="p">,</span> <span class="p">&amp;</span>
+     <span class="n">ind</span>   <span class="o">=&gt;</span> <span class="n">marbl_interior_tendency_diag_ind</span> <span class="p">&amp;</span>
+     <span class="p">)</span>
+<span class="n">diags</span><span class="p">(</span><span class="n">ind</span><span class="p">%</span><span class="n">insitu_temp</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">kmt</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">temperature</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">kmt</span><span class="p">)</span>
+<span class="k">end associate</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In situ temperature is copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_interior_tendency_compute()</span></code>.
+This subroutine also calls many different <code class="docutils literal notranslate"><span class="pre">store_diagnostics_*</span></code> subroutines, but in a future release the <code class="docutils literal notranslate"><span class="pre">store_diagnostics</span></code> routines will be condensed into a smaller subset of routines.
+Regardless, find the routine that makes the most sense for your diagnostic variable.
+(Surface forcing fields are copied to the diagnostic type in <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_surface_flux_compute()</span></code>.)</p>
+</div>
+</div>
+<div class="section" id="step-4-update-the-diagnostics-yaml-files">
+<h2>Step 4. Update the Diagnostics YAML files<a class="headerlink" href="#step-4-update-the-diagnostics-yaml-files" title="Permalink to this headline">¶</a></h2>
+<p>We use a YAML file to provide an easy-to-edit and human-readable text file containing a list of all diagnostics and the recommended frequency of output.
+Developers adding or removing diagnostics should make changes to <code class="docutils literal notranslate"><span class="pre">defaults/diagnostics_latest.yaml</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">insitu_temp </span><span class="p">:</span>
+   <span class="nt">longname </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">in situ temperature</span>
+   <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">degC</span>
+   <span class="nt">vertical_grid </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">layer_avg</span>
+   <span class="nt">frequency </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">medium</span>
+   <span class="nt">operator </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">insitu_temp</span></code> matches what we used for the short name in <a class="reference internal" href="#step-2-add-to-diagnostic-structure">Step 2. Add to diagnostic structure</a>.
+The frequency <code class="docutils literal notranslate"><span class="pre">medium</span></code> means “we recommend outputting this variable monthly”.
+Other acceptable frequencies are <code class="docutils literal notranslate"><span class="pre">never</span></code>, <code class="docutils literal notranslate"><span class="pre">low</span></code> (annual), and <code class="docutils literal notranslate"><span class="pre">high</span></code> (daily).</p>
+<p>The operator means “average over this time period.”
+Other acceptable operators are <code class="docutils literal notranslate"><span class="pre">instantaneous</span></code>, <code class="docutils literal notranslate"><span class="pre">minimum</span></code>, and <code class="docutils literal notranslate"><span class="pre">maximum</span></code>.
+You can recommend multiple frequencies by adding a list to the YAML, as long as the operator key is a list of the same size:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">CaCO3_form_zint </span><span class="p">:</span>
+   <span class="nt">longname </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Total CaCO3 Formation Vertical Integral</span>
+   <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mmol/m^3 cm/s</span>
+   <span class="nt">vertical_grid </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">none</span>
+   <span class="nt">frequency </span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">medium</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">high</span>
+   <span class="nt">operator </span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">average</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-5-convert-the-yaml-file-to-json">
+<h2>Step 5. Convert the YAML file to JSON<a class="headerlink" href="#step-5-convert-the-yaml-file-to-json" title="Permalink to this headline">¶</a></h2>
+<p>We prefer editing YAML files to editing JSON files because they are much easier to maintain (and allow user comments).
+Unfortunately, python does not include a YAML parser in the default distributions.
+Rather than require all users to install <code class="docutils literal notranslate"><span class="pre">pyYAML</span></code>, we require that of MARBL developers and then ask them to convert the YAML files to JSON.
+The <code class="docutils literal notranslate"><span class="pre">MARBL_tools/yaml_to_json.py</span></code> script is provided to do just that:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cd MARBL_tools
+$ ./yaml_to_json.py
+</pre></div>
+</div>
+<p>The rest of the python scripts provided in the <code class="docutils literal notranslate"><span class="pre">MARBL_tools/</span></code> subdirectory rely on the JSON file rather than the YAML.
+<code class="docutils literal notranslate"><span class="pre">MARBL_tools/MARBL_generate_diagnostics_file.py</span></code> will turn the JSON file into a list for the GCM to parse:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># This file contains a list of all diagnostics MARBL can compute for a given configuration,
+# as well as the recommended frequency and operator for outputting each diagnostic.
+# The format of this file is:
+#
+# DIAGNOSTIC_NAME : frequency_operator
+#
+# And fields that should be output at multiple different frequencies will be comma-separated:
+#
+# DIAGNOSTIC_NAME : frequency1_operator1, frequency2_operator2, ..., frequencyN_operatorN
+#
+# Frequencies are never, low, medium, and high.
+# Operators are instantaneous, average, minimum, and maximum.
+.
+.
+.
+CaCO3_form_zint : medium_average, high_average
+.
+.
+.
+insitu_temp : medium_average
+</pre></div>
+</div>
+<p>It is then up to the GCM to convert this text file into a format it recognizes for output (e.g. POP will add to the <code class="docutils literal notranslate"><span class="pre">tavg_contents</span></code> file).</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="add-settings-parameter.html" class="btn btn-neutral float-right" title="Adding a MARBL Parameter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="development-examples.html" class="btn btn-neutral" title="Development Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
