@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>What Tracer Tendencies will MARBL Compute? &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Requirements on the GCM" href="index.html"/>
+        <link rel="next" title="What Forcing Fields has MARBL Requested?" href="forcing_fields.html"/>
+        <link rel="prev" title="Requirements on the GCM" href="index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">MARBL user guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">How to Use MARBL in a GCM</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../init.html">Init</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Requirements on the GCM</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="index.html#provide-data-to-marbl">Provide data to MARBL</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html#computations-across-columns">Computations across columns</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../surface_flux.html">Compute Surface Fluxes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../shutdown.html">Shutdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-guide/index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev-guide/repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">MARBL user guide</a> &raquo;</li>
+        
+          <li><a href="../index.html">How to Use MARBL in a GCM</a> &raquo;</li>
+        
+          <li><a href="index.html">Requirements on the GCM</a> &raquo;</li>
+        
+      <li>What Tracer Tendencies will MARBL Compute?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/usr-guide/GCM-interface/GCM_requirements/tracer_state.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="what-tracer-tendencies-will-marbl-compute">
+<span id="tracer-state"></span><h1>What Tracer Tendencies will MARBL Compute?<a class="headerlink" href="#what-tracer-tendencies-will-marbl-compute" title="Permalink to this headline">¶</a></h1>
+<p>This is an important question, because the GCM will need to provide the current state for each tracer at each timestep (including initial conditions at the beginning of the run).
+MARBL provides a stand-alone test in <code class="docutils literal notranslate"><span class="pre">$MARBL/tests/regression_tests/requested_tracers</span></code> that shows how the MARBL library passes this information to the GCM.
+For example, running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./requested_tracers.py
+</pre></div>
+</div>
+<p>Provides a list of the tracers in the base ecosystem module. The test output is below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-----------------
+Requested tracers
+-----------------
+
+1. PO4
+2. NO3
+3. SiO3
+4. NH4
+5. Fe
+6. Lig
+7. O2
+8. DIC
+9. DIC_ALT_CO2
+10. ALK
+11. ALK_ALT_CO2
+12. DOC
+13. DON
+14. DOP
+15. DOPr
+16. DONr
+17. DOCr
+18. zooC
+19. spChl
+20. spC
+21. spP
+22. spFe
+23. spCaCO3
+24. diatChl
+25. diatC
+26. diatP
+27. diatFe
+28. diatSi
+29. diazChl
+30. diazC
+31. diazP
+32. diazFe
+</pre></div>
+</div>
+<div class="section" id="tracer-metadata-available-from-the-marbl-interface">
+<h2>Tracer Metadata Available from the MARBL Interface<a class="headerlink" href="#tracer-metadata-available-from-the-marbl-interface" title="Permalink to this headline">¶</a></h2>
+<p>The details are found in <code class="docutils literal notranslate"><span class="pre">$MARBL/tests/driver_src/marbl.F90</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_header</span><span class="p">(</span><span class="s1">&#39;Requested tracers&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+<span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">)</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span> <span class="s2">&quot;(I0, 2A)&quot;</span><span class="p">)</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;. &#39;</span><span class="p">,</span>                               <span class="p">&amp;</span>
+    <span class="nb">trim</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">short_name</span><span class="p">)</span>
+  <span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_noerror</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">marbl_interface_class</span></code> contains an object <code class="docutils literal notranslate"><span class="pre">tracer_metadata</span></code>, the length of which is equal to the number of tracers MARBL is computing tendencies of.
+The <code class="docutils literal notranslate"><span class="pre">tracer_metadata_type</span></code> contains metadata for each tracer:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_tracer_metadata_type</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">short_name</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">long_name</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">units</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tend_units</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">flux_units</span>
+   <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">lfull_depth_tavg</span>
+   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tracer_module_name</span>
+<span class="k">end type </span><span class="n">marbl_tracer_metadata_type</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">short_name</span></code> and <code class="docutils literal notranslate"><span class="pre">long_name</span></code> are both unique to the tracer, and either can be used to inform the GCM which tracer each index refers to.</p>
+</div>
+<div class="section" id="example-accessing-tracer-metadata-in-pop">
+<h2>Example: Accessing Tracer Metadata in POP<a class="headerlink" href="#example-accessing-tracer-metadata-in-pop" title="Permalink to this headline">¶</a></h2>
+<p>Details are on the <a class="reference internal" href="../../../implementations/pop/tracers.html#pop-tracers"><span class="std std-ref">implementation</span></a> page</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="forcing_fields.html" class="btn btn-neutral float-right" title="What Forcing Fields has MARBL Requested?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Requirements on the GCM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

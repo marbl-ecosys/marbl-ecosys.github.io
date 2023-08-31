@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Compute Surface Fluxes &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../../index.html"/>
+        <link rel="up" title="How to Use MARBL in a GCM" href="index.html"/>
+        <link rel="next" title="Compute Interior Tracer Tendencies" href="interior_tend.html"/>
+        <link rel="prev" title="Running Means of Fields Provided by MARBL" href="GCM_requirements/running_means.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">MARBL user guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">How to Use MARBL in a GCM</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="init.html">Init</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GCM_requirements/index.html">Requirements on the GCM</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Compute Surface Fluxes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-from-stand-alone-marbl">Example from Stand-Alone MARBL</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutdown.html">Shutdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-guide/index.html">MARBL developer’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev-guide/repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">MARBL user guide</a> &raquo;</li>
+        
+          <li><a href="index.html">How to Use MARBL in a GCM</a> &raquo;</li>
+        
+      <li>Compute Surface Fluxes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/usr-guide/GCM-interface/surface_flux.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compute-surface-fluxes">
+<span id="ref-compute-surface-fluxes"></span><span id="surface-flux"></span><h1>Compute Surface Fluxes<a class="headerlink" href="#compute-surface-fluxes" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code> computes surface fluxes (and related diagnostics) over a 1D array of grid cells.
+The array is assumed to be length <code class="docutils literal notranslate"><span class="pre">num_elements_surface_flux</span></code>, per <a class="reference internal" href="init.html#ref-init-interface"><span class="std std-ref">The init() interface</span></a>.</p>
+<div class="section" id="example-from-stand-alone-marbl">
+<h2>Example from Stand-Alone MARBL<a class="headerlink" href="#example-from-stand-alone-marbl" title="Permalink to this headline">¶</a></h2>
+<p>The GCM needs to make sure the MARBL instance has all the data it needs to compute surface fluxes correctly.
+The following blocks of code can all be found in <code class="docutils literal notranslate"><span class="pre">tests/driver_src/marbl_call_compute_subroutines_drv.F90</span></code>:</p>
+<div class="section" id="step-1-set-global-scalars">
+<span id="ref-global-scalars-surface-flux"></span><h3>Step 1. Set global scalars<a class="headerlink" href="#step-1-set-global-scalars" title="Permalink to this headline">¶</a></h3>
+<p>Currently, there are no MARBL configurations requiring <a class="reference internal" href="../../dev-guide/code-details/global-scalars.html#global-scalars"><span class="std std-ref">global scalars</span></a> to compute the surface fluxes.
+To prepare for future updates where that is no longer the case, it is recommended that the GCM calls</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! 5. Call surface_flux_compute() (all columns simultaneously)</span>
+<span class="c">!    (a) call set_global_scalars() for consistent setting of time-varying scalars</span>
+<span class="c">!        [surface_flux computation doesn&#39;t currently have any time-varying scalars]</span>
+<span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">set_global_scalars</span><span class="p">(</span><span class="s1">&#39;surface_flux&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-copy-data-into-marbl">
+<h3>Step 2. Copy data into MARBL<a class="headerlink" href="#step-2-copy-data-into-marbl" title="Permalink to this headline">¶</a></h3>
+<p>MARBL needs surface tracer values, surface flux forcings, and saved state values.
+These are copied to <code class="docutils literal notranslate"><span class="pre">marbl_instances(n)%tracers_at_surface</span></code>, <code class="docutils literal notranslate"><span class="pre">marbl_instances(n)%surface_flux_forcings</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">marbl_instances(n)%surface_flux_saved_state%state</span></code>, respectively.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">col_id_loc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_cnt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+  <span class="n">col_id</span> <span class="o">=</span> <span class="n">col_start</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="n">col_id_loc</span>
+
+  <span class="c">!  (b) copy surface tracer values into marbl_instances(n)%tracers_at_surface</span>
+  <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">tracers_at_surface</span><span class="p">(</span><span class="n">col_id_loc</span><span class="p">,</span> <span class="p">:)</span> <span class="o">=</span> <span class="n">tracer_initial_vals</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_id</span><span class="p">)</span>
+
+  <span class="c">!  (c) copy surface flux forcings into marbl_instances(n)%surface_flux_forcings</span>
+  <span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">))</span> <span class="k">then</span>
+<span class="k">      </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">col_id_loc</span><span class="p">)</span> <span class="o">=</span> <span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">col_id</span><span class="p">)</span>
+    <span class="k">else</span>
+<span class="k">      </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">col_id_loc</span><span class="p">,:)</span> <span class="o">=</span> <span class="n">surface_flux_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">col_id</span><span class="p">,:)</span>
+    <span class="k">end if</span>
+<span class="k">  end do</span>
+<span class="k">end do</span>
+
+<span class="c">!    (d) populate marbl_instances(n)%surface_flux_saved_state (with 0s)</span>
+<span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">)</span>
+  <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(:)</span> <span class="o">=</span> <span class="mf">0._r8</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-call-surface-flux-compute">
+<h3>Step 3. Call <code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code><a class="headerlink" href="#step-3-call-surface-flux-compute" title="Permalink to this headline">¶</a></h3>
+<p>Since all the data is available on the class object, the call to the routine does not require any arguments:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!    (e) call surface_flux_compute()</span>
+<span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_flux_compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-copy-values-marbl-will-need-later-into-a-local-buffer">
+<span id="ref-after-surface-flux-call"></span><h3>Step 4. Copy values MARBL will need later into a local buffer<a class="headerlink" href="#step-4-copy-values-marbl-will-need-later-into-a-local-buffer" title="Permalink to this headline">¶</a></h3>
+<p>After computing the surface fluxes, MARBL returns several different fields to the GCM.
+Each GCM will handle these fields in its own way, but it is important to know where to find them.
+In the descriptions below, <code class="docutils literal notranslate"><span class="pre">num_elements_surface_flux</span></code> is the number of grid cells MARBL computes surface fluxes for simultaneously.</p>
+<ol class="arabic simple">
+<li>The surface fluxes themselves, which are needed in the source term of the advection solver<ul>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_fluxes(:,:)</span></code> is a <code class="docutils literal notranslate"><span class="pre">num_elements_surface_flux</span></code> by <code class="docutils literal notranslate"><span class="pre">marbl_tracer_cnt</span></code> array</li>
+</ul>
+</li>
+<li>Surface forcing fields, which may be requested by the GCM</li>
+<li>Saved state, which the GCM should store and then provide to MARBL on the next time step<ul>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_saved_state</span></code> is <code class="docutils literal notranslate"><span class="pre">marbl_saved_state_type</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_saved_state%state(:)</span></code> is array of <code class="docutils literal notranslate"><span class="pre">marbl_single_saved_state_type</span></code> containing data GCM should store for next time step</li>
+</ul>
+</li>
+<li>Values that need a global operation performed (per <a class="reference internal" href="#ref-global-scalars-surface-flux"><span class="std std-ref">above</span></a>, there are not yet any of these)<ul>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%glo_avg_fields_surface_flux(:,:)</span></code> is a <code class="docutils literal notranslate"><span class="pre">num_elements_surface_flux</span></code> by <code class="docutils literal notranslate"><span class="pre">glo_avg_field_cnt_surface_flux</span></code> array</li>
+<li>GCM should store fields in global array and compute an average prior to calling <code class="docutils literal notranslate"><span class="pre">interior_tendency_compute()</span></code></li>
+<li>Recommended to do global average as soon as all surface fluxes have been computed</li>
+</ul>
+</li>
+<li>Diagnostics for the GCM to provide to the user<ul>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_diags</span></code> is <code class="docutils literal notranslate"><span class="pre">marbl_diagnostics_type</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">marbl_instance%surface_flux_diags%diags(:)</span></code> is array of <code class="docutils literal notranslate"><span class="pre">marbl_single_diagnostic_type</span></code> containing data GCM should add to diagnostic output</li>
+</ul>
+</li>
+</ol>
+<p>The stand-alone driver does not hold on to saved state (there is no time stepping involved).
+It also does not request any surface forcing fields or compute global averages.
+After the call to <code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code>, the standalone driver copies diags into the buffer and stores the surface fluxes
+(which are also written to the netCDF output file).</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!    (f) write to diagnostic buffers</span>
+<span class="c">!        Note: passing col_start and col_cnt =&gt; surface flux diagnostic buffer</span>
+<span class="k">call </span><span class="n">marbl_io_copy_into_diag_buffer</span><span class="p">(</span><span class="n">col_start</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">col_cnt</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">surface_fluxes</span><span class="p">((</span><span class="n">col_start</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):(</span><span class="n">col_start</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="n">col_cnt</span><span class="p">(</span><span class="n">n</span><span class="p">)),:)</span> <span class="o">=</span> <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">surface_fluxes</span><span class="p">(:,:)</span>
+</pre></div>
+</div>
+<p>A more complete example can be found in <a class="reference internal" href="../../implementations/pop/processing_MARBL_output.html#ref-surface-flux-in-pop"><span class="std std-ref">how POP handles MARBL output</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="interior_tend.html" class="btn btn-neutral float-right" title="Compute Interior Tracer Tendencies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GCM_requirements/running_means.html" class="btn btn-neutral" title="Running Means of Fields Provided by MARBL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
