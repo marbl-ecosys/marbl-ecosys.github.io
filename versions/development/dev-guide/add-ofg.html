@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding an Output for the GCM &mdash; MARBL cesm2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MARBL cesm2.1 documentation" href="../index.html"/>
+        <link rel="up" title="Development Examples" href="development-examples.html"/>
+        <link rel="next" title="Code Snippets" href="code-details/index.html"/>
+        <link rel="prev" title="Adding a Tracer" href="add-tracer.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MARBL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                
+                  <div class="version-dropdown">
+                    <select class="version-list" id="version-list">
+                      <option value=''>cesm2.1</option>
+                      
+                        
+                          <option value="../latest">latest</option>
+                        
+                      
+                        
+                      
+                    </select>
+                  </div>
+                
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Marine Biogeochemistry Library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../usr-guide/index.html">MARBL user guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/index.html">Examples of MARBL Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MARBL developer’s guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction to MARBL framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coding-conventions.html">Coding conventions in MARBL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marbl-interface.html">MARBL interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="development-examples.html">Development Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="add-diagnostic.html">Adding a Diagnostic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add-settings-parameter.html">Adding a MARBL Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add-tracer.html">Adding a Tracer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adding an Output for the GCM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-add-to-marbl-output-for-gcm-indexing-type">Step 1. Add to MARBL output for GCM indexing type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-add-to-marbl-output-for-gcm-output-registry">Step 2. Add to MARBL output for GCM output registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-copy-output-into-output-for-gcm-type">Step 3. Copy Output into <code class="docutils literal notranslate"><span class="pre">output_for_GCM_type</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code-details/index.html">Code Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sci-guide/index.html">MARBL scientific documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repo-access/index.html">Rules of engagement</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MARBL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MARBL developer’s guide</a> &raquo;</li>
+        
+          <li><a href="development-examples.html">Development Examples</a> &raquo;</li>
+        
+      <li>Adding an Output for the GCM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/dev-guide/add-ofg.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-an-output-for-the-gcm">
+<span id="add-ofg"></span><h1>Adding an Output for the GCM<a class="headerlink" href="#adding-an-output-for-the-gcm" title="Permalink to this headline">¶</a></h1>
+<p>In addition to surface fluxes and interior tendencies, MARBL can provide <a class="reference internal" href="../usr-guide/GCM-interface/additional_output.html#additional-output"><span class="std std-ref">additional output</span></a> as well.
+These might be fluxes that feed back to the atmosphere, or tracer sums used for other physical properties.
+Adding a new output is a straightforward process.</p>
+<div class="section" id="step-1-add-to-marbl-output-for-gcm-indexing-type">
+<h2>Step 1. Add to MARBL output for GCM indexing type<a class="headerlink" href="#step-1-add-to-marbl-output-for-gcm-indexing-type" title="Permalink to this headline">¶</a></h2>
+<p>MARBL tracks the internal index of each output for the GCM in the <code class="docutils literal notranslate"><span class="pre">output_for_GCM_type</span></code> components of the interface
+(<code class="docutils literal notranslate"><span class="pre">surface_flux_output</span></code> and <code class="docutils literal notranslate"><span class="pre">interior_tendency_output</span></code>).
+There is a module variable in <code class="docutils literal notranslate"><span class="pre">marbl_interface_public_types.F90</span></code> of type <code class="docutils literal notranslate"><span class="pre">marbl_output_for_GCM_indexing_type</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">marbl_output_for_GCM_indexing_type</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux_o2_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux_co2_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux_nhx_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">total_surfChl_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">total_Chl_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="k">end type </span><span class="n">marbl_output_for_GCM_indexing_type</span>
+<span class="k">type</span><span class="p">(</span><span class="n">marbl_output_for_GCM_indexing_type</span><span class="p">),</span><span class="w"> </span><span class="k">target</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ofg_ind</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ofg_ind</span></code> is a target because there is a registry of all defined outputs for the GCM that use pointers to
+make sure the correct index is updated.
+Any new outputs for the GCM must have an index added to this indexing type.</p>
+</div>
+<div class="section" id="step-2-add-to-marbl-output-for-gcm-output-registry">
+<h2>Step 2. Add to MARBL output for GCM output registry<a class="headerlink" href="#step-2-add-to-marbl-output-for-gcm-output-registry" title="Permalink to this headline">¶</a></h2>
+<p>MARBL tracks what outputs are available via the <code class="docutils literal notranslate"><span class="pre">marbl_output_for_GCM_registry_type</span></code>.
+When a GCM calls <code class="docutils literal notranslate"><span class="pre">marbl_instance%add_output_for_GCM()</span></code>,
+MARBL checks the registry to see if it can provide the output.</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">marbl_output_for_GCM_linked_list_type</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">short_name</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">long_name</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">units</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">field_source</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">err_message</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">id</span>
+<span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">marbl_output_for_GCM_linked_list_type</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">NULL</span><span class="p">()</span>
+<span class="k">end type </span><span class="n">marbl_output_for_GCM_linked_list_type</span>
+
+<span class="c">!*****************************************************************************</span>
+
+<span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">marbl_output_for_GCM_registry_type</span>
+<span class="w">  </span><span class="k">type</span><span class="p">(</span><span class="n">marbl_output_for_GCM_linked_list_type</span><span class="p">),</span><span class="w"> </span><span class="k">pointer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">registered_outputs</span>
+<span class="k">contains</span>
+<span class="k">  procedure</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w">  </span><span class="kd">::</span><span class="w"> </span><span class="n">create_registry</span>
+<span class="w">  </span><span class="k">procedure</span><span class="p">,</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">add_registry_entry</span>
+<span class="k">end type </span><span class="n">marbl_output_for_GCM_registry_type</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">create_registry()</span></code> is called during MARBL initialization,
+and it makes repeated use of the <code class="docutils literal notranslate"><span class="pre">add_registry_entry()</span></code> subroutine.
+To add a new output to the registry, copy an existing block and modify appropriately:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! Surface Chlorophyll</span>
+<span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">base_bio_on</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">  </span><span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;requires base biotic tracers&quot;</span>
+<span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_registry_entry</span><span class="p">(</span><span class="n">short_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;total_surfChl&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">long_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Total Surface Chlorophyll Concentration&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mg/m^3&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">field_source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;surface_flux&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_surfChl_id</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">err_message</span><span class="p">)</span>
+
+<span class="c">! Full Depth Chlorophyll</span>
+<span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">base_bio_on</span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">  </span><span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;requires base biotic tracers&quot;</span>
+<span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_registry_entry</span><span class="p">(</span><span class="n">short_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;total_Chl&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">long_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Total Chlorophyll Concentration&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mg/m^3&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">field_source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;interior_tendency&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_Chl_id</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                             </span><span class="n">err_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">err_message</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">field_source</span></code> will tell the GCM whether to look for updated values of this output
+after calls to <code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code> or <code class="docutils literal notranslate"><span class="pre">interior_tendency_compute()</span></code>.</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">err_message</span></code> is an empty string, then this output is available for the GCM.
+If MARBL is configured in a way such that this output will not be computed,
+<code class="docutils literal notranslate"><span class="pre">err_message</span></code> should give a concise explanation of why it is unavailable.
+MARBL will return the error <code class="docutils literal notranslate"><span class="pre">{short_name}</span> <span class="pre">{err_message}</span></code> – for example,
+if <code class="docutils literal notranslate"><span class="pre">base_bio_on</span> <span class="pre">=</span> <span class="pre">.false.</span></code> and a GCM requests <code class="docutils literal notranslate"><span class="pre">total_Chl</span></code> then MARBL will abort with the message
+<code class="docutils literal notranslate"><span class="pre">total_Chl</span> <span class="pre">requires</span> <span class="pre">base</span> <span class="pre">biotic</span> <span class="pre">tracers</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="step-3-copy-output-into-output-for-gcm-type">
+<h2>Step 3. Copy Output into <code class="docutils literal notranslate"><span class="pre">output_for_GCM_type</span></code><a class="headerlink" href="#step-3-copy-output-into-output-for-gcm-type" title="Permalink to this headline">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">field_source</span> <span class="pre">=</span> <span class="pre">&quot;surface_flux&quot;</span></code> you need something like this inside <code class="docutils literal notranslate"><span class="pre">surface_flux_compute()</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!-----------------------------------------------------------------------</span>
+<span class="c">!  Compute surface chlorophyll (if requested by GCM)</span>
+<span class="c">!-----------------------------------------------------------------------</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_surfChl_id</span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">  </span><span class="n">totalChl_loc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c0</span>
+<span class="w">  </span><span class="k">do </span><span class="n">auto_ind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">autotroph_cnt</span>
+<span class="w">    </span><span class="n">totalChl_loc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">totalChl_loc</span><span class="w"> </span><span class="o">+</span><span class="w">                                         </span><span class="p">&amp;</span>
+<span class="w">      </span><span class="nb">max</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span><span class="w"> </span><span class="n">tracers_at_surface</span><span class="p">(:,</span><span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">auto_inds</span><span class="p">(</span><span class="n">auto_ind</span><span class="p">)%</span><span class="n">Chl_ind</span><span class="p">))</span>
+<span class="w">  </span><span class="k">end do</span>
+<span class="k">  </span><span class="n">surface_flux_output</span><span class="p">%</span><span class="n">outputs_for_GCM</span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_surfChl_id</span><span class="p">)%</span><span class="n">forcing_field_0d</span><span class="p">(:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">totalChl_loc</span>
+<span class="k">end if</span>
+</pre></div>
+</div>
+<p>Otherwise, <code class="docutils literal notranslate"><span class="pre">field_source</span> <span class="pre">=</span> <span class="pre">&quot;interior_tendency&quot;</span></code> and you need something like this inside <code class="docutils literal notranslate"><span class="pre">interior_tendency_compute()</span></code>:</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!-----------------------------------------------------------------------</span>
+<span class="c">!  Compute Chlorophyll (if requested by GCM)</span>
+<span class="c">!-----------------------------------------------------------------------</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_Chl_id</span><span class="p">.</span><span class="n">ne</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">  </span><span class="n">interior_tendency_output</span><span class="p">%</span><span class="n">outputs_for_GCM</span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_Chl_id</span><span class="p">)%</span><span class="n">forcing_field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c0</span>
+<span class="w">  </span><span class="k">do </span><span class="n">auto_ind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">autotroph_cnt</span>
+<span class="w">    </span><span class="n">interior_tendency_output</span><span class="p">%</span><span class="n">outputs_for_GCM</span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_Chl_id</span><span class="p">)%</span><span class="n">forcing_field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="n">interior_tendency_output</span><span class="p">%</span><span class="n">outputs_for_GCM</span><span class="p">(</span><span class="n">ofg_ind</span><span class="p">%</span><span class="n">total_Chl_id</span><span class="p">)%</span><span class="n">forcing_field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="n">tracer_local</span><span class="p">(</span><span class="n">marbl_tracer_indices</span><span class="p">%</span><span class="n">auto_inds</span><span class="p">(</span><span class="n">auto_ind</span><span class="p">)%</span><span class="n">Chl_ind</span><span class="p">,:)</span>
+<span class="w">  </span><span class="k">end do</span>
+<span class="k">end if</span>
+</pre></div>
+</div>
+<p>Note that, in both examples, the output is only computed and stored if the index is positive.
+If the GCM did not request this output,
+memory will not be allocated to store it and MARBL won’t spend time computing it.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code-details/index.html" class="btn btn-neutral float-right" title="Code Snippets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="add-tracer.html" class="btn btn-neutral" title="Adding a Tracer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, National Science Foundation and U.S. Department of Energy.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+     
+<script>var version_json_loc = "../../versions.json";</script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'cesm2.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/pop_ver.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

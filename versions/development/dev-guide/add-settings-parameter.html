@@ -126,6 +126,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="add-tracer.html">Adding a Tracer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add-ofg.html">Adding an Output for the GCM</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="code-details/index.html">Code Snippets</a></li>
@@ -203,7 +204,7 @@
   <div class="section" id="adding-a-marbl-parameter">
 <span id="add-settings-parameter"></span><h1>Adding a MARBL Parameter<a class="headerlink" href="#adding-a-marbl-parameter" title="Permalink to this headline">¶</a></h1>
 <p>This is a five step process.
-There are three changes to make in the Fortran code, all of which are made in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code> <a class="footnote-reference" href="#id2" id="id1">[*]</a>.
+There are three changes to make in the Fortran code, all of which are made in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code> <a class="footnote-reference" href="#footnote-1" id="footnote-reference-1">[*]</a>.
 There are also two steps to make sure the parameter is picked up by the python tools to allow non-default values to be set.</p>
 <p>Settings parameters are sorted into four categories that are processed in the following order:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>general_parms
@@ -218,28 +219,28 @@ During initialization, parameters will be defined and the default values will be
 The defaults will be overwritten if the GCM called <code class="docutils literal notranslate"><span class="pre">marbl_instance%put_setting()</span></code> before calling <code class="docutils literal notranslate"><span class="pre">init()</span></code>.</p>
 <p>For this example, we follow the minimum O2 needed for prodution and consumption parameter, which is <code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> in the code.
 <code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is a general parameter.</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
+<table class="docutils footnote" frame="void" id="footnote-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[*]</a></td><td>The only exception is for parameters dealing with PFTs, those are in <code class="docutils literal notranslate"><span class="pre">marbl_pft_mod.F90</span></code>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#footnote-reference-1">[*]</a></td><td>The only exception is for parameters dealing with PFTs, those are in <code class="docutils literal notranslate"><span class="pre">marbl_pft_mod.F90</span></code>.</td></tr>
 </tbody>
 </table>
 <div class="section" id="step-1-create-new-module-level-variable">
 <h2>Step 1. Create new module-level variable<a class="headerlink" href="#step-1-create-new-module-level-variable" title="Permalink to this headline">¶</a></h2>
 <p>All parameter settings are module variables in <code class="docutils literal notranslate"><span class="pre">marbl_settings_mod.F90</span></code>.
 Further, all subroutines and module variables are public in this module.</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">r8</span><span class="p">),</span> <span class="k">target</span> <span class="kd">::</span> <span class="p">&amp;</span>
-<span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span> <span class="k">target</span> <span class="kd">::</span> <span class="p">&amp;</span>
-     <span class="n">Jint_Ctot_thres_molpm2pyr</span><span class="p">,</span>  <span class="p">&amp;</span> <span class="c">! MARBL will abort if abs(Jint_Ctot) exceeds this threshold</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
-     <span class="n">parm_Fe_bioavail</span><span class="p">,</span>           <span class="p">&amp;</span> <span class="c">! fraction of Fe flux that is bioavailable</span>
-     <span class="n">parm_o2_min</span><span class="p">,</span>                <span class="p">&amp;</span> <span class="c">! min O2 needed for prod &amp; consump. (nmol/cm^3)</span>
-     <span class="n">parm_o2_min_delta</span><span class="p">,</span>          <span class="p">&amp;</span> <span class="c">! width of min O2 range (nmol/cm^3)</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
-     <span class="p">.</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">r8</span><span class="p">),</span><span class="w"> </span><span class="k">target</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span><span class="w"> </span><span class="k">target</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">Jint_Ctot_thres_molpm2pyr</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c">! MARBL will abort if abs(Jint_Ctot) exceeds this threshold</span>
+<span class="w">     </span><span class="p">.</span>
+<span class="w">     </span><span class="p">.</span>
+<span class="w">     </span><span class="p">.</span>
+<span class="w">     </span><span class="n">parm_Fe_bioavail</span><span class="p">,</span><span class="w">           </span><span class="p">&amp;</span><span class="w"> </span><span class="c">! fraction of Fe flux that is bioavailable</span>
+<span class="w">     </span><span class="n">parm_o2_min</span><span class="p">,</span><span class="w">                </span><span class="p">&amp;</span><span class="w"> </span><span class="c">! min O2 needed for prod &amp; consump. (nmol/cm^3)</span>
+<span class="w">     </span><span class="n">parm_o2_min_delta</span><span class="p">,</span><span class="w">          </span><span class="p">&amp;</span><span class="w"> </span><span class="c">! width of min O2 range (nmol/cm^3)</span>
+<span class="w">     </span><span class="p">.</span>
+<span class="w">     </span><span class="p">.</span>
+<span class="w">     </span><span class="p">.</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -251,25 +252,25 @@ Further, all subroutines and module variables are public in this module.</p>
 <h2>Step 2. Add the parameter to MARBL registry<a class="headerlink" href="#step-2-add-the-parameter-to-marbl-registry" title="Permalink to this headline">¶</a></h2>
 <p>This registry allows the parameter to be both set by and returned to the GCM.
 Parameters in each of the four possible categories are defined separately from each other, in one of the following subroutines:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
-<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_counts</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
-<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_derived_types</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
-<span class="k">subroutine </span><span class="n">marbl_settings_define_tracer_dependent</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_counts</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_PFT_derived_types</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_status_log</span><span class="p">)</span>
+<span class="k">subroutine </span><span class="n">marbl_settings_define_tracer_dependent</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_status_log</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is registered in <code class="docutils literal notranslate"><span class="pre">marbl_settings_define_general_parms</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">marbl_status_log</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_define_general_parms</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_status_log</span><span class="p">)</span>
 <span class="p">.</span>
 <span class="p">.</span>
 <span class="p">.</span>
-  <span class="n">sname</span>     <span class="o">=</span> <span class="s1">&#39;parm_o2_min&#39;</span>
-  <span class="n">lname</span>     <span class="o">=</span> <span class="s1">&#39;Minimum O2 needed for production and consumption&#39;</span>
-  <span class="n">units</span>     <span class="o">=</span> <span class="s1">&#39;nmol/cm^3&#39;</span>
-  <span class="n">datatype</span>  <span class="o">=</span> <span class="s1">&#39;real&#39;</span>
-  <span class="n">rptr</span>      <span class="o">=&gt;</span> <span class="n">parm_o2_min</span>
-  <span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_var</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">lname</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span>       <span class="p">&amp;</span>
-                      <span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">rptr</span><span class="o">=</span><span class="n">rptr</span><span class="p">)</span>
-  <span class="k">call </span><span class="n">check_and_log_add_var_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">subname</span><span class="p">,</span> <span class="n">labort_marbl_loc</span><span class="p">)</span>
+<span class="w">  </span><span class="n">sname</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;parm_o2_min&#39;</span>
+<span class="w">  </span><span class="n">lname</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Minimum O2 needed for production and consumption&#39;</span>
+<span class="w">  </span><span class="n">units</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;nmol/cm^3&#39;</span>
+<span class="w">  </span><span class="n">datatype</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;real&#39;</span>
+<span class="w">  </span><span class="n">rptr</span><span class="w">      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">parm_o2_min</span>
+<span class="w">  </span><span class="k">call </span><span class="n">this</span><span class="p">%</span><span class="n">add_var</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span><span class="w"> </span><span class="n">lname</span><span class="p">,</span><span class="w"> </span><span class="n">units</span><span class="p">,</span><span class="w"> </span><span class="n">datatype</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span>
+<span class="w">                      </span><span class="n">marbl_status_log</span><span class="p">,</span><span class="w"> </span><span class="n">rptr</span><span class="o">=</span><span class="n">rptr</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">check_and_log_add_var_error</span><span class="p">(</span><span class="n">marbl_status_log</span><span class="p">,</span><span class="w"> </span><span class="n">sname</span><span class="p">,</span><span class="w"> </span><span class="n">subname</span><span class="p">,</span><span class="w"> </span><span class="n">labort_marbl_loc</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -286,12 +287,12 @@ The subroutines for setting defaults are</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">parm_o2_min</span></code> is set in <code class="docutils literal notranslate"><span class="pre">marbl_settings_set_defaults_general_parms</span></code>:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">marbl_settings_set_defaults_general_parms</span><span class="p">()</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="n">parm_Fe_bioavail</span>              <span class="o">=</span> <span class="mf">1.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
-  <span class="n">parm_o2_min</span>                   <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
-  <span class="n">parm_o2_min_delta</span>             <span class="o">=</span> <span class="mf">5.0_r8</span>          <span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="n">parm_Fe_bioavail</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_r8</span><span class="w">          </span><span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+<span class="w">  </span><span class="n">parm_o2_min</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0_r8</span><span class="w">          </span><span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
+<span class="w">  </span><span class="n">parm_o2_min_delta</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0_r8</span><span class="w">          </span><span class="c">! CESM USERS - DO NOT CHANGE HERE! POP calls put_setting() for this var, see CESM NOTE above</span>
 </pre></div>
 </div>
 </div>
@@ -344,19 +345,19 @@ Release branches may only offer specific versions of this file, such as <code cl
 <span class="l l-Scalar l-Scalar-Plain">.</span>
 <span class="l l-Scalar l-Scalar-Plain">.</span>
 <span class="l l-Scalar l-Scalar-Plain">################################################################################</span>
-<span class="l l-Scalar l-Scalar-Plain">#                        Category 1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">General Parameters</span>                        <span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">#                        Category 1</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">General Parameters</span><span class="w">                        </span><span class="c1">#</span>
 <span class="c1">################################################################################</span>
 
 <span class="nt">general_parms </span><span class="p">:</span>
-   <span class="l l-Scalar l-Scalar-Plain">.</span>
-   <span class="l l-Scalar l-Scalar-Plain">.</span>
-   <span class="l l-Scalar l-Scalar-Plain">.</span>
-   <span class="l l-Scalar l-Scalar-Plain">parm_o2_min</span> <span class="p p-Indicator">:</span>
-      <span class="nt">longname </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Minimum O2 needed for production &amp; consumption</span>
-      <span class="nt">subcategory </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4. general parameters</span>
-      <span class="nt">units </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nmol/cm^3</span>
-      <span class="nt">datatype </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
-      <span class="nt">default_value </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">parm_o2_min</span><span class="w"> </span><span class="p p-Indicator">:</span>
+<span class="w">      </span><span class="nt">longname </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Minimum O2 needed for production &amp; consumption</span>
+<span class="w">      </span><span class="nt">subcategory </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4. general parameters</span>
+<span class="w">      </span><span class="nt">units </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nmol/cm^3</span>
+<span class="w">      </span><span class="nt">datatype </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real</span>
+<span class="w">      </span><span class="nt">default_value </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
 </pre></div>
 </div>
 </div>

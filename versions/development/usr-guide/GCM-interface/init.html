@@ -120,6 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="GCM_requirements/index.html">Requirements on the GCM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="surface_flux.html">Compute Surface Fluxes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="additional_output.html">Additional Output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shutdown.html">Shutdown</a></li>
 </ul>
 </li>
@@ -196,14 +197,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="init">
-<span id="id1"></span><h1>Init<a class="headerlink" href="#init" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="init-1">
+<span id="init"></span><h1>Init<a class="headerlink" href="#init-1" title="Permalink to this headline">¶</a></h1>
 <p>The init stage is where MARBL is configured, parameters are set, and memory is allocated.
 If the GCM wants to specify non-default parameter values, that needs to be done with <code class="docutils literal notranslate"><span class="pre">put_setting()</span></code> statements before calling <code class="docutils literal notranslate"><span class="pre">init()</span></code>.
 There are three different interfaces that can be used; all are equivalent, but different GCMs may find it easiest to call different interfaces.</p>
 <ol class="arabic">
 <li><p class="first">Two arguments: a string containing the variable name, and then the variable value (in proper datatype)</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="s1">&#39;ciso_on&#39;</span><span class="p">,</span> <span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="s1">&#39;ciso_on&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
 </pre></div>
 </div>
 </li>
@@ -213,7 +214,7 @@ There are three different interfaces that can be used; all are equivalent, but d
 </div>
 </li>
 <li><p class="first">Three arguments: strings containing the variable name, the datatype, and the value</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="s1">&#39;ciso_on&#39;</span><span class="p">,</span> <span class="s1">&#39;logical&#39;</span><span class="p">,</span> <span class="s1">&#39;.true.&#39;</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="s1">&#39;ciso_on&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;logical&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;.true.&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -223,29 +224,29 @@ There is no check in the <code class="docutils literal notranslate"><span class=
 For example, <code class="docutils literal notranslate"><span class="pre">autotrophs(3)%sname</span></code> is defined if <code class="docutils literal notranslate"><span class="pre">autotroph_cnt</span> <span class="pre">&gt;=</span> <span class="pre">3</span></code> but not if <code class="docutils literal notranslate"><span class="pre">autotroph_cnt</span> <span class="pre">&lt;</span> <span class="pre">3</span></code>.</p>
 <div class="section" id="the-init-interface">
 <span id="ref-init-interface"></span><h2>The <code class="docutils literal notranslate"><span class="pre">init()</span></code> interface<a class="headerlink" href="#the-init-interface" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">init</span><span class="p">(</span><span class="n">this</span><span class="p">,</span>                   <span class="p">&amp;</span>
-     <span class="n">gcm_num_levels</span><span class="p">,</span>                    <span class="p">&amp;</span>
-     <span class="n">gcm_num_PAR_subcols</span><span class="p">,</span>               <span class="p">&amp;</span>
-     <span class="n">gcm_num_elements_surface_flux</span><span class="p">,</span>     <span class="p">&amp;</span>
-     <span class="n">gcm_delta_z</span><span class="p">,</span>                       <span class="p">&amp;</span>
-     <span class="n">gcm_zw</span><span class="p">,</span>                            <span class="p">&amp;</span>
-     <span class="n">gcm_zt</span><span class="p">,</span>                            <span class="p">&amp;</span>
-     <span class="n">unit_system_opt</span><span class="p">,</span>                   <span class="p">&amp;</span>
-     <span class="n">lgcm_has_global_ops</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">init</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w">                   </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_num_levels</span><span class="p">,</span><span class="w">                    </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_num_PAR_subcols</span><span class="p">,</span><span class="w">               </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_num_elements_surface_flux</span><span class="p">,</span><span class="w">     </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_delta_z</span><span class="p">,</span><span class="w">                       </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_zw</span><span class="p">,</span><span class="w">                            </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">gcm_zt</span><span class="p">,</span><span class="w">                            </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">unit_system_opt</span><span class="p">,</span><span class="w">                   </span><span class="p">&amp;</span>
+<span class="w">     </span><span class="n">lgcm_has_global_ops</span><span class="p">)</span>
 
-  <span class="p">.</span>
-  <span class="p">.</span>
-  <span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
 
-  <span class="k">class</span><span class="p">(</span><span class="n">marbl_interface_class</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">this</span>
-  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_levels</span>
-  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_PAR_subcols</span>
-  <span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span>            <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_num_elements_surface_flux</span>
-  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_delta_z</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
-  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_zw</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
-  <span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span>                     <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">gcm_zt</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span> <span class="c">! thickness of layer k</span>
-  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span>  <span class="k">optional</span><span class="p">,</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">unit_system_opt</span>
-  <span class="kt">logical</span><span class="p">,</span>           <span class="k">optional</span><span class="p">,</span>  <span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>    <span class="kd">::</span> <span class="n">lgcm_has_global_ops</span>
+<span class="w">  </span><span class="k">class</span><span class="p">(</span><span class="n">marbl_interface_class</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span><span class="w">            </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_num_levels</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span><span class="w">            </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_num_PAR_subcols</span>
+<span class="w">  </span><span class="kt">integer</span><span class="p">(</span><span class="n">int_kind</span><span class="p">),</span><span class="w">            </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_num_elements_surface_flux</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span><span class="w">                     </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_delta_z</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span><span class="w"> </span><span class="c">! thickness of layer k</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span><span class="w">                     </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_zw</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span><span class="w"> </span><span class="c">! thickness of layer k</span>
+<span class="w">  </span><span class="kt">real</span><span class="p">(</span><span class="n">r8</span><span class="p">),</span><span class="w">                     </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">gcm_zt</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="p">)</span><span class="w"> </span><span class="c">! thickness of layer k</span>
+<span class="w">  </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w">  </span><span class="k">optional</span><span class="p">,</span><span class="w">  </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">unit_system_opt</span>
+<span class="w">  </span><span class="kt">logical</span><span class="p">,</span><span class="w">           </span><span class="k">optional</span><span class="p">,</span><span class="w">  </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w">    </span><span class="kd">::</span><span class="w"> </span><span class="n">lgcm_has_global_ops</span>
 </pre></div>
 </div>
 <p>Note the two optional arguments:
@@ -262,48 +263,48 @@ There is not a corresponding <code class="docutils literal notranslate"><span cl
 <div class="section" id="example-from-stand-alone-marbl">
 <h2>Example from Stand-Alone MARBL<a class="headerlink" href="#example-from-stand-alone-marbl" title="Permalink to this headline">¶</a></h2>
 <p>The stand-alone MARBL driver / test suite use settings files (<code class="docutils literal notranslate"><span class="pre">*.settings</span></code> in the <code class="docutils literal notranslate"><span class="pre">tests/input_files/settings/</span></code> directory) that are processed in the following manner:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">settings_file_line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-<span class="k">do while</span><span class="p">(</span><span class="n">ioerr</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span> <span class="mi">0</span><span class="p">)</span>
-  <span class="c">! (i) broadcast settings_file_line and call put_setting(); abort if error</span>
-  <span class="c">!     calling with empty settings_file_line on first entry to loop is okay, and</span>
-  <span class="c">!     this ensures we don&#39;t call put_setting with a garbage line if</span>
-  <span class="c">!     ioerr is non-zero</span>
-  <span class="k">call </span><span class="n">marbl_mpi_bcast</span><span class="p">(</span><span class="n">settings_file_line</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-  <span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="n">settings_file_line</span><span class="p">)</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">    call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;put_setting(settings_file_line)&quot;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
-    <span class="k">call </span><span class="n">marbl_io_print_marbl_log</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">)</span>
-  <span class="k">end if</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="n">settings_file_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+<span class="k">do while</span><span class="p">(</span><span class="n">ioerr</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="c">! (i) broadcast settings_file_line and call put_setting(); abort if error</span>
+<span class="w">  </span><span class="c">!     calling with empty settings_file_line on first entry to loop is okay, and</span>
+<span class="w">  </span><span class="c">!     this ensures we don&#39;t call put_setting with a garbage line if</span>
+<span class="w">  </span><span class="c">!     ioerr is non-zero</span>
+<span class="w">  </span><span class="k">call </span><span class="n">marbl_mpi_bcast</span><span class="p">(</span><span class="n">settings_file_line</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">put_setting</span><span class="p">(</span><span class="n">settings_file_line</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">    call </span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s2">&quot;put_setting(settings_file_line)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">subname</span><span class="p">)</span>
+<span class="w">    </span><span class="k">call </span><span class="n">marbl_io_print_marbl_log</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">StatusLog</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end if</span>
 
-  <span class="c">! (ii) master task reads next line in settings file</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">my_task</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span> <span class="mi">0</span><span class="p">)</span> <span class="k">read</span><span class="p">(</span><span class="mi">97</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">,</span> <span class="n">iostat</span><span class="o">=</span><span class="n">ioerr</span><span class="p">)</span> <span class="n">settings_file_line</span>
+<span class="w">  </span><span class="c">! (ii) master task reads next line in settings file</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">my_task</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">read</span><span class="p">(</span><span class="mi">97</span><span class="p">,</span><span class="s2">&quot;(A)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">iostat</span><span class="o">=</span><span class="n">ioerr</span><span class="p">)</span><span class="w"> </span><span class="n">settings_file_line</span>
 
-  <span class="c">! (iii) broadcast settings file line to all tasks (along with iostat)</span>
-  <span class="k">call </span><span class="n">marbl_mpi_bcast</span><span class="p">(</span><span class="n">ioerr</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="c">! (iii) broadcast settings file line to all tasks (along with iostat)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">marbl_mpi_bcast</span><span class="p">(</span><span class="n">ioerr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="k">end do</span>
 
-<span class="k">if</span> <span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="nb">is_iostat_end</span><span class="p">(</span><span class="n">ioerr</span><span class="p">))</span> <span class="k">then</span>
-<span class="k">  if</span> <span class="p">(</span><span class="n">my_task</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span> <span class="mi">0</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">    write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,I0)&quot;</span><span class="p">)</span> <span class="s2">&quot;ioerr = &quot;</span><span class="p">,</span> <span class="n">ioerr</span>
-    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(2A)&quot;</span><span class="p">)</span> <span class="s2">&quot;ERROR encountered when reading MARBL settings file &quot;</span><span class="p">,</span> <span class="nb">trim</span><span class="p">(</span><span class="n">settings_file</span><span class="p">)</span>
-  <span class="k">end if</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="nb">is_iostat_end</span><span class="p">(</span><span class="n">ioerr</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">  if</span><span class="w"> </span><span class="p">(</span><span class="n">my_task</span><span class="w"> </span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">    write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(A,I0)&quot;</span><span class="p">)</span><span class="w"> </span><span class="s2">&quot;ioerr = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ioerr</span>
+<span class="w">    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">&quot;(2A)&quot;</span><span class="p">)</span><span class="w"> </span><span class="s2">&quot;ERROR encountered when reading MARBL settings file &quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">settings_file</span><span class="p">)</span>
+<span class="w">  </span><span class="k">end if</span>
 <span class="k">  call </span><span class="n">marbl_mpi_abort</span><span class="p">()</span>
 <span class="k">end if</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">init()</span></code> is then called from the individual test:</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">! 3. Initialize each instance of MARBL</span>
-<span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">)</span>
-  <span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">init</span><span class="p">(</span><span class="n">gcm_num_levels</span> <span class="o">=</span> <span class="n">num_levels</span><span class="p">,</span>                <span class="p">&amp;</span>
-                               <span class="n">gcm_num_PAR_subcols</span> <span class="o">=</span> <span class="n">num_PAR_subcols</span><span class="p">,</span>      <span class="p">&amp;</span>
-                               <span class="n">gcm_num_elements_surface_flux</span> <span class="o">=</span> <span class="n">col_cnt</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="p">&amp;</span>
-                               <span class="n">gcm_delta_z</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">%</span><span class="n">delta_z</span><span class="p">,</span>            <span class="p">&amp;</span>
-                               <span class="n">gcm_zw</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">%</span><span class="n">zw</span><span class="p">,</span>                      <span class="p">&amp;</span>
-                               <span class="n">gcm_zt</span> <span class="o">=</span> <span class="n">grid_data</span><span class="p">%</span><span class="n">zt</span><span class="p">,</span>                      <span class="p">&amp;</span>
-                               <span class="n">unit_system_opt</span> <span class="o">=</span> <span class="n">unit_system_opt</span><span class="p">)</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span> <span class="k">then</span>
-<span class="k">    call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;marbl%init&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
-    <span class="k">return</span>
+<span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">init</span><span class="p">(</span><span class="n">gcm_num_levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_levels</span><span class="p">,</span><span class="w">                </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">gcm_num_PAR_subcols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">num_PAR_subcols</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">gcm_num_elements_surface_flux</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col_cnt</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">gcm_delta_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">grid_data</span><span class="p">%</span><span class="n">delta_z</span><span class="p">,</span><span class="w">            </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">gcm_zw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">grid_data</span><span class="p">%</span><span class="n">zw</span><span class="p">,</span><span class="w">                      </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">gcm_zt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">grid_data</span><span class="p">%</span><span class="n">zt</span><span class="p">,</span><span class="w">                      </span><span class="p">&amp;</span>
+<span class="w">                               </span><span class="n">unit_system_opt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">unit_system_opt</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">labort_marbl</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="k">    call </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">StatusLog</span><span class="p">%</span><span class="n">log_error_trace</span><span class="p">(</span><span class="s1">&#39;marbl%init&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">subname</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
 <span class="k">  end if</span>
 <span class="k">end do</span>
 </pre></div>

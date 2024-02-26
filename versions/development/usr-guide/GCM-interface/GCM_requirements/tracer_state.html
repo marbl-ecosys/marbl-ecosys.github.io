@@ -119,6 +119,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../surface_flux.html">Compute Surface Fluxes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../additional_output.html">Additional Output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../shutdown.html">Shutdown</a></li>
 </ul>
 </li>
@@ -247,24 +248,24 @@ Requested tracers
 <div class="section" id="tracer-metadata-available-from-the-marbl-interface">
 <h2>Tracer Metadata Available from the MARBL Interface<a class="headerlink" href="#tracer-metadata-available-from-the-marbl-interface" title="Permalink to this headline">¶</a></h2>
 <p>The details are found in <code class="docutils literal notranslate"><span class="pre">$MARBL/tests/driver_src/marbl.F90</span></code>:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_header</span><span class="p">(</span><span class="s1">&#39;Requested tracers&#39;</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
-<span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">)</span>
-  <span class="k">write</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span> <span class="s2">&quot;(I0, 2A)&quot;</span><span class="p">)</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;. &#39;</span><span class="p">,</span>                               <span class="p">&amp;</span>
-    <span class="nb">trim</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">short_name</span><span class="p">)</span>
-  <span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_noerror</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span> <span class="n">subname</span><span class="p">)</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_header</span><span class="p">(</span><span class="s1">&#39;Requested tracers&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">subname</span><span class="p">)</span>
+<span class="k">do </span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">)</span>
+<span class="w">  </span><span class="k">write</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;(I0, 2A)&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;. &#39;</span><span class="p">,</span><span class="w">                               </span><span class="p">&amp;</span>
+<span class="w">    </span><span class="nb">trim</span><span class="p">(</span><span class="n">marbl_instance</span><span class="p">%</span><span class="n">tracer_metadata</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">short_name</span><span class="p">)</span>
+<span class="w">  </span><span class="k">call </span><span class="n">driver_status_log</span><span class="p">%</span><span class="n">log_noerror</span><span class="p">(</span><span class="n">log_message</span><span class="p">,</span><span class="w"> </span><span class="n">subname</span><span class="p">)</span>
 <span class="k">end do</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">marbl_interface_class</span></code> contains an object <code class="docutils literal notranslate"><span class="pre">tracer_metadata</span></code>, the length of which is equal to the number of tracers MARBL is computing tendencies of.
 The <code class="docutils literal notranslate"><span class="pre">tracer_metadata_type</span></code> contains metadata for each tracer:</p>
-<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span> <span class="k">public</span> <span class="kd">::</span> <span class="n">marbl_tracer_metadata_type</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">short_name</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">long_name</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">units</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tend_units</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">flux_units</span>
-   <span class="kt">logical</span>                 <span class="kd">::</span> <span class="n">lfull_depth_tavg</span>
-   <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span> <span class="kd">::</span> <span class="n">tracer_module_name</span>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">marbl_tracer_metadata_type</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">short_name</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">long_name</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">units</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tend_units</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">flux_units</span>
+<span class="w">   </span><span class="kt">logical</span><span class="w">                 </span><span class="kd">::</span><span class="w"> </span><span class="n">lfull_depth_tavg</span>
+<span class="w">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="n">char_len</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tracer_module_name</span>
 <span class="k">end type </span><span class="n">marbl_tracer_metadata_type</span>
 </pre></div>
 </div>

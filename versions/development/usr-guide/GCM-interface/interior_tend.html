@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="MARBL cesm2.1 documentation" href="../../index.html"/>
         <link rel="up" title="How to Use MARBL in a GCM" href="index.html"/>
-        <link rel="next" title="Shutdown" href="shutdown.html"/>
+        <link rel="next" title="Additional Output" href="additional_output.html"/>
         <link rel="prev" title="Compute Surface Fluxes" href="surface_flux.html"/> 
 
   
@@ -118,6 +118,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#example-from-stand-alone-marbl">Example from Stand-Alone MARBL</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="additional_output.html">Additional Output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="shutdown.html">Shutdown</a></li>
 </ul>
 </li>
@@ -228,29 +229,29 @@ For each column, MARBL needs to know the following:</p>
 <span class="c">!      In this example, the vertical grid is the same from column to column and</span>
 <span class="c">!      therefore set during initialization. The columns vary in depth, so</span>
 <span class="c">!      the index of the bottom layer must be updated for each column.</span>
-<span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">domain</span><span class="p">%</span><span class="n">kmt</span> <span class="o">=</span> <span class="n">active_level_cnt</span><span class="p">(</span><span class="n">col_id</span><span class="p">)</span>
+<span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">domain</span><span class="p">%</span><span class="n">kmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">active_level_cnt</span><span class="p">(</span><span class="n">col_id</span><span class="p">)</span>
 
 <span class="c">!  (c) copy tracer values into marbl_instances(n)%tracers</span>
-<span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">tracers</span> <span class="o">=</span> <span class="n">tracer_initial_vals</span><span class="p">(:,:,</span><span class="n">col_id</span><span class="p">)</span>
+<span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">tracers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tracer_initial_vals</span><span class="p">(:,:,</span><span class="n">col_id</span><span class="p">)</span>
 
 <span class="c">!  (d) copy interior tendency forcings into marbl_instances(n)%interior_tendency_forcings</span>
-<span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">)</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">))</span> <span class="k">then</span>
-<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="p">&amp;</span>
-         <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">col_id</span><span class="p">)</span>
-  <span class="k">else</span>
-<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span> <span class="o">=</span> <span class="p">&amp;</span>
-         <span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">col_id</span><span class="p">,:)</span>
-  <span class="k">end if</span>
+<span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">associated</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">         </span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_0d</span><span class="p">(</span><span class="n">col_id</span><span class="p">)</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">         </span><span class="n">interior_tendency_forcings</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_1d</span><span class="p">(</span><span class="n">col_id</span><span class="p">,:)</span>
+<span class="w">  </span><span class="k">end if</span>
 <span class="k">end do</span>
 
 <span class="c">!  (e) populate marbl_instances(n)%interior_tendency_saved_state (with 0s)</span>
-<span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">)</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">))</span> <span class="k">then</span>
-<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(:)</span> <span class="o">=</span> <span class="mf">0._r8</span>
-  <span class="k">else</span>
-<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0._r8</span>
-  <span class="k">end if</span>
+<span class="k">do </span><span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_2d</span><span class="p">(:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._r8</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="k">    </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendency_saved_state</span><span class="p">%</span><span class="n">state</span><span class="p">(</span><span class="n">m</span><span class="p">)%</span><span class="n">field_3d</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._r8</span>
+<span class="w">  </span><span class="k">end if</span>
 <span class="k">end do</span>
 </pre></div>
 </div>
@@ -296,8 +297,8 @@ After the call to <code class="docutils literal notranslate"><span class="pre">i
 (which are also written to the netCDF output file).</p>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="c">!  (g) write to diagnostic buffer</span>
 <span class="c">!        Note: passing just col_id =&gt; interior tendency diagnostic buffer</span>
-<span class="k">call </span><span class="n">marbl_io_copy_into_diag_buffer</span><span class="p">(</span><span class="n">col_id</span><span class="p">,</span> <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-<span class="n">interior_tendencies</span><span class="p">(:,:,</span><span class="n">col_id</span><span class="p">)</span> <span class="o">=</span> <span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendencies</span><span class="p">(:,:)</span>
+<span class="k">call </span><span class="n">marbl_io_copy_into_diag_buffer</span><span class="p">(</span><span class="n">col_id</span><span class="p">,</span><span class="w"> </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">interior_tendencies</span><span class="p">(:,:,</span><span class="n">col_id</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">marbl_instances</span><span class="p">(</span><span class="n">n</span><span class="p">)%</span><span class="n">interior_tendencies</span><span class="p">(:,:)</span>
 </pre></div>
 </div>
 <p>A more complete example can be found in <a class="reference internal" href="../../implementations/pop/processing_MARBL_output.html#ref-interior-tend-in-pop"><span class="std std-ref">how POP handles MARBL output</span></a>.</p>
@@ -315,7 +316,7 @@ After the call to <code class="docutils literal notranslate"><span class="pre">i
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="shutdown.html" class="btn btn-neutral float-right" title="Shutdown" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="additional_output.html" class="btn btn-neutral float-right" title="Additional Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="surface_flux.html" class="btn btn-neutral" title="Compute Surface Fluxes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

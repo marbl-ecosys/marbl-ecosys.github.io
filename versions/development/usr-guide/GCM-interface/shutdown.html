@@ -38,7 +38,7 @@
     <link rel="top" title="MARBL cesm2.1 documentation" href="../../index.html"/>
         <link rel="up" title="How to Use MARBL in a GCM" href="index.html"/>
         <link rel="next" title="Examples of MARBL Implementation" href="../../implementations/index.html"/>
-        <link rel="prev" title="Compute Interior Tracer Tendencies" href="interior_tend.html"/> 
+        <link rel="prev" title="Additional Output" href="additional_output.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="GCM_requirements/index.html">Requirements on the GCM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="surface_flux.html">Compute Surface Fluxes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="interior_tend.html">Compute Interior Tracer Tendencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="additional_output.html">Additional Output</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Shutdown</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#the-shutdown-interface">The <code class="docutils literal notranslate"><span class="pre">shutdown()</span></code> interface</a></li>
 </ul>
@@ -194,15 +195,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="shutdown">
-<span id="id1"></span><h1>Shutdown<a class="headerlink" href="#shutdown" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="shutdown-1">
+<span id="shutdown"></span><h1>Shutdown<a class="headerlink" href="#shutdown-1" title="Permalink to this headline">¶</a></h1>
 <p>The shutdown stage is where MARBL deallocates memory (including memory allocated inside of derived types, such as the diagnostic indexing types).
 The only object still accessible after shutdown is <code class="docutils literal notranslate"><span class="pre">marbl_interface%timer_summary</span></code>, so GCMs can still access performance timers.</p>
 <div class="section" id="the-shutdown-interface">
 <h2>The <code class="docutils literal notranslate"><span class="pre">shutdown()</span></code> interface<a class="headerlink" href="#the-shutdown-interface" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">shutdown</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
 
-  <span class="k">class</span><span class="p">(</span><span class="n">marbl_interface_class</span><span class="p">),</span> <span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span> <span class="kd">::</span> <span class="n">this</span>
+<span class="w">  </span><span class="k">class</span><span class="p">(</span><span class="n">marbl_interface_class</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this</span>
 </pre></div>
 </div>
 <p>No additional arguments are needed for calls to <code class="docutils literal notranslate"><span class="pre">marbl_instance%shutdown()</span></code>.</p>
@@ -222,7 +223,7 @@ The only object still accessible after shutdown is <code class="docutils literal
         <a href="../../implementations/index.html" class="btn btn-neutral float-right" title="Examples of MARBL Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="interior_tend.html" class="btn btn-neutral" title="Compute Interior Tracer Tendencies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="additional_output.html" class="btn btn-neutral" title="Additional Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
